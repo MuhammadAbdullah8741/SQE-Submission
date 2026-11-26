@@ -103,7 +103,7 @@ public class IssueReturnService {
         }
 
         long activeCount = transactionRepository.countByMemberAndStatus(member, Transaction.TxnStatus.ISSUED);
-        if (activeCount >= borrowLimit) {
+        if (activeCount > borrowLimit) {
             throw new BookFlowException(
                 "Member has reached the borrow limit (" + borrowLimit + " books). Return a book before issuing another."
             );

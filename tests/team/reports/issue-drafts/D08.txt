@@ -1,0 +1,23 @@
+D08: Resolved dependencies match published vulnerability advisories
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: High
+Priority: P1
+Status: Open
+Risk: R01
+Category: Dependencies
+
+Reproduction / review:
+Resolve the Maven dependency tree and run tests/team/scripts/audit.py. Review the exact package versions and OSV advisory IDs. Advisory matches do not establish exploitability.
+
+Evidence:
+dependency-audit.json: 129 resolved Maven packages, 23 with advisories
+
+Root cause:
+Upstream framework/dependency versions are old.
+
+Correction:
+Triage reachability, upgrade supported Spring Boot/dependencies and rerun all tests.
+
+Triage:
+Advisory match is not proof of exploitability; no exploit attempted.

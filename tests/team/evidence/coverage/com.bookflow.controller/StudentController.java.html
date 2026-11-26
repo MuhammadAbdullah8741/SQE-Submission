@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StudentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.controller</a> &gt; <span class="el_source">StudentController.java</span></div><h1>StudentController.java</h1><pre class="source lang-java linenums">package com.bookflow.controller;
+
+import com.bookflow.exception.BookFlowException;
+import com.bookflow.model.Book;
+import com.bookflow.model.Fine;
+import com.bookflow.model.Transaction;
+import com.bookflow.model.User;
+import com.bookflow.security.BookFlowUserDetails;
+import com.bookflow.service.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Controller
+@RequestMapping(&quot;/student&quot;)
+public class StudentController {
+
+    private final IssueReturnService issueReturnService;
+    private final FineService fineService;
+    private final BookService bookService;
+    private final ReservationService reservationService;
+    private final GeminiService geminiService;
+    private final com.bookflow.util.PdfReceiptGenerator pdfReceiptGenerator;
+
+    public StudentController(IssueReturnService issueReturnService,
+                              FineService fineService,
+                              BookService bookService,
+                              ReservationService reservationService,
+                              GeminiService geminiService,
+<span class="fc" id="L41">                              com.bookflow.util.PdfReceiptGenerator pdfReceiptGenerator) {</span>
+<span class="fc" id="L42">        this.issueReturnService = issueReturnService;</span>
+<span class="fc" id="L43">        this.fineService = fineService;</span>
+<span class="fc" id="L44">        this.bookService = bookService;</span>
+<span class="fc" id="L45">        this.reservationService = reservationService;</span>
+<span class="fc" id="L46">        this.geminiService = geminiService;</span>
+<span class="fc" id="L47">        this.pdfReceiptGenerator = pdfReceiptGenerator;</span>
+<span class="fc" id="L48">    }</span>
+
+    // ---- Dashboard ----
+
+    @GetMapping(&quot;/dashboard&quot;)
+    public String dashboard(@AuthenticationPrincipal BookFlowUserDetails principal, Model model) {
+<span class="nc" id="L54">        User student = principal.getUser();</span>
+
+<span class="nc" id="L56">        List&lt;Transaction&gt; borrowed = issueReturnService.getActiveTransactionsForMember(student.getSystemId());</span>
+<span class="nc" id="L57">        BigDecimal fineBalance = fineService.getTotalOutstanding(student);</span>
+<span class="nc" id="L58">        JsonNode recommendationsJson = geminiService.getRecommendations(student);</span>
+
+<span class="nc" id="L60">        model.addAttribute(&quot;user&quot;, student);</span>
+<span class="nc" id="L61">        model.addAttribute(&quot;borrowedBooks&quot;, borrowed);</span>
+<span class="nc" id="L62">        model.addAttribute(&quot;borrowedCount&quot;, borrowed.size());</span>
+<span class="nc" id="L63">        model.addAttribute(&quot;fineBalance&quot;, fineBalance);</span>
+<span class="nc" id="L64">        model.addAttribute(&quot;recommendations&quot;, toRecommendationList(recommendationsJson));</span>
+<span class="nc" id="L65">        model.addAttribute(&quot;dueSoonCount&quot;, borrowed.stream().filter(Transaction::isDueSoon).count());</span>
+<span class="nc" id="L66">        model.addAttribute(&quot;notificationCount&quot;, 0);</span>
+
+<span class="nc" id="L68">        return &quot;student/dashboard&quot;;</span>
+    }
+
+    /**
+     * Converts the Gemini JsonNode response into a list of simple maps,
+     * since JSTL EL cannot navigate Jackson's JsonNode property accessors
+     * directly (${rec.title} would fail to resolve on a raw JsonNode).
+     */
+    private List&lt;java.util.Map&lt;String, String&gt;&gt; toRecommendationList(JsonNode node) {
+<span class="nc" id="L77">        List&lt;java.util.Map&lt;String, String&gt;&gt; list = new java.util.ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">        if (node != null &amp;&amp; node.isArray()) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            for (JsonNode item : node) {</span>
+<span class="nc" id="L80">                java.util.Map&lt;String, String&gt; map = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L81">                map.put(&quot;title&quot;, item.path(&quot;title&quot;).asText(&quot;&quot;));</span>
+<span class="nc" id="L82">                map.put(&quot;author&quot;, item.path(&quot;author&quot;).asText(&quot;&quot;));</span>
+<span class="nc" id="L83">                map.put(&quot;genre&quot;, item.path(&quot;genre&quot;).asText(&quot;&quot;));</span>
+<span class="nc" id="L84">                map.put(&quot;reason&quot;, item.path(&quot;reason&quot;).asText(&quot;&quot;));</span>
+<span class="nc" id="L85">                list.add(map);</span>
+<span class="nc" id="L86">            }</span>
+        }
+<span class="nc" id="L88">        return list;</span>
+    }
+
+    /** AI Recommendations widget — lazy-loaded via AJAX if preferred. */
+    @GetMapping(&quot;/recommendations&quot;)
+    @ResponseBody
+    public JsonNode recommendations(@AuthenticationPrincipal BookFlowUserDetails principal) {
+<span class="nc" id="L95">        return geminiService.getRecommendations(principal.getUser());</span>
+    }
+
+    // ---- Book Catalogue Browser ----
+
+    @GetMapping(&quot;/books&quot;)
+    public String browseCatalogue(@RequestParam(required = false) String q,
+                                   @RequestParam(defaultValue = &quot;0&quot;) int page,
+                                   Model model) {
+<span class="nc" id="L104">        Page&lt;Book&gt; books = bookService.search(q, PageRequest.of(page, 12));</span>
+<span class="nc" id="L105">        model.addAttribute(&quot;books&quot;, books);</span>
+<span class="nc" id="L106">        model.addAttribute(&quot;query&quot;, q);</span>
+<span class="nc" id="L107">        return &quot;student/catalogue&quot;;</span>
+    }
+
+    // ---- Borrow History ----
+
+    @GetMapping(&quot;/history&quot;)
+    public String borrowHistory(@AuthenticationPrincipal BookFlowUserDetails principal, Model model) {
+<span class="nc" id="L114">        model.addAttribute(&quot;history&quot;, issueReturnService.getHistoryForMember(principal.getUser().getSystemId()));</span>
+<span class="nc" id="L115">        return &quot;student/history&quot;;</span>
+    }
+
+    // ---- Fine Balance &amp; History ----
+
+    @GetMapping(&quot;/fines&quot;)
+    public String fines(@AuthenticationPrincipal BookFlowUserDetails principal, Model model) {
+<span class="nc" id="L122">        User student = principal.getUser();</span>
+<span class="nc" id="L123">        model.addAttribute(&quot;outstanding&quot;, fineService.getOutstandingForMember(student));</span>
+<span class="nc" id="L124">        model.addAttribute(&quot;history&quot;, fineService.getHistoryForMember(student));</span>
+<span class="nc" id="L125">        model.addAttribute(&quot;totalOutstanding&quot;, fineService.getTotalOutstanding(student));</span>
+<span class="nc" id="L126">        return &quot;student/fines&quot;;</span>
+    }
+
+    @GetMapping(&quot;/fines/{fineId}/receipt&quot;)
+    public ResponseEntity&lt;ByteArrayResource&gt; downloadFineReceipt(@PathVariable Long fineId) {
+<span class="nc" id="L131">        byte[] pdf = fineService.generateReceiptPdf(fineId);</span>
+<span class="nc" id="L132">        return buildPdfResponse(pdf, &quot;fine-receipt-&quot; + fineId + &quot;.pdf&quot;);</span>
+    }
+
+    // ---- Reserve a Book ----
+
+    @PostMapping(&quot;/reserve&quot;)
+    public String reserveBook(@RequestParam String isbn,
+                               @AuthenticationPrincipal BookFlowUserDetails principal,
+                               Model model) {
+        try {
+<span class="nc" id="L142">            reservationService.reserveBook(principal.getUser(), isbn);</span>
+<span class="nc" id="L143">            return &quot;redirect:/student/books?reserved=true&quot;;</span>
+<span class="nc" id="L144">        } catch (BookFlowException ex) {</span>
+<span class="nc" id="L145">            model.addAttribute(&quot;errorMessage&quot;, ex.getMessage());</span>
+<span class="nc" id="L146">            return &quot;redirect:/student/books?error=&quot; + ex.getMessage();</span>
+        }
+    }
+
+    @GetMapping(&quot;/reservations&quot;)
+    public String myReservations(@AuthenticationPrincipal BookFlowUserDetails principal, Model model) {
+<span class="nc" id="L152">        model.addAttribute(&quot;reservations&quot;, reservationService.getForMember(principal.getUser()));</span>
+<span class="nc" id="L153">        return &quot;student/reservations&quot;;</span>
+    }
+
+    // ---- Profile ----
+
+    @GetMapping(&quot;/profile&quot;)
+    public String profile(@AuthenticationPrincipal BookFlowUserDetails principal, Model model) {
+<span class="nc" id="L160">        model.addAttribute(&quot;user&quot;, principal.getUser());</span>
+<span class="nc" id="L161">        return &quot;student/profile&quot;;</span>
+    }
+
+    // ---- Download borrowing certificate / full receipt (PDF) ----
+
+    @GetMapping(&quot;/download-receipt&quot;)
+    public ResponseEntity&lt;ByteArrayResource&gt; downloadBorrowReceipt(
+            @AuthenticationPrincipal BookFlowUserDetails principal) {
+<span class="nc" id="L169">        User student = principal.getUser();</span>
+<span class="nc" id="L170">        List&lt;Transaction&gt; history = issueReturnService.getHistoryForMember(student.getSystemId());</span>
+
+<span class="nc" id="L172">        byte[] pdf = pdfReceiptGenerator.generateBorrowHistory(student.getFullName(), student.getSystemId(), history);</span>
+
+<span class="nc" id="L174">        return buildPdfResponse(pdf, &quot;borrow-history-&quot; + student.getSystemId() + &quot;.pdf&quot;);</span>
+    }
+
+    private ResponseEntity&lt;ByteArrayResource&gt; buildPdfResponse(byte[] data, String filename) {
+<span class="nc" id="L178">        return ResponseEntity.ok()</span>
+<span class="nc" id="L179">            .header(HttpHeaders.CONTENT_DISPOSITION, &quot;attachment; filename=\&quot;&quot; + filename + &quot;\&quot;&quot;)</span>
+<span class="nc" id="L180">            .contentType(MediaType.APPLICATION_PDF)</span>
+<span class="nc" id="L181">            .contentLength(data.length)</span>
+<span class="nc" id="L182">            .body(new ByteArrayResource(data));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

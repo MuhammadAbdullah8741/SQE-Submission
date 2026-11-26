@@ -1,0 +1,23 @@
+D05: Issue precheck ignores member eligibility
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: Medium
+Priority: P2
+Status: Open
+Risk: R02
+Category: API contract
+
+Reproduction / review:
+Request issue/precheck with a known ISBN and an empty, unknown or ineligible member ID. Expected: eligibility error. Observed: stock availability returned without checking member.
+
+Evidence:
+LibrarianController.precheckIssue uses ISBN only; generated API cases
+
+Root cause:
+Precheck implements stock lookup while its description promises limit/fine checks.
+
+Correction:
+Share read-only eligibility validation with issue operation, including member, limit and fines.
+
+Triage:
+Record as misleading precheck; actual issue service still validates.

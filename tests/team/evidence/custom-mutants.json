@@ -1,0 +1,20 @@
+[
+  {
+    "operator": "LOAN_LIMIT_OFF_BY_ONE",
+    "replacement": [
+      "activeCount >= borrowLimit",
+      "activeCount > borrowLimit"
+    ],
+    "exitCode": 1,
+    "killed": true
+  },
+  {
+    "operator": "FINE_ON_DUE_DATE",
+    "replacement": [
+      "if (overdueDays > 0)",
+      "if (overdueDays >= 0)"
+    ],
+    "exitCode": 1,
+    "killed": true
+  }
+]

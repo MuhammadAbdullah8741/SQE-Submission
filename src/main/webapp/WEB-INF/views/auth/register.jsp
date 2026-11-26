@@ -220,11 +220,11 @@
                 </div>
 
                 <p id="passwordHint" style="font-size: 12px; color: var(--text-muted); margin: -10px 0 16px 2px;">
-                    Password rules depend on the role selected below.
+                    Student password: at least 6 characters including a number.
                 </p>
 
                 <div class="form-group">
-                    <label class="form-label" for="role">Select Role</label>
+                    <label class="form-label" for="role">Account Role</label>
                     <div class="form-input-wrap">
                         <select id="role" name="role" class="form-input" style="padding-left: 14px;" required>
                             <option value="" disabled selected>-- Select Role --</option>

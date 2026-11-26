@@ -70,6 +70,7 @@ public class LibrarianController {
             return "redirect:/librarian/dashboard?issued=true";
         } catch (BookFlowException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
+            dashboard(principal, model);
             return "librarian/dashboard";
         }
     }
@@ -79,7 +80,7 @@ public class LibrarianController {
     @ResponseBody
     public Map<String, Object> precheckIssue(@RequestParam String memberId, @RequestParam String isbn) {
         try {
-            Book book = bookService.getByIsbn(isbn);
+            Book book = issueReturnService.precheckIssue(memberId, isbn);
             return Map.of(
                 "available", book.hasAvailableCopies(),
                 "bookTitle", book.getTitle(),
@@ -101,6 +102,7 @@ public class LibrarianController {
             return "redirect:/librarian/dashboard?returned=true";
         } catch (BookFlowException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
+            dashboard(principal, model);
             return "librarian/dashboard";
         }
     }
@@ -108,9 +110,16 @@ public class LibrarianController {
     /** Fine Calculator Widget — preview overdue days/fine before confirming return. */
     @GetMapping("/return/preview")
     @ResponseBody
-    public Map<String, Object> previewReturn(@RequestParam Long txnId) {
-        long overdueDays = issueReturnService.previewOverdueDays(txnId);
-        return Map.of("overdueDays", overdueDays);
+    public ResponseEntity<Map<String, Object>> previewReturn(@RequestParam Long txnId) {
+        if (txnId == null || txnId < 1) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Transaction ID must be at least 1"));
+        }
+        try {
+            long overdueDays = issueReturnService.previewOverdueDays(txnId);
+            return ResponseEntity.ok(Map.of("overdueDays", overdueDays));
+        } catch (BookFlowException ex) {
+            return ResponseEntity.status(404).body(Map.of("error", ex.getMessage()));
+        }
     }
 
     // ---- Book Search Panel ----

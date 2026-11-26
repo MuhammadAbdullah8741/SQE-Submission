@@ -1,0 +1,23 @@
+D07: Dashboard contrast, heading, landmark and ARIA defects
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: High
+Priority: P1
+Status: Fixed locally
+Risk: R10
+Category: Accessibility
+
+Reproduction / review:
+Run axe on the authenticated librarian dashboard and Lighthouse before the screen fixes. Observe invalid theme ARIA, contrast, heading and landmark findings. Rerun after repair.
+
+Evidence:
+axe-before.json; axe-after.json; Lighthouse before/after
+
+Root cause:
+Muted palette and icon controls were not checked with accessibility tooling.
+
+Correction:
+Increase contrast; name landmarks; correct heading sequence and theme switch role.
+
+Triage:
+Repair screen and rerun both tools.

@@ -1,0 +1,13 @@
+{
+  "java_timezone": "Asia/Karachi",
+  "jdbc_timezone_options": "connectionTimeZone=%2B05:00&forceConnectionTimeZoneToSession=true",
+  "mysql_test_session": {
+    "session_timezone": "+05:00",
+    "session_now": "2026-11-26 04:06:43",
+    "utc_now": "2026-11-25 23:06:43",
+    "fixture_date": "2026-11-26"
+  },
+  "reason": "Keep SQL CURRENT_DATE fixtures and Java LocalDate.now aligned across the UTC/local midnight boundary",
+  "prior_failure_evidence": "playwright-timezone-failure.json",
+  "performance_note": "Four retained k6 runs precede this explicit session-timezone correction; their stock-only lookup operation does not use dates."
+}

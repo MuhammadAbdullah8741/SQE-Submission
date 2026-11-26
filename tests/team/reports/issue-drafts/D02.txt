@@ -1,0 +1,23 @@
+D02: LOST transaction can be returned and inflate availability
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: High
+Priority: P1
+Status: Fixed locally
+Risk: R07
+Category: State integrity
+
+Reproduction / review:
+Seed an existing transaction as LOST and submit its ID to the return action. Expected: reject without stock change. Baseline: accepted and stock incremented.
+
+Evidence:
+regression-before.log; IssueReturnTest.lostTransactionMustNotReturn
+
+Root cause:
+Guard rejects only RETURNED rather than requiring ISSUED.
+
+Correction:
+Require ISSUED as source state.
+
+Triage:
+Fix and regression-test all three source states.

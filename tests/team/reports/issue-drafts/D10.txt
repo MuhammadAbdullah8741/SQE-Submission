@@ -1,0 +1,23 @@
+D10: Public registration accepts privileged role
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: Critical
+Priority: P1
+Status: Open - source verified
+Risk: R01
+Category: Authorization
+
+Reproduction / review:
+Source review: public registration exposes all roles, and UserService.register persists the client-supplied role. Expected public signup role: STU. No external exploitation was performed.
+
+Evidence:
+AuthController.registerPage exposes all roles; UserService.register persists request.getRole(); SecurityConfig permits registration
+
+Root cause:
+Client-selected role is trusted during public signup.
+
+Correction:
+Force STU for public signup; provision staff only through authenticated admin flow.
+
+Triage:
+Hold release; passive source finding, no attack against any external system.

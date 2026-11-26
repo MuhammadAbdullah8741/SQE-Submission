@@ -1,0 +1,34 @@
+[
+  {
+    "vus": 1,
+    "repeat": 1,
+    "p95_ms": 38.287652349999995,
+    "requests_per_second_including_setup": 4.100208557337482,
+    "unexpected_failure_rate": 0,
+    "thresholds_pass": true
+  },
+  {
+    "vus": 1,
+    "repeat": 2,
+    "p95_ms": 29.452119999999997,
+    "requests_per_second_including_setup": 4.344259296068878,
+    "unexpected_failure_rate": 0,
+    "thresholds_pass": true
+  },
+  {
+    "vus": 5,
+    "repeat": 1,
+    "p95_ms": 51.55118599999999,
+    "requests_per_second_including_setup": 21.027306094634262,
+    "unexpected_failure_rate": 0,
+    "thresholds_pass": true
+  },
+  {
+    "vus": 5,
+    "repeat": 2,
+    "p95_ms": 59.8897012,
+    "requests_per_second_including_setup": 20.852463616838374,
+    "unexpected_failure_rate": 0,
+    "thresholds_pass": true
+  }
+]

@@ -255,7 +255,7 @@
                                 </div>
                                 <div>
                                     <p class="books-table__date-label">Due Date</p>
-                                    <p class="books-table__date books-table__date--overdue"><fmt:formatDate value="${txn.dueDate}" pattern="MMM dd, yyyy"/></p>
+                                    <p class="books-table__date books-table__date--overdue"><c:out value="${txn.dueDate}"/></p>
                                 </div>
                                 <c:choose>
                                     <c:when test="${txn.overdueDays >= 4}">

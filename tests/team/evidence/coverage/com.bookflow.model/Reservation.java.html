@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Reservation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.model</a> &gt; <span class="el_source">Reservation.java</span></div><h1>Reservation.java</h1><pre class="source lang-java linenums">package com.bookflow.model;
+
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = &quot;reservations&quot;, indexes = {
+        @Index(name = &quot;idx_rsv_member&quot;, columnList = &quot;member_id&quot;),
+        @Index(name = &quot;idx_rsv_isbn&quot;,   columnList = &quot;isbn&quot;),
+        @Index(name = &quot;idx_rsv_status&quot;, columnList = &quot;status&quot;)
+})
+<span class="nc bnc" id="L14" title="All 70 branches missed.">@Data</span>
+<span class="fc" id="L15">@NoArgsConstructor</span>
+<span class="nc" id="L16">@AllArgsConstructor</span>
+<span class="pc bnc" id="L17" title="All 4 branches missed.">@Builder</span>
+public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = &quot;rsv_id&quot;)
+<span class="nc" id="L23">    private Long rsvId;</span>
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;member_id&quot;, nullable = false)
+<span class="nc" id="L27">    private User member;</span>
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;isbn&quot;, nullable = false)
+<span class="nc" id="L31">    private Book book;</span>
+
+    @Column(name = &quot;request_date&quot;, nullable = false)
+    @Builder.Default
+<span class="pc" id="L35">    private LocalDate requestDate = LocalDate.now();</span>
+
+    @Column(name = &quot;expiry_date&quot;)
+<span class="nc" id="L38">    private LocalDate expiryDate;</span>
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = &quot;status&quot;, nullable = false, length = 15)
+    @Builder.Default
+<span class="nc" id="L43">    private ReservationStatus status = ReservationStatus.PENDING;</span>
+
+    @Column(name = &quot;fulfilled_at&quot;)
+<span class="nc" id="L46">    private LocalDateTime fulfilledAt;</span>
+
+    @Column(name = &quot;created_at&quot;, updatable = false)
+<span class="nc" id="L49">    private LocalDateTime createdAt;</span>
+
+    @PrePersist
+    protected void onCreate() {
+<span class="nc" id="L53">        createdAt    = LocalDateTime.now();</span>
+<span class="nc" id="L54">        requestDate  = LocalDate.now();</span>
+<span class="nc" id="L55">        expiryDate   = requestDate.plusDays(7);</span>
+<span class="nc" id="L56">    }</span>
+
+<span class="fc" id="L58">    public enum ReservationStatus {</span>
+<span class="fc" id="L59">        PENDING, FULFILLED, CANCELLED, EXPIRED</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,50 @@
+[
+  {
+    "name": "com.bookflow.team.ControllerContractTest",
+    "tests": "4",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "4.592"
+  },
+  {
+    "name": "com.bookflow.team.FineTest",
+    "tests": "20",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "1.819"
+  },
+  {
+    "name": "com.bookflow.team.IssueReturnTest",
+    "tests": "42",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.76"
+  },
+  {
+    "name": "com.bookflow.team.PublicRegistrationSecurityTest",
+    "tests": "1",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.297"
+  },
+  {
+    "name": "com.bookflow.team.RecoveryIntegrationTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "21.278"
+  },
+  {
+    "name": "com.bookflow.team.StockTest",
+    "tests": "12",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "0.206"
+  }
+]

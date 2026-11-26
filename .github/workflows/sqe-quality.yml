@@ -1,0 +1,95 @@
+name: SQE quality gate
+on: [pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  quality:
+    # Playwright 1.56 supports Ubuntu 24.04; ubuntu-latest moved to 26.04.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Karachi
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: SqeLocal2026
+          MYSQL_DATABASE: bookflow_test
+        ports: ['3308:3306']
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -pSqeLocal2026"
+          --health-interval=10s --health-timeout=5s --health-retries=12
+      sonar:
+        image: sonarqube:community
+        env:
+          SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: 'true'
+        ports: ['9000:9000']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install bcrypt requests
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Schema and synthetic data
+        run: |
+          sed s/bookflow_db/bookflow_test/g src/main/resources/schema.sql | MYSQL_PWD=SqeLocal2026 mysql -h 127.0.0.1 -P 3308 -u root
+          node tests/team/scripts/seed.cjs
+      - name: Unit and transactional recovery tests
+        run: mvn -B -ntp verify
+      - name: Coverage gate
+        run: python tests/team/scripts/gate.py coverage
+      - name: PIT and custom rule mutation
+        run: |
+          mvn -B -ntp org.pitest:pitest-maven:mutationCoverage
+          python tests/team/scripts/custom_mutations.py
+          python tests/team/scripts/gate.py mutation
+          mvn -B -ntp package -DskipTests
+      - name: Start local application
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3308/bookflow_test?useSSL=false&connectionTimeZone=%2B05:00&forceConnectionTimeZoneToSession=true&allowPublicKeyRetrieval=true
+          SPRING_DATASOURCE_USERNAME: root
+          SPRING_DATASOURCE_PASSWORD: SqeLocal2026
+          SERVER_PORT: '8081'
+          BOOKFLOW_MAIL_SIMULATE: 'true'
+        run: |
+          java -jar target/bookflow.war > tests/team/evidence/ci-app.log 2>&1 &
+          python tests/team/scripts/wait_ready.py
+      - name: Generated API cases
+        run: |
+          python tests/team/api/generate.py
+          python tests/team/api/check_generation.py
+          node tests/team/api/run.cjs
+      - name: Browser, roles and accessibility
+        run: npx playwright test
+      - name: Sonar analysis and quality gate
+        run: |
+          python tests/team/scripts/sonar.py
+          python tests/team/scripts/gate.py sonar
+      - name: Preserve evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sqe-evidence
+          path: |
+            tests/team/evidence/
+            target/site/jacoco/
+            target/pit-reports/
+            target/surefire-reports/
+  deployment-eligibility:
+    needs: quality
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Quality job passed. No deployment destination is configured."

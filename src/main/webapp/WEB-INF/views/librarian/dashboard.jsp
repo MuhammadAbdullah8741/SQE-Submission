@@ -10,6 +10,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookflow.css">
+<style>
+:root { --text-muted: #526174; }
+.dash-stat-card__label { color: #526174 !important; }
+.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }
+[data-theme="dark"] { --text-muted: #b8c7db; }
+[data-theme="dark"] .dash-stat-card__label { color: #b8c7db !important; }
+</style>
 </head>
 <body>
 
@@ -18,7 +25,7 @@
     <!-- ================================================== -->
     <!-- SIDEBAR                                            -->
     <!-- ================================================== -->
-    <aside class="sidebar">
+    <aside class="sidebar" aria-label="Library navigation">
 
         <div class="sidebar__header">
             <span class="sidebar__logo-icon">
@@ -145,7 +152,7 @@
             </div>
 
             <div class="top-navbar__right">
-                <button class="theme-toggle top-navbar__icon-btn" data-theme-toggle aria-label="Toggle theme">
+                <button class="theme-toggle top-navbar__icon-btn" data-theme-toggle role="switch" aria-checked="false" aria-label="Toggle theme">
                     <span class="theme-toggle__track" style="width:40px; height:22px;">
                         <span class="theme-toggle__thumb" style="width:16px; height:16px; top:3px; left:3px;">
                             <svg class="icon-sun" width="10" height="10" viewBox="0 0 24 24" fill="none">
@@ -242,13 +249,13 @@
 
                 <!-- Issue Book Form -->
                 <div class="panel-card" style="margin-bottom: 0;">
-                    <h3 class="panel-card__title">
+                    <h2 class="panel-card__title">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color: var(--brand-blue)">
                             <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         Issue Book
-                    </h3>
+                    </h2>
                     <form method="post" action="${pageContext.request.contextPath}/librarian/issue">
                         <c:if test="${not empty _csrf}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -273,13 +280,13 @@
 
                 <!-- Return Book Form -->
                 <div class="panel-card" style="margin-bottom: 0;" id="return-section">
-                    <h3 class="panel-card__title">
+                    <h2 class="panel-card__title">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color: var(--brand-green)">
                             <path d="M1 4V10H7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M3.51 15C4.46 17.4 6.71 19.23 9.45 19.78C12.19 20.33 15.02 19.5 17.02 17.62C19.02 15.74 19.9 13 19.47 10.31C19.03 7.62 17.37 5.26 14.95 3.93C12.53 2.6 9.67 2.47 7.13 3.58L1 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         Return Book
-                    </h3>
+                    </h2>
                     <form method="post" action="${pageContext.request.contextPath}/librarian/return">
                         <c:if test="${not empty _csrf}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -335,7 +342,7 @@
                                 </div>
                                 <div>
                                     <p class="books-table__date-label">Due Date</p>
-                                    <p class="books-table__date books-table__date--overdue"><fmt:formatDate value="${txn.dueDate}" pattern="MMM dd, yyyy"/></p>
+                                    <p class="books-table__date books-table__date--overdue"><c:out value="${txn.dueDate}"/></p>
                                 </div>
                                 <c:choose>
                                     <c:when test="${txn.overdueDays >= 4}">
@@ -380,7 +387,7 @@
                                 </div>
                                 <div>
                                     <p class="books-table__date-label">Requested</p>
-                                    <p class="books-table__date"><fmt:formatDate value="${rsv.requestDate}" pattern="MMM dd, yyyy"/></p>
+                                    <p class="books-table__date"><c:out value="${rsv.requestDate}"/></p>
                                 </div>
                                 <form method="post" action="${pageContext.request.contextPath}/librarian/reservations/${rsv.rsvId}/fulfill">
                                     <c:if test="${not empty _csrf}">
@@ -400,17 +407,17 @@
     <!-- ================================================== -->
     <!-- RIGHT PANEL                                        -->
     <!-- ================================================== -->
-    <aside class="dashboard-right">
+    <aside class="dashboard-right" aria-label="Library tools">
 
         <!-- Book Search Panel -->
         <div class="panel-card">
-            <h3 class="panel-card__title">
+            <h2 class="panel-card__title">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color: var(--brand-blue)">
                     <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.7"/>
                     <path d="M16.5 16.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
                 </svg>
                 Quick Book Search
-            </h3>
+            </h2>
             <input type="text" id="quickSearchInput" class="form-input" style="padding-left:14px; margin-bottom:10px;" placeholder="Title, author, ISBN...">
             <div id="quickSearchResults" style="font-size:12.5px; color: var(--text-muted);">
                 Type to search the catalogue.
@@ -419,25 +426,25 @@
 
         <!-- Member Lookup -->
         <div class="panel-card">
-            <h3 class="panel-card__title">
+            <h2 class="panel-card__title">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color: var(--brand-green)">
                     <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/>
                     <path d="M4 20C4 17.3333 5.6 12 12 12C18.4 12 20 17.3333 20 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
                 </svg>
                 Member Lookup
-            </h3>
+            </h2>
             <input type="text" id="memberLookupInput" class="form-input" style="padding-left:14px;" placeholder="Enter member System ID">
         </div>
 
         <!-- Daily Activity Log -->
         <div class="panel-card">
-            <h3 class="panel-card__title">
+            <h2 class="panel-card__title">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="color: var(--brand-purple)">
                     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/>
                     <path d="M12 7V12L15 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
                 Today's Activity
-            </h3>
+            </h2>
             <c:choose>
                 <c:when test="${empty currentlyIssued}">
                     <p style="font-size:12.5px; color: var(--text-muted); text-align:center; padding:12px 0;">No activity yet today.</p>
@@ -451,7 +458,7 @@
                             <div>
                                 <p class="due-item__title">${txn.book.title}</p>
                                 <p class="due-item__author">${txn.member.systemId}</p>
-                                <p class="due-item__days">Issued <fmt:formatDate value="${txn.issueDate}" pattern="MMM dd"/></p>
+                                <p class="due-item__days">Issued <c:out value="${txn.issueDate}"/></p>
                             </div>
                         </div>
                     </c:forEach>

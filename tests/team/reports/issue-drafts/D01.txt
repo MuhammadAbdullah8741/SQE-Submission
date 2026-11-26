@@ -1,0 +1,23 @@
+D01: Repeated issue creates duplicate active loan
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: High
+Priority: P1
+Status: Fixed locally
+Risk: R06
+Category: State integrity
+
+Reproduction / review:
+Seed an eligible student and an ISBN with at least two copies. Issue once, then repeat the same member/ISBN request. Expected: reject the second active loan. Baseline: two records accepted.
+
+Evidence:
+regression-before.log; IssueReturnTest.duplicateIssueMustNotCreateSecondLoan
+
+Root cause:
+Issue path checks total loan count but not existing member/ISBN active loan.
+
+Correction:
+Reject an existing active member/ISBN loan. Concurrent requests still need a locking/unique-key design.
+
+Triage:
+Fix sequential retry defect; retain concurrency residual risk.

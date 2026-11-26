@@ -1,0 +1,23 @@
+D06: Unknown return-preview transaction raises unhandled error
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: Medium
+Priority: P2
+Status: Open
+Risk: R10
+Category: API contract
+
+Reproduction / review:
+Request return/preview with txnId=0 or an unknown positive ID. Expected: client-facing 400/404. Observed: unhandled exception and HTTP 500.
+
+Evidence:
+api-results.json invalid txnId cases
+
+Root cause:
+Preview controller does not map BookFlowException to a client error.
+
+Correction:
+Return structured 404 for absent transaction and 400 for invalid numeric ID.
+
+Triage:
+Retain failing API evidence and block quality gate.

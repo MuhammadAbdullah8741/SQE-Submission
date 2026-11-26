@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IssueReturnService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.service</a> &gt; <span class="el_source">IssueReturnService.java</span></div><h1>IssueReturnService.java</h1><pre class="source lang-java linenums">package com.bookflow.service;
+
+import com.bookflow.dto.IssueBookRequest;
+import com.bookflow.exception.BookFlowException;
+import com.bookflow.model.*;
+import com.bookflow.repository.FineRepository;
+import com.bookflow.repository.TransactionRepository;
+import com.bookflow.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+
+/**
+ * Core library workflow: issue, return, and the checks that gate them
+ * (borrow limit, unpaid fines, book availability).
+ *
+ * Maps to Implementation Plan §4.2 (Issue &amp; Return Workflow) and
+ * Weeks 7-8 (Issue, Return &amp; Fine Engine).
+ */
+@Service
+public class IssueReturnService {
+
+    @Value(&quot;${bookflow.borrow.limit:3}&quot;)
+    private int borrowLimit;
+
+    @Value(&quot;${bookflow.borrow.duration-days:14}&quot;)
+    private int borrowDurationDays;
+
+    private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
+    private final FineRepository fineRepository;
+    private final BookService bookService;
+    private final FineService fineService;
+    private final AuditLogService auditLogService;
+
+    public IssueReturnService(TransactionRepository transactionRepository,
+                               UserRepository userRepository,
+                               FineRepository fineRepository,
+                               BookService bookService,
+                               FineService fineService,
+<span class="fc" id="L44">                               AuditLogService auditLogService) {</span>
+<span class="fc" id="L45">        this.transactionRepository = transactionRepository;</span>
+<span class="fc" id="L46">        this.userRepository = userRepository;</span>
+<span class="fc" id="L47">        this.fineRepository = fineRepository;</span>
+<span class="fc" id="L48">        this.bookService = bookService;</span>
+<span class="fc" id="L49">        this.fineService = fineService;</span>
+<span class="fc" id="L50">        this.auditLogService = auditLogService;</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Issues a book to a member.
+     * Pre-checks: member exists &amp; active, borrow limit (max 3), no unpaid fines,
+     * book has available copies.
+     */
+    @Transactional
+    public Transaction issueBook(IssueBookRequest request, String issuedByLibrarianId) {
+<span class="fc" id="L60">        IssueEligibility eligibility = validateIssueEligibility(request.getMemberId(), request.getIsbn());</span>
+<span class="fc" id="L61">        User member = eligibility.member();</span>
+<span class="fc" id="L62">        Book book = eligibility.book();</span>
+
+<span class="fc" id="L64">        LocalDate issueDate = LocalDate.now();</span>
+<span class="fc" id="L65">        LocalDate dueDate = issueDate.plusDays(borrowDurationDays);</span>
+
+<span class="fc" id="L67">        Transaction txn = Transaction.builder()</span>
+<span class="fc" id="L68">            .member(member)</span>
+<span class="fc" id="L69">            .book(book)</span>
+<span class="fc" id="L70">            .issueDate(issueDate)</span>
+<span class="fc" id="L71">            .dueDate(dueDate)</span>
+<span class="fc" id="L72">            .status(Transaction.TxnStatus.ISSUED)</span>
+<span class="fc" id="L73">            .issuedBy(issuedByLibrarianId)</span>
+<span class="fc" id="L74">            .build();</span>
+
+<span class="fc" id="L76">        transactionRepository.save(txn);</span>
+<span class="fc" id="L77">        bookService.decrementStock(book.getIsbn());</span>
+
+<span class="fc" id="L79">        auditLogService.log(issuedByLibrarianId, AuditLog.AuditAction.BOOK_ISSUED,</span>
+<span class="fc" id="L80">            &quot;Issued '&quot; + book.getTitle() + &quot;' to &quot; + member.getSystemId() + &quot;, due &quot; + dueDate);</span>
+
+<span class="fc" id="L82">        return txn;</span>
+    }
+
+    /** Performs the same eligibility checks as issueBook without changing state. */
+    @Transactional(readOnly = true)
+    public Book precheckIssue(String memberId, String isbn) {
+<span class="fc" id="L88">        return validateIssueEligibility(memberId, isbn).book();</span>
+    }
+
+    private IssueEligibility validateIssueEligibility(String memberId, String isbn) {
+<span class="fc" id="L92">        User member = userRepository.findById(memberId)</span>
+<span class="fc" id="L93">            .orElseThrow(() -&gt; new BookFlowException(&quot;Member not found: &quot; + memberId));</span>
+
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (!member.isActive()) {</span>
+<span class="fc" id="L96">            throw new BookFlowException(&quot;Member account is &quot; + member.getStatus() + &quot; — cannot issue book&quot;);</span>
+        }
+
+<span class="fc" id="L99">        Book book = bookService.getByIsbn(isbn);</span>
+
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (!book.hasAvailableCopies()) {</span>
+<span class="fc" id="L102">            throw new BookFlowException(&quot;No copies available for: &quot; + book.getTitle());</span>
+        }
+
+<span class="fc" id="L105">        long activeCount = transactionRepository.countByMemberAndStatus(member, Transaction.TxnStatus.ISSUED);</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        if (activeCount &gt;= borrowLimit) {</span>
+<span class="fc" id="L107">            throw new BookFlowException(</span>
+                &quot;Member has reached the borrow limit (&quot; + borrowLimit + &quot; books). Return a book before issuing another.&quot;
+            );
+        }
+
+<span class="fc" id="L112">        boolean hasUnpaidFines = fineRepository.existsByMemberAndPaidFalseAndWaivedFalse(member);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (hasUnpaidFines) {</span>
+<span class="fc" id="L114">            throw new BookFlowException(&quot;Member has outstanding fines. Clear fines before issuing a new book.&quot;);</span>
+        }
+
+<span class="fc" id="L117">        if (transactionRepository.findByMemberSystemIdAndBookIsbnAndStatus(</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">                member.getSystemId(), book.getIsbn(), Transaction.TxnStatus.ISSUED).isPresent()) {</span>
+<span class="fc" id="L119">            throw new BookFlowException(&quot;Member already has an active loan for this book&quot;);</span>
+        }
+
+<span class="fc" id="L122">        return new IssueEligibility(member, book);</span>
+    }
+
+<span class="fc" id="L125">    private record IssueEligibility(User member, Book book) {}</span>
+
+    /**
+     * Returns a book. Calculates overdue fine automatically if past due date.
+     * Increments book stock.
+     */
+    @Transactional
+    public Transaction returnBook(Long txnId, String returnedByLibrarianId) {
+
+<span class="fc" id="L134">        Transaction txn = transactionRepository.findById(txnId)</span>
+<span class="fc" id="L135">            .orElseThrow(() -&gt; new BookFlowException(&quot;Transaction not found: &quot; + txnId));</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (txn.getStatus() != Transaction.TxnStatus.ISSUED) {</span>
+<span class="fc" id="L138">            throw new BookFlowException(&quot;Only issued books can be returned; this transaction is already closed&quot;);</span>
+        }
+
+<span class="fc" id="L141">        LocalDate returnDate = LocalDate.now();</span>
+<span class="fc" id="L142">        txn.setReturnDate(returnDate);</span>
+<span class="fc" id="L143">        txn.setStatus(Transaction.TxnStatus.RETURNED);</span>
+<span class="fc" id="L144">        txn.setReturnedBy(returnedByLibrarianId);</span>
+<span class="fc" id="L145">        transactionRepository.save(txn);</span>
+
+<span class="fc" id="L147">        bookService.incrementStock(txn.getBook().getIsbn());</span>
+
+        // Auto-calculate fine if overdue
+<span class="fc" id="L150">        long overdueDays = Math.max(0,</span>
+<span class="fc" id="L151">            java.time.temporal.ChronoUnit.DAYS.between(txn.getDueDate(), returnDate));</span>
+
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        if (overdueDays &gt; 0) {</span>
+<span class="fc" id="L154">            fineService.createFineForTransaction(txn, overdueDays);</span>
+        }
+
+<span class="fc" id="L157">        auditLogService.log(returnedByLibrarianId, AuditLog.AuditAction.BOOK_RETURNED,</span>
+<span class="fc" id="L158">            &quot;Returned '&quot; + txn.getBook().getTitle() + &quot;' from &quot; + txn.getMember().getSystemId()</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                + (overdueDays &gt; 0 ? &quot; (&quot; + overdueDays + &quot; days overdue)&quot; : &quot; (on time)&quot;));</span>
+
+<span class="fc" id="L161">        return txn;</span>
+    }
+
+    /** Preview fine before confirming return — used by the Fine Calculator Widget. */
+    @Transactional(readOnly = true)
+    public long previewOverdueDays(Long txnId) {
+<span class="fc" id="L167">        Transaction txn = transactionRepository.findById(txnId)</span>
+<span class="fc" id="L168">            .orElseThrow(() -&gt; new BookFlowException(&quot;Transaction not found: &quot; + txnId));</span>
+<span class="fc" id="L169">        return Math.max(0,</span>
+<span class="fc" id="L170">            java.time.temporal.ChronoUnit.DAYS.between(txn.getDueDate(), LocalDate.now()));</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Transaction&gt; getActiveTransactionsForMember(String memberId) {
+<span class="fc" id="L175">        return transactionRepository.findActiveByMember(memberId);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Transaction&gt; getAllOverdue() {
+<span class="fc" id="L180">        return transactionRepository.findAllOverdue();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Transaction&gt; getAllCurrentlyIssued() {
+<span class="fc" id="L185">        return transactionRepository.findAllCurrentlyIssued();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Transaction&gt; getHistoryForMember(String memberId) {
+<span class="fc" id="L190">        return transactionRepository.findAllByMemberId(memberId);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public long countIssuedToday() {
+<span class="fc" id="L195">        return transactionRepository.countByIssueDate(LocalDate.now());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

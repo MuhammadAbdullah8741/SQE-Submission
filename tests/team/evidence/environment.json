@@ -1,0 +1,15 @@
+{
+  "recorded_at": "2026-11-26T03:07:26+0500",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+  "duration_seconds": 65,
+  "operation": "authenticated availability precheck",
+  "targets": {
+    "p95_ms": 500,
+    "unexpected_failure_rate": 0.01
+  },
+  "java": "openjdk version \"21.0.12.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.12.1+1 (build 21.0.12.1+1-LTS, mixed mode, sharing)\n",
+  "docker": "Client:\n Version:           29.8.0\n API version:       1.56\n Go version:        go1.26.8\n Git commit:        88096ef\n Built:             Thu Sep  3 21:53:38 2026\n OS/Arch:           windows/amd64\n Context:           desktop-linux\n\nServer: Docker Desktop 4.92.0 (240144)\n Engine:\n  Version:          29.8.0\n  API version:      1.56 (minimum version 1.40)\n  Go version:       go1.26.8\n  Git commit:       3ce5872\n  Built:            Thu Sep  3 21:51:20 2026\n  OS/Arch:          linux/amd64\n  Experimental:     false\n containerd:\n  Version:          v2.3.5\n  GitCommit:        1294c24a7da8e5a793ed378161673abe94118892\n runc:\n  Version:          1.5.1\n  GitCommit:        v1.5.1-0-g8f2685a4\n docker-init:\n  Version:          0.19.0\n  GitCommit:        de40ad0\n",
+  "node": "v24.15.0\n",
+  "k6": "k6 v2.4.0 (commit/dd9395906d, go1.27.3, linux/amd64)\n"
+}

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.service</a> &gt; <span class="el_source">BookService.java</span></div><h1>BookService.java</h1><pre class="source lang-java linenums">package com.bookflow.service;
+
+import com.bookflow.dto.BookRequest;
+import com.bookflow.exception.BookFlowException;
+import com.bookflow.model.AuditLog;
+import com.bookflow.model.Book;
+import com.bookflow.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+public class BookService {
+
+    @Value(&quot;${bookflow.upload.dir:uploads/covers/}&quot;)
+    private String uploadDir;
+
+    private final BookRepository bookRepository;
+    private final AuditLogService auditLogService;
+
+<span class="fc" id="L32">    public BookService(BookRepository bookRepository, AuditLogService auditLogService) {</span>
+<span class="fc" id="L33">        this.bookRepository = bookRepository;</span>
+<span class="fc" id="L34">        this.auditLogService = auditLogService;</span>
+<span class="fc" id="L35">    }</span>
+
+    // ---- CRUD ----
+
+    @Transactional
+    public Book addBook(BookRequest request, MultipartFile coverImage, String addedByUserId) {
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (bookRepository.existsById(request.getIsbn())) {</span>
+<span class="nc" id="L42">            throw new BookFlowException(&quot;A book with ISBN &quot; + request.getIsbn() + &quot; already exists&quot;);</span>
+        }
+
+<span class="nc" id="L45">        Book book = Book.builder()</span>
+<span class="nc" id="L46">                .isbn(request.getIsbn().trim())</span>
+<span class="nc" id="L47">                .title(request.getTitle().trim())</span>
+<span class="nc" id="L48">                .author(request.getAuthor().trim())</span>
+<span class="nc" id="L49">                .category(request.getCategory())</span>
+<span class="nc" id="L50">                .publisher(request.getPublisher())</span>
+<span class="nc" id="L51">                .year(request.getYear())</span>
+<span class="nc" id="L52">                .description(request.getDescription())</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">                .language(request.getLanguage() != null ? request.getLanguage() : &quot;English&quot;)</span>
+<span class="nc" id="L54">                .pages(request.getPages())</span>
+<span class="nc" id="L55">                .totalCopies(request.getTotalCopies())</span>
+<span class="nc" id="L56">                .available(request.getTotalCopies())</span>
+<span class="nc" id="L57">                .build();</span>
+
+<span class="nc bnc" id="L59" title="All 4 branches missed.">        if (coverImage != null &amp;&amp; !coverImage.isEmpty()) {</span>
+<span class="nc" id="L60">            book.setCoverPath(storeCoverImage(coverImage));</span>
+        }
+
+<span class="nc" id="L63">        bookRepository.save(book);</span>
+
+<span class="nc" id="L65">        auditLogService.log(addedByUserId, AuditLog.AuditAction.BOOK_ADDED,</span>
+<span class="nc" id="L66">                &quot;Book added: &quot; + book.getIsbn() + &quot; — &quot; + book.getTitle());</span>
+
+<span class="nc" id="L68">        return book;</span>
+    }
+
+    @Transactional
+    public Book updateBook(String isbn, BookRequest request, MultipartFile coverImage, String updatedByUserId) {
+<span class="nc" id="L73">        Book book = getByIsbn(isbn);</span>
+
+<span class="nc" id="L75">        book.setTitle(request.getTitle().trim());</span>
+<span class="nc" id="L76">        book.setAuthor(request.getAuthor().trim());</span>
+<span class="nc" id="L77">        book.setCategory(request.getCategory());</span>
+<span class="nc" id="L78">        book.setPublisher(request.getPublisher());</span>
+<span class="nc" id="L79">        book.setYear(request.getYear());</span>
+<span class="nc" id="L80">        book.setDescription(request.getDescription());</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (request.getLanguage() != null) book.setLanguage(request.getLanguage());</span>
+<span class="nc" id="L82">        book.setPages(request.getPages());</span>
+
+        // Adjust available count proportionally if total copies changed
+<span class="nc" id="L85">        int delta = request.getTotalCopies() - book.getTotalCopies();</span>
+<span class="nc" id="L86">        book.setTotalCopies(request.getTotalCopies());</span>
+<span class="nc" id="L87">        book.setAvailable(Math.max(0, book.getAvailable() + delta));</span>
+
+<span class="nc bnc" id="L89" title="All 4 branches missed.">        if (coverImage != null &amp;&amp; !coverImage.isEmpty()) {</span>
+<span class="nc" id="L90">            book.setCoverPath(storeCoverImage(coverImage));</span>
+        }
+
+<span class="nc" id="L93">        bookRepository.save(book);</span>
+
+<span class="nc" id="L95">        auditLogService.log(updatedByUserId, AuditLog.AuditAction.BOOK_UPDATED,</span>
+<span class="nc" id="L96">                &quot;Book updated: &quot; + book.getIsbn() + &quot; — &quot; + book.getTitle());</span>
+
+<span class="nc" id="L98">        return book;</span>
+    }
+
+    @Transactional
+    public void deleteBook(String isbn, String deletedByUserId) {
+<span class="nc" id="L103">        Book book = getByIsbn(isbn);</span>
+<span class="nc" id="L104">        bookRepository.delete(book);</span>
+
+<span class="nc" id="L106">        auditLogService.log(deletedByUserId, AuditLog.AuditAction.BOOK_DELETED,</span>
+<span class="nc" id="L107">                &quot;Book deleted: &quot; + isbn + &quot; — &quot; + book.getTitle());</span>
+<span class="nc" id="L108">    }</span>
+
+    @Transactional(readOnly = true)
+    public Book getByIsbn(String isbn) {
+<span class="fc" id="L112">        return bookRepository.findById(isbn)</span>
+<span class="fc" id="L113">                .orElseThrow(() -&gt; new BookFlowException(&quot;Book not found for ISBN: &quot; + isbn));</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Book&gt; getAll() {
+<span class="nc" id="L118">        return bookRepository.findAll();</span>
+    }
+
+    // ---- Search (real-time AJAX) ----
+
+    @Transactional(readOnly = true)
+    public Page&lt;Book&gt; search(String query, Pageable pageable) {
+<span class="nc bnc" id="L125" title="All 4 branches missed.">        if (query == null || query.isBlank()) {</span>
+<span class="nc" id="L126">            return bookRepository.findAll(pageable);</span>
+        }
+<span class="nc" id="L128">        return bookRepository.search(query.trim(), pageable);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Book&gt; getByCategory(Book.BookCategory category) {
+<span class="nc" id="L133">        return bookRepository.findByCategory(category);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Book&gt; getAvailableBooks() {
+<span class="nc" id="L138">        return bookRepository.findByAvailableGreaterThan(0);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Book&gt; getMostBorrowed(int topN) {
+<span class="nc" id="L143">        return bookRepository.findMostBorrowed(org.springframework.data.domain.PageRequest.of(0, topN));</span>
+    }
+
+    // ---- Stock management (used by IssueReturnService) ----
+
+    @Transactional
+    public void decrementStock(String isbn) {
+<span class="fc" id="L150">        Book book = getByIsbn(isbn);</span>
+<span class="fc" id="L151">        book.decrementAvailable();</span>
+<span class="fc" id="L152">        bookRepository.save(book);</span>
+<span class="fc" id="L153">    }</span>
+
+    @Transactional
+    public void incrementStock(String isbn) {
+<span class="fc" id="L157">        Book book = getByIsbn(isbn);</span>
+<span class="fc" id="L158">        book.incrementAvailable();</span>
+<span class="fc" id="L159">        bookRepository.save(book);</span>
+<span class="fc" id="L160">    }</span>
+
+    // ---- Cover image upload ----
+
+    private String storeCoverImage(MultipartFile file) {
+        try {
+<span class="nc" id="L166">            Path uploadPath = Paths.get(uploadDir);</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">            if (!Files.exists(uploadPath)) {</span>
+<span class="nc" id="L168">                Files.createDirectories(uploadPath);</span>
+            }
+
+<span class="nc" id="L171">            String originalName = file.getOriginalFilename();</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed.">            String extension = (originalName != null &amp;&amp; originalName.contains(&quot;.&quot;))</span>
+<span class="nc" id="L173">                    ? originalName.substring(originalName.lastIndexOf('.'))</span>
+<span class="nc" id="L174">                    : &quot;.jpg&quot;;</span>
+
+<span class="nc" id="L176">            String fileName = UUID.randomUUID() + extension;</span>
+<span class="nc" id="L177">            Path destination = uploadPath.resolve(fileName);</span>
+
+<span class="nc" id="L179">            Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);</span>
+
+<span class="nc" id="L181">            return uploadDir + fileName;</span>
+
+<span class="nc" id="L183">        } catch (IOException e) {</span>
+<span class="nc" id="L184">            throw new BookFlowException(&quot;Failed to upload cover image: &quot; + e.getMessage(), e);</span>
+        }
+    }
+    @Transactional(readOnly = true)
+    public long getTotalBookCount() {
+<span class="nc" id="L189">        return bookRepository.count();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public long getAvailableBookCount() {
+<span class="nc" id="L194">        return bookRepository.countByAvailableGreaterThan(0);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PdfReceiptGenerator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.util</a> &gt; <span class="el_source">PdfReceiptGenerator.java</span></div><h1>PdfReceiptGenerator.java</h1><pre class="source lang-java linenums">package com.bookflow.util;
+
+import com.bookflow.model.Fine;
+import com.bookflow.model.Transaction;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.borders.SolidBorder;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+import org.springframework.stereotype.Component;
+
+import java.io.ByteArrayOutputStream;
+import java.time.format.DateTimeFormatter;
+
+@Component
+<span class="fc" id="L22">public class PdfReceiptGenerator {</span>
+
+<span class="fc" id="L24">    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern(&quot;dd MMM yyyy&quot;);</span>
+
+    /** Generates a fine payment receipt PDF. */
+    public byte[] generateFineReceipt(Fine fine) {
+<span class="nc" id="L28">        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
+<span class="nc" id="L29">            PdfDocument pdfDoc = new PdfDocument(new PdfWriter(baos));</span>
+<span class="nc" id="L30">            Document doc = new Document(pdfDoc, PageSize.A4);</span>
+<span class="nc" id="L31">            doc.setMargins(40, 40, 40, 40);</span>
+
+            // Header
+<span class="nc" id="L34">            doc.add(new Paragraph(&quot;BookFlow&quot;)</span>
+<span class="nc" id="L35">                    .setFontSize(22)</span>
+<span class="nc" id="L36">                    .setBold()</span>
+<span class="nc" id="L37">                    .setFontColor(ColorConstants.BLUE));</span>
+<span class="nc" id="L38">            doc.add(new Paragraph(&quot;Online Library Management System&quot;)</span>
+<span class="nc" id="L39">                    .setFontSize(10)</span>
+<span class="nc" id="L40">                    .setFontColor(ColorConstants.GRAY)</span>
+<span class="nc" id="L41">                    .setMarginBottom(10));</span>
+
+<span class="nc" id="L43">            doc.add(new Paragraph(&quot;Fine Payment Receipt&quot;)</span>
+<span class="nc" id="L44">                    .setFontSize(16)</span>
+<span class="nc" id="L45">                    .setBold()</span>
+<span class="nc" id="L46">                    .setMarginTop(10)</span>
+<span class="nc" id="L47">                    .setMarginBottom(15));</span>
+
+<span class="nc" id="L49">            Transaction txn = fine.getTransaction();</span>
+
+<span class="nc" id="L51">            Table table = new Table(UnitValue.createPercentArray(new float[]{1, 1}))</span>
+<span class="nc" id="L52">                    .useAllAvailableWidth();</span>
+
+<span class="nc" id="L54">            addRow(table, &quot;Receipt Number&quot;, nullSafe(fine.getReceiptNumber()));</span>
+<span class="nc" id="L55">            addRow(table, &quot;Member ID&quot;, fine.getMember().getSystemId());</span>
+<span class="nc" id="L56">            addRow(table, &quot;Member Name&quot;, fine.getMember().getFullName());</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            addRow(table, &quot;Book Title&quot;, txn != null ? txn.getBook().getTitle() : &quot;—&quot;);</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            addRow(table, &quot;Due Date&quot;, txn != null ? txn.getDueDate().format(DATE_FMT) : &quot;—&quot;);</span>
+<span class="nc bnc" id="L59" title="All 4 branches missed.">            addRow(table, &quot;Return Date&quot;, (txn != null &amp;&amp; txn.getReturnDate() != null)</span>
+<span class="nc" id="L60">                    ? txn.getReturnDate().format(DATE_FMT) : &quot;—&quot;);</span>
+<span class="nc" id="L61">            addRow(table, &quot;Overdue Days&quot;, String.valueOf(fine.getOverdueDays()));</span>
+<span class="nc" id="L62">            addRow(table, &quot;Daily Rate&quot;, &quot;Rs. &quot; + fine.getDailyRate());</span>
+<span class="nc" id="L63">            addRow(table, &quot;Fine Amount&quot;, &quot;Rs. &quot; + fine.getAmount());</span>
+<span class="nc" id="L64">            addRow(table, &quot;Processing Charge&quot;, &quot;Rs. &quot; + fine.getProcessingCharge());</span>
+<span class="nc" id="L65">            addRow(table, &quot;Total Paid&quot;, &quot;Rs. &quot; + fine.getTotalAmount());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            addRow(table, &quot;Payment Date&quot;, fine.getPaymentDate() != null</span>
+<span class="nc" id="L67">                    ? fine.getPaymentDate().format(DATE_FMT) : &quot;—&quot;);</span>
+<span class="nc" id="L68">            addRow(table, &quot;Payment Mode&quot;, nullSafe(fine.getPaymentMode()));</span>
+
+<span class="nc" id="L70">            doc.add(table);</span>
+
+<span class="nc" id="L72">            doc.add(new Paragraph(&quot;This is a system-generated receipt.&quot;)</span>
+<span class="nc" id="L73">                    .setFontSize(9)</span>
+<span class="nc" id="L74">                    .setFontColor(ColorConstants.GRAY)</span>
+<span class="nc" id="L75">                    .setTextAlignment(TextAlignment.CENTER)</span>
+<span class="nc" id="L76">                    .setMarginTop(30));</span>
+
+<span class="nc" id="L78">            doc.close();</span>
+<span class="nc" id="L79">            return baos.toByteArray();</span>
+
+<span class="nc" id="L81">        } catch (Exception e) {</span>
+<span class="nc" id="L82">            throw new RuntimeException(&quot;Failed to generate fine receipt PDF&quot;, e);</span>
+        }
+    }
+
+    /** Generates a borrowing history PDF for a student. */
+    public byte[] generateBorrowHistory(String memberName, String memberId,
+                                        java.util.List&lt;Transaction&gt; transactions) {
+<span class="nc" id="L89">        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
+<span class="nc" id="L90">            PdfDocument pdfDoc = new PdfDocument(new PdfWriter(baos));</span>
+<span class="nc" id="L91">            Document doc = new Document(pdfDoc, PageSize.A4);</span>
+<span class="nc" id="L92">            doc.setMargins(40, 40, 40, 40);</span>
+
+<span class="nc" id="L94">            doc.add(new Paragraph(&quot;BookFlow — Borrowing History&quot;)</span>
+<span class="nc" id="L95">                    .setFontSize(18).setBold());</span>
+<span class="nc" id="L96">            doc.add(new Paragraph(memberName + &quot; (&quot; + memberId + &quot;)&quot;)</span>
+<span class="nc" id="L97">                    .setFontSize(11).setFontColor(ColorConstants.GRAY).setMarginBottom(15));</span>
+
+<span class="nc" id="L99">            Table table = new Table(UnitValue.createPercentArray(new float[]{3, 2, 2, 2, 1.5f}))</span>
+<span class="nc" id="L100">                    .useAllAvailableWidth();</span>
+
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            for (String header : new String[]{&quot;Book Title&quot;, &quot;Issue Date&quot;, &quot;Due Date&quot;, &quot;Return Date&quot;, &quot;Status&quot;}) {</span>
+<span class="nc" id="L103">                table.addHeaderCell(</span>
+<span class="nc" id="L104">                        new Cell().add(new Paragraph(header).setBold())</span>
+<span class="nc" id="L105">                                .setBackgroundColor(ColorConstants.LIGHT_GRAY)</span>
+                );
+            }
+
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            for (Transaction t : transactions) {</span>
+<span class="nc" id="L110">                table.addCell(t.getBook().getTitle());</span>
+<span class="nc" id="L111">                table.addCell(t.getIssueDate().format(DATE_FMT));</span>
+<span class="nc" id="L112">                table.addCell(t.getDueDate().format(DATE_FMT));</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">                table.addCell(t.getReturnDate() != null ? t.getReturnDate().format(DATE_FMT) : &quot;—&quot;);</span>
+<span class="nc" id="L114">                table.addCell(t.getStatus().name());</span>
+<span class="nc" id="L115">            }</span>
+
+<span class="nc" id="L117">            doc.add(table);</span>
+<span class="nc" id="L118">            doc.close();</span>
+<span class="nc" id="L119">            return baos.toByteArray();</span>
+
+<span class="nc" id="L121">        } catch (Exception e) {</span>
+<span class="nc" id="L122">            throw new RuntimeException(&quot;Failed to generate borrow history PDF&quot;, e);</span>
+        }
+    }
+
+    private void addRow(Table table, String label, String value) {
+<span class="nc" id="L127">        table.addCell(new Cell().add(new Paragraph(label).setBold())</span>
+<span class="nc" id="L128">                .setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f)));</span>
+<span class="nc" id="L129">        table.addCell(new Cell().add(new Paragraph(value))</span>
+<span class="nc" id="L130">                .setBorder(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.5f)));</span>
+<span class="nc" id="L131">    }</span>
+
+    private String nullSafe(String s) {
+<span class="nc bnc" id="L134" title="All 4 branches missed.">        return (s == null || s.isBlank()) ? &quot;—&quot; : s;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

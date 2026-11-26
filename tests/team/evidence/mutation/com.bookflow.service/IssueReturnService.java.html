@@ -1,0 +1,4306 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>IssueReturnService.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package com.bookflow.service;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.bookflow.dto.IssueBookRequest;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.bookflow.exception.BookFlowException;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.bookflow.model.*;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.bookflow.repository.FineRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.bookflow.repository.TransactionRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_8'/>
+8
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_8'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import com.bookflow.repository.UserRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.beans.factory.annotation.Value;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.stereotype.Service;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_11'/>
+11
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_11'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import org.springframework.transaction.annotation.Transactional;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.time.LocalDate;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_14'/>
+14
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_14'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>import java.util.List;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Core library workflow: issue, return, and the checks that gate them</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * (borrow limit, unpaid fines, book availability).</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Maps to Implementation Plan &#167;4.2 (Issue &#38; Return Workflow) and</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> * Weeks 7-8 (Issue, Return &#38; Fine Engine).</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_23'/>
+23
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_23'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>@Service</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_24'/>
+24
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_24'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class IssueReturnService {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Value(&#34;${bookflow.borrow.limit:3}&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private int borrowLimit;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_29'/>
+29
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_29'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Value(&#34;${bookflow.borrow.duration-days:14}&#34;)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_30'/>
+30
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_30'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private int borrowDurationDays;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_31'/>
+31
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_31'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_32'/>
+32
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_32'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final TransactionRepository transactionRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_33'/>
+33
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_33'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final UserRepository userRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_34'/>
+34
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_34'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final FineRepository fineRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_35'/>
+35
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_35'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final BookService bookService;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_36'/>
+36
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_36'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final FineService fineService;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_37'/>
+37
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_37'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private final AuditLogService auditLogService;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_38'/>
+38
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_38'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_39'/>
+39
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_39'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public IssueReturnService(TransactionRepository transactionRepository,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_40'/>
+40
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_40'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                               UserRepository userRepository,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_41'/>
+41
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_41'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                               FineRepository fineRepository,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_42'/>
+42
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_42'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                               BookService bookService,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_43'/>
+43
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_43'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                               FineService fineService,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_44'/>
+44
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_44'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>                               AuditLogService auditLogService) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_45'/>
+45
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_45'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable transactionRepository &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        this.transactionRepository = transactionRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_46'/>
+46
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_46'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable userRepository &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        this.userRepository = userRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_47'/>
+47
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_47'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable fineRepository &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        this.fineRepository = fineRepository;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_48'/>
+48
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_48'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable bookService &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        this.bookService = bookService;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_49'/>
+49
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_49'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable fineService &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        this.fineService = fineService;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_50'/>
+50
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_50'>1</a>
+<span>
+
+1. &#60;init&#62; : Removed assignment to member variable auditLogService &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        this.auditLogService = auditLogService;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_51'/>
+51
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_51'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_52'/>
+52
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_52'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_53'/>
+53
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_53'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_54'/>
+54
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_54'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Issues a book to a member.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_55'/>
+55
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_55'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Pre-checks: member exists &#38; active, borrow limit (max 3), no unpaid fines,</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_56'/>
+56
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_56'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * book has available copies.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_57'/>
+57
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_57'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_58'/>
+58
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_58'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_59'/>
+59
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_59'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Transaction issueBook(IssueBookRequest request, String issuedByLibrarianId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_60'/>
+60
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_60'>3</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/dto/IssueBookRequest::getIsbn &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/dto/IssueBookRequest::getMemberId &rarr; KILLED<br/>
+
+3. issueBook : removed call to com/bookflow/service/IssueReturnService::validateIssueEligibility &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        IssueEligibility eligibility = validateIssueEligibility(request.getMemberId(), request.getIsbn());</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_61'/>
+61
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_61'>1</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/service/IssueReturnService$IssueEligibility::member &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        User member = eligibility.member();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_62'/>
+62
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_62'>1</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/service/IssueReturnService$IssueEligibility::book &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        Book book = eligibility.book();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_63'/>
+63
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_63'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_64'/>
+64
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_64'>1</a>
+<span>
+
+1. issueBook : removed call to java/time/LocalDate::now &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        LocalDate issueDate = LocalDate.now();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_65'/>
+65
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_65'>2</a>
+<span>
+
+1. issueBook : removed call to java/time/LocalDate::plusDays &rarr; KILLED<br/>
+
+2. issueBook : replaced call to java/time/LocalDate::plusDays with receiver &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        LocalDate dueDate = issueDate.plusDays(borrowDurationDays);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_66'/>
+66
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_66'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_67'/>
+67
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_67'>1</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/model/Transaction::builder &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        Transaction txn = Transaction.builder()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_68'/>
+68
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_68'>2</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::member &rarr; KILLED<br/>
+
+2. issueBook : replaced call to com/bookflow/model/Transaction$TransactionBuilder::member with receiver &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .member(member)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_69'/>
+69
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_69'>2</a>
+<span>
+
+1. issueBook : replaced call to com/bookflow/model/Transaction$TransactionBuilder::book with receiver &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::book &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .book(book)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_70'/>
+70
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_70'>2</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::issueDate &rarr; KILLED<br/>
+
+2. issueBook : replaced call to com/bookflow/model/Transaction$TransactionBuilder::issueDate with receiver &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .issueDate(issueDate)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_71'/>
+71
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_71'>2</a>
+<span>
+
+1. issueBook : replaced call to com/bookflow/model/Transaction$TransactionBuilder::dueDate with receiver &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::dueDate &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .dueDate(dueDate)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_72'/>
+72
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_72'>2</a>
+<span>
+
+1. issueBook : replaced call to com/bookflow/model/Transaction$TransactionBuilder::status with receiver &rarr; SURVIVED<br/>
+
+2. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::status &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>            .status(Transaction.TxnStatus.ISSUED)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_73'/>
+73
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_73'>2</a>
+<span>
+
+1. issueBook : replaced call to com/bookflow/model/Transaction$TransactionBuilder::issuedBy with receiver &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::issuedBy &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .issuedBy(issuedByLibrarianId)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_74'/>
+74
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_74'>1</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/model/Transaction$TransactionBuilder::build &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .build();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_75'/>
+75
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_75'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_76'/>
+76
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_76'>2</a>
+<span>
+
+1. issueBook : replaced call to com/bookflow/repository/TransactionRepository::save with argument &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/repository/TransactionRepository::save &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        transactionRepository.save(txn);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_77'/>
+77
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_77'>2</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/service/BookService::decrementStock &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/model/Book::getIsbn &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        bookService.decrementStock(book.getIsbn());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_78'/>
+78
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_78'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_79'/>
+79
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_79'>1</a>
+<span>
+
+1. issueBook : removed call to com/bookflow/service/AuditLogService::log &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        auditLogService.log(issuedByLibrarianId, AuditLog.AuditAction.BOOK_ISSUED,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_80'/>
+80
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_80'>3</a>
+<span>
+
+1. issueBook : removed call to java/lang/String::valueOf &rarr; KILLED<br/>
+
+2. issueBook : removed call to com/bookflow/model/User::getSystemId &rarr; KILLED<br/>
+
+3. issueBook : removed call to com/bookflow/model/Book::getTitle &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            &#34;Issued &#39;&#34; + book.getTitle() + &#34;&#39; to &#34; + member.getSystemId() + &#34;, due &#34; + dueDate);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_81'/>
+81
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_81'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_82'/>
+82
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_82'>1</a>
+<span>
+
+1. issueBook : replaced return value with null for com/bookflow/service/IssueReturnService::issueBook &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return txn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_83'/>
+83
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_83'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_84'/>
+84
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_84'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_85'/>
+85
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_85'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Performs the same eligibility checks as issueBook without changing state. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_86'/>
+86
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_86'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_87'/>
+87
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_87'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Book precheckIssue(String memberId, String isbn) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_88'/>
+88
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_88'>3</a>
+<span>
+
+1. precheckIssue : removed call to com/bookflow/service/IssueReturnService::validateIssueEligibility &rarr; KILLED<br/>
+
+2. precheckIssue : removed call to com/bookflow/service/IssueReturnService$IssueEligibility::book &rarr; KILLED<br/>
+
+3. precheckIssue : replaced return value with null for com/bookflow/service/IssueReturnService::precheckIssue &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return validateIssueEligibility(memberId, isbn).book();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_89'/>
+89
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_89'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_90'/>
+90
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_90'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_91'/>
+91
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_91'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private IssueEligibility validateIssueEligibility(String memberId, String isbn) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_92'/>
+92
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_92'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/repository/UserRepository::findById &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        User member = userRepository.findById(memberId)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_93'/>
+93
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_93'>3</a>
+<span>
+
+1. validateIssueEligibility : removed call to java/util/Optional::orElseThrow &rarr; KILLED<br/>
+
+2. lambda$validateIssueEligibility$0 : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+3. lambda$validateIssueEligibility$0 : replaced return value with null for com/bookflow/service/IssueReturnService::lambda$validateIssueEligibility$0 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .orElseThrow(() -&#62; new BookFlowException(&#34;Member not found: &#34; + memberId));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_94'/>
+94
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_94'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_95'/>
+95
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_95'>4</a>
+<span>
+
+1. validateIssueEligibility : negated conditional &rarr; KILLED<br/>
+
+2. validateIssueEligibility : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+3. validateIssueEligibility : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+4. validateIssueEligibility : removed call to com/bookflow/model/User::isActive &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (!member.isActive()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_96'/>
+96
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_96'>3</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+2. validateIssueEligibility : removed call to com/bookflow/model/User::getStatus &rarr; KILLED<br/>
+
+3. validateIssueEligibility : removed call to java/lang/String::valueOf &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            throw new BookFlowException(&#34;Member account is &#34; + member.getStatus() + &#34; &#8212; cannot issue book&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_97'/>
+97
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_97'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_98'/>
+98
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_98'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_99'/>
+99
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_99'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/service/BookService::getByIsbn &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        Book book = bookService.getByIsbn(isbn);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_100'/>
+100
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_100'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_101'/>
+101
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_101'>4</a>
+<span>
+
+1. validateIssueEligibility : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+2. validateIssueEligibility : negated conditional &rarr; KILLED<br/>
+
+3. validateIssueEligibility : removed call to com/bookflow/model/Book::hasAvailableCopies &rarr; KILLED<br/>
+
+4. validateIssueEligibility : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (!book.hasAvailableCopies()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_102'/>
+102
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_102'>2</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/model/Book::getTitle &rarr; KILLED<br/>
+
+2. validateIssueEligibility : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            throw new BookFlowException(&#34;No copies available for: &#34; + book.getTitle());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_103'/>
+103
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_103'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_104'/>
+104
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_104'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_105'/>
+105
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_105'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/repository/TransactionRepository::countByMemberAndStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        long activeCount = transactionRepository.countByMemberAndStatus(member, Transaction.TxnStatus.ISSUED);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_106'/>
+106
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_106'>4</a>
+<span>
+
+1. validateIssueEligibility : removed conditional - replaced comparison check with false &rarr; KILLED<br/>
+
+2. validateIssueEligibility : negated conditional &rarr; KILLED<br/>
+
+3. validateIssueEligibility : changed conditional boundary &rarr; KILLED<br/>
+
+4. validateIssueEligibility : removed conditional - replaced comparison check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (activeCount &#62;= borrowLimit) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_107'/>
+107
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_107'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            throw new BookFlowException(</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_108'/>
+108
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_108'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>                &#34;Member has reached the borrow limit (&#34; + borrowLimit + &#34; books). Return a book before issuing another.&#34;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_109'/>
+109
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_109'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>            );</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_110'/>
+110
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_110'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_111'/>
+111
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_111'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_112'/>
+112
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_112'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/repository/FineRepository::existsByMemberAndPaidFalseAndWaivedFalse &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        boolean hasUnpaidFines = fineRepository.existsByMemberAndPaidFalseAndWaivedFalse(member);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_113'/>
+113
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_113'>3</a>
+<span>
+
+1. validateIssueEligibility : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+2. validateIssueEligibility : negated conditional &rarr; KILLED<br/>
+
+3. validateIssueEligibility : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (hasUnpaidFines) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_114'/>
+114
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_114'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            throw new BookFlowException(&#34;Member has outstanding fines. Clear fines before issuing a new book.&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_115'/>
+115
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_115'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_116'/>
+116
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_116'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_117'/>
+117
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_117'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/repository/TransactionRepository::findByMemberSystemIdAndBookIsbnAndStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (transactionRepository.findByMemberSystemIdAndBookIsbnAndStatus(</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_118'/>
+118
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_118'>6</a>
+<span>
+
+1. validateIssueEligibility : removed call to java/util/Optional::isPresent &rarr; KILLED<br/>
+
+2. validateIssueEligibility : removed call to com/bookflow/model/User::getSystemId &rarr; KILLED<br/>
+
+3. validateIssueEligibility : negated conditional &rarr; KILLED<br/>
+
+4. validateIssueEligibility : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+5. validateIssueEligibility : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+6. validateIssueEligibility : removed call to com/bookflow/model/Book::getIsbn &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                member.getSystemId(), book.getIsbn(), Transaction.TxnStatus.ISSUED).isPresent()) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_119'/>
+119
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_119'>1</a>
+<span>
+
+1. validateIssueEligibility : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            throw new BookFlowException(&#34;Member already has an active loan for this book&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_120'/>
+120
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_120'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_121'/>
+121
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_121'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_122'/>
+122
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_122'>2</a>
+<span>
+
+1. validateIssueEligibility : replaced return value with null for com/bookflow/service/IssueReturnService::validateIssueEligibility &rarr; KILLED<br/>
+
+2. validateIssueEligibility : removed call to com/bookflow/service/IssueReturnService$IssueEligibility::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return new IssueEligibility(member, book);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_123'/>
+123
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_123'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_124'/>
+124
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_124'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_125'/>
+125
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_125'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    private record IssueEligibility(User member, Book book) {}</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_126'/>
+126
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_126'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_127'/>
+127
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_127'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_128'/>
+128
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_128'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Returns a book. Calculates overdue fine automatically if past due date.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_129'/>
+129
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_129'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     * Increments book stock.</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_130'/>
+130
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_130'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_131'/>
+131
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_131'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_132'/>
+132
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_132'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public Transaction returnBook(Long txnId, String returnedByLibrarianId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_133'/>
+133
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_133'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_134'/>
+134
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_134'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/repository/TransactionRepository::findById &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        Transaction txn = transactionRepository.findById(txnId)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_135'/>
+135
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_135'>3</a>
+<span>
+
+1. returnBook : removed call to java/util/Optional::orElseThrow &rarr; KILLED<br/>
+
+2. lambda$returnBook$1 : replaced return value with null for com/bookflow/service/IssueReturnService::lambda$returnBook$1 &rarr; KILLED<br/>
+
+3. lambda$returnBook$1 : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .orElseThrow(() -&#62; new BookFlowException(&#34;Transaction not found: &#34; + txnId));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_136'/>
+136
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_136'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_137'/>
+137
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_137'>4</a>
+<span>
+
+1. returnBook : negated conditional &rarr; KILLED<br/>
+
+2. returnBook : removed conditional - replaced equality check with true &rarr; KILLED<br/>
+
+3. returnBook : removed conditional - replaced equality check with false &rarr; KILLED<br/>
+
+4. returnBook : removed call to com/bookflow/model/Transaction::getStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (txn.getStatus() != Transaction.TxnStatus.ISSUED) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_138'/>
+138
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_138'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            throw new BookFlowException(&#34;Only issued books can be returned; this transaction is already closed&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_139'/>
+139
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_139'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_140'/>
+140
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_140'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_141'/>
+141
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_141'>1</a>
+<span>
+
+1. returnBook : removed call to java/time/LocalDate::now &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        LocalDate returnDate = LocalDate.now();</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_142'/>
+142
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_142'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/model/Transaction::setReturnDate &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        txn.setReturnDate(returnDate);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_143'/>
+143
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_143'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/model/Transaction::setStatus &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        txn.setStatus(Transaction.TxnStatus.RETURNED);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_144'/>
+144
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_144'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/model/Transaction::setReturnedBy &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        txn.setReturnedBy(returnedByLibrarianId);</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_145'/>
+145
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_145'>2</a>
+<span>
+
+1. returnBook : replaced call to com/bookflow/repository/TransactionRepository::save with argument &rarr; KILLED<br/>
+
+2. returnBook : removed call to com/bookflow/repository/TransactionRepository::save &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        transactionRepository.save(txn);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_146'/>
+146
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_146'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_147'/>
+147
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_147'>3</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/service/BookService::incrementStock &rarr; KILLED<br/>
+
+2. returnBook : removed call to com/bookflow/model/Book::getIsbn &rarr; KILLED<br/>
+
+3. returnBook : removed call to com/bookflow/model/Transaction::getBook &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        bookService.incrementStock(txn.getBook().getIsbn());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_148'/>
+148
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_148'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_149'/>
+149
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_149'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        // Auto-calculate fine if overdue</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_150'/>
+150
+</td>
+<td class='survived'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_150'>3</a>
+<span>
+
+1. returnBook : replaced call to java/lang/Math::max with argument &rarr; SURVIVED<br/>
+
+2. returnBook : Substituted 0 with 1 &rarr; KILLED<br/>
+
+3. returnBook : removed call to java/lang/Math::max &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='survived'>        long overdueDays = Math.max(0,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_151'/>
+151
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_151'>2</a>
+<span>
+
+1. returnBook : removed call to java/time/temporal/ChronoUnit::between &rarr; KILLED<br/>
+
+2. returnBook : removed call to com/bookflow/model/Transaction::getDueDate &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            java.time.temporal.ChronoUnit.DAYS.between(txn.getDueDate(), returnDate));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_152'/>
+152
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_152'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_153'/>
+153
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_153'>5</a>
+<span>
+
+1. returnBook : changed conditional boundary &rarr; KILLED<br/>
+
+2. returnBook : Substituted 0 with 1 &rarr; KILLED<br/>
+
+3. returnBook : removed conditional - replaced comparison check with true &rarr; KILLED<br/>
+
+4. returnBook : negated conditional &rarr; KILLED<br/>
+
+5. returnBook : removed conditional - replaced comparison check with false &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (overdueDays &#62; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_154'/>
+154
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_154'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/service/FineService::createFineForTransaction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            fineService.createFineForTransaction(txn, overdueDays);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_155'/>
+155
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_155'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_156'/>
+156
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_156'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_157'/>
+157
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_157'>1</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/service/AuditLogService::log &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        auditLogService.log(returnedByLibrarianId, AuditLog.AuditAction.BOOK_RETURNED,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_158'/>
+158
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_158'>4</a>
+<span>
+
+1. returnBook : removed call to com/bookflow/model/User::getSystemId &rarr; KILLED<br/>
+
+2. returnBook : removed call to com/bookflow/model/Transaction::getMember &rarr; KILLED<br/>
+
+3. returnBook : removed call to com/bookflow/model/Book::getTitle &rarr; KILLED<br/>
+
+4. returnBook : removed call to com/bookflow/model/Transaction::getBook &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            &#34;Returned &#39;&#34; + txn.getBook().getTitle() + &#34;&#39; from &#34; + txn.getMember().getSystemId()</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_159'/>
+159
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_159'>5</a>
+<span>
+
+1. returnBook : removed conditional - replaced comparison check with true &rarr; KILLED<br/>
+
+2. returnBook : negated conditional &rarr; KILLED<br/>
+
+3. returnBook : removed conditional - replaced comparison check with false &rarr; KILLED<br/>
+
+4. returnBook : changed conditional boundary &rarr; KILLED<br/>
+
+5. returnBook : Substituted 0 with 1 &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>                + (overdueDays &#62; 0 ? &#34; (&#34; + overdueDays + &#34; days overdue)&#34; : &#34; (on time)&#34;));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_160'/>
+160
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_160'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_161'/>
+161
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_161'>1</a>
+<span>
+
+1. returnBook : replaced return value with null for com/bookflow/service/IssueReturnService::returnBook &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return txn;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_162'/>
+162
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_162'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_163'/>
+163
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_163'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_164'/>
+164
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_164'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    /** Preview fine before confirming return &#8212; used by the Fine Calculator Widget. */</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_165'/>
+165
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_165'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_166'/>
+166
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_166'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public long previewOverdueDays(Long txnId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_167'/>
+167
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_167'>1</a>
+<span>
+
+1. previewOverdueDays : removed call to com/bookflow/repository/TransactionRepository::findById &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        Transaction txn = transactionRepository.findById(txnId)</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_168'/>
+168
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_168'>3</a>
+<span>
+
+1. lambda$previewOverdueDays$2 : removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED<br/>
+
+2. lambda$previewOverdueDays$2 : replaced return value with null for com/bookflow/service/IssueReturnService::lambda$previewOverdueDays$2 &rarr; KILLED<br/>
+
+3. previewOverdueDays : removed call to java/util/Optional::orElseThrow &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            .orElseThrow(() -&#62; new BookFlowException(&#34;Transaction not found: &#34; + txnId));</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_169'/>
+169
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_169'>4</a>
+<span>
+
+1. previewOverdueDays : Substituted 0 with 1 &rarr; KILLED<br/>
+
+2. previewOverdueDays : removed call to java/lang/Math::max &rarr; KILLED<br/>
+
+3. previewOverdueDays : replaced long return with 0 for com/bookflow/service/IssueReturnService::previewOverdueDays &rarr; KILLED<br/>
+
+4. previewOverdueDays : replaced call to java/lang/Math::max with argument &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return Math.max(0,</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_170'/>
+170
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_170'>3</a>
+<span>
+
+1. previewOverdueDays : removed call to java/time/LocalDate::now &rarr; KILLED<br/>
+
+2. previewOverdueDays : removed call to java/time/temporal/ChronoUnit::between &rarr; KILLED<br/>
+
+3. previewOverdueDays : removed call to com/bookflow/model/Transaction::getDueDate &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            java.time.temporal.ChronoUnit.DAYS.between(txn.getDueDate(), LocalDate.now()));</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_171'/>
+171
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_171'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_172'/>
+172
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_172'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_173'/>
+173
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_173'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_174'/>
+174
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_174'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public List&#60;Transaction&#62; getActiveTransactionsForMember(String memberId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_175'/>
+175
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_175'>2</a>
+<span>
+
+1. getActiveTransactionsForMember : replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getActiveTransactionsForMember &rarr; KILLED<br/>
+
+2. getActiveTransactionsForMember : removed call to com/bookflow/repository/TransactionRepository::findActiveByMember &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return transactionRepository.findActiveByMember(memberId);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_176'/>
+176
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_176'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_177'/>
+177
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_177'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_178'/>
+178
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_178'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_179'/>
+179
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_179'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public List&#60;Transaction&#62; getAllOverdue() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_180'/>
+180
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_180'>2</a>
+<span>
+
+1. getAllOverdue : replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getAllOverdue &rarr; KILLED<br/>
+
+2. getAllOverdue : removed call to com/bookflow/repository/TransactionRepository::findAllOverdue &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return transactionRepository.findAllOverdue();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_181'/>
+181
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_181'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_182'/>
+182
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_182'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_183'/>
+183
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_183'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_184'/>
+184
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_184'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public List&#60;Transaction&#62; getAllCurrentlyIssued() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_185'/>
+185
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_185'>2</a>
+<span>
+
+1. getAllCurrentlyIssued : replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getAllCurrentlyIssued &rarr; KILLED<br/>
+
+2. getAllCurrentlyIssued : removed call to com/bookflow/repository/TransactionRepository::findAllCurrentlyIssued &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return transactionRepository.findAllCurrentlyIssued();</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_186'/>
+186
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_186'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_187'/>
+187
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_187'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_188'/>
+188
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_188'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_189'/>
+189
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_189'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public List&#60;Transaction&#62; getHistoryForMember(String memberId) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_190'/>
+190
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_190'>2</a>
+<span>
+
+1. getHistoryForMember : replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getHistoryForMember &rarr; KILLED<br/>
+
+2. getHistoryForMember : removed call to com/bookflow/repository/TransactionRepository::findAllByMemberId &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return transactionRepository.findAllByMemberId(memberId);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_191'/>
+191
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_191'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_192'/>
+192
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_192'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_193'/>
+193
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_193'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    @Transactional(readOnly = true)</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_194'/>
+194
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_194'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public long countIssuedToday() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_195'/>
+195
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_195'>3</a>
+<span>
+
+1. countIssuedToday : removed call to java/time/LocalDate::now &rarr; KILLED<br/>
+
+2. countIssuedToday : replaced long return with 0 for com/bookflow/service/IssueReturnService::countIssuedToday &rarr; KILLED<br/>
+
+3. countIssuedToday : removed call to com/bookflow/repository/TransactionRepository::countByIssueDate &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        return transactionRepository.countByIssueDate(LocalDate.now());</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_196'/>
+196
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_196'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_197'/>
+197
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_197'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_45'>45</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_45'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:previewMissing()]</span></span> Removed assignment to member variable transactionRepository &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_46'>46</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_46'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#6]</span></span> Removed assignment to member variable userRepository &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_47'>47</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_47'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> Removed assignment to member variable fineRepository &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_48'>48</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_48'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#2]</span></span> Removed assignment to member variable bookService &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_49'>49</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_49'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</span></span> Removed assignment to member variable fineService &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_50'>50</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_50'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>&#60;init&#62;<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> Removed assignment to member variable auditLogService &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_60'>60</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_60'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/dto/IssueBookRequest::getIsbn &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:missingMember()]</span></span> removed call to com/bookflow/dto/IssueBookRequest::getMemberId &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#6]</span></span> removed call to com/bookflow/service/IssueReturnService::validateIssueEligibility &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_61'>61</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_61'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/service/IssueReturnService$IssueEligibility::member &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_62'>62</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_62'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/service/IssueReturnService$IssueEligibility::book &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_64'>64</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_64'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to java/time/LocalDate::now &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_65'>65</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_65'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> removed call to java/time/LocalDate::plusDays &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to java/time/LocalDate::plusDays with receiver &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_67'>67</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_67'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction::builder &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_68'>68</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_68'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::member &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to com/bookflow/model/Transaction$TransactionBuilder::member with receiver &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_69'>69</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_69'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to com/bookflow/model/Transaction$TransactionBuilder::book with receiver &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::book &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_70'>70</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_70'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::issueDate &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to com/bookflow/model/Transaction$TransactionBuilder::issueDate with receiver &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_71'>71</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_71'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to com/bookflow/model/Transaction$TransactionBuilder::dueDate with receiver &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::dueDate &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_72'>72</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_72'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::status &rarr; KILLED</span>
+</div> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>none</span></span> replaced call to com/bookflow/model/Transaction$TransactionBuilder::status with receiver &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.bookflow.service.IssueReturnService,-method=issueBook,-methodDesc=(Lcom/bookflow/dto/IssueBookRequest;Ljava/lang/String;)Lcom/bookflow/model/Transaction;],-indexes=[54],-mutator=org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.bookflow.service.IssueReturnService,-method=issueBook,-methodDesc=(Lcom/bookflow/dto/IssueBookRequest;Ljava/lang/String;)Lcom/bookflow/model/Transaction;],-indexes=[54],-mutator=org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.bookflow.service.IssueReturnService,-method=issueBook,-methodDesc=(Lcom/bookflow/dto/IssueBookRequest;Ljava/lang/String;)Lcom/bookflow/model/Transaction;],-indexes=[54],-mutator=org.pitest.mutationtest.engine.gregor.mutators.experimental.NakedReceiverMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#16]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#1]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</li> 
+</ul>
+</div></div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_73'>73</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_73'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to com/bookflow/model/Transaction$TransactionBuilder::issuedBy with receiver &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::issuedBy &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_74'>74</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_74'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/model/Transaction$TransactionBuilder::build &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_76'>76</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_76'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> replaced call to com/bookflow/repository/TransactionRepository::save with argument &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> removed call to com/bookflow/repository/TransactionRepository::save &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_77'>77</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_77'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> removed call to com/bookflow/service/BookService::decrementStock &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> removed call to com/bookflow/model/Book::getIsbn &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_79'>79</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_79'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()]</span></span> removed call to com/bookflow/service/AuditLogService::log &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_80'>80</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_80'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to java/lang/String::valueOf &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to com/bookflow/model/User::getSystemId &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to com/bookflow/model/Book::getTitle &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_82'>82</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_82'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>issueBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::issueBook &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_88'>88</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_88'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>precheckIssue<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed call to com/bookflow/service/IssueReturnService::validateIssueEligibility &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>precheckIssue<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed call to com/bookflow/service/IssueReturnService$IssueEligibility::book &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>precheckIssue<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::precheckIssue &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_92'>92</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_92'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#6]</span></span> removed call to com/bookflow/repository/UserRepository::findById &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_93'>93</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_93'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#6]</span></span> removed call to java/util/Optional::orElseThrow &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$validateIssueEligibility$0<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:missingMember()]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>lambda$validateIssueEligibility$0<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:missingMember()]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::lambda$validateIssueEligibility$0 &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_95'>95</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_95'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#8]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#8]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed call to com/bookflow/model/User::isActive &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_96'>96</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_96'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#8]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to com/bookflow/model/User::getStatus &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to java/lang/String::valueOf &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_99'>99</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_99'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/service/BookService::getByIsbn &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_101'>101</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_101'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#2]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed call to com/bookflow/model/Book::hasAvailableCopies &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#2]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_102'>102</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_102'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to com/bookflow/model/Book::getTitle &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#9]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_105'>105</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_105'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/repository/TransactionRepository::countByMemberAndStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_106'>106</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_106'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#3]</span></span> removed conditional - replaced comparison check with false &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#3]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#2]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed conditional - replaced comparison check with true &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_107'>107</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_107'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_112'>112</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_112'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#15]</span></span> removed call to com/bookflow/repository/FineRepository::existsByMemberAndPaidFalseAndWaivedFalse &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_113'>113</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_113'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#15]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_114'>114</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_114'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#15]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_117'>117</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_117'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findByMemberSystemIdAndBookIsbnAndStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_118'>118</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_118'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> removed call to java/util/Optional::isPresent &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> removed call to com/bookflow/model/User::getSystemId &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>6.<span><b>6</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> removed call to com/bookflow/model/Book::getIsbn &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_119'>119</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_119'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_122'>122</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_122'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::validateIssueEligibility &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>validateIssueEligibility<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()]</span></span> removed call to com/bookflow/service/IssueReturnService$IssueEligibility::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_134'>134</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_134'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:unknownTransactionRejected()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findById &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_135'>135</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_135'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:unknownTransactionRejected()]</span></span> removed call to java/util/Optional::orElseThrow &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$returnBook$1<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:unknownTransactionRejected()]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::lambda$returnBook$1 &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>lambda$returnBook$1<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:unknownTransactionRejected()]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_137'>137</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_137'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:lostTransactionMustNotReturn()]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed conditional - replaced equality check with true &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:lostTransactionMustNotReturn()]</span></span> removed conditional - replaced equality check with false &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::getStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_138'>138</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_138'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:lostTransactionMustNotReturn()]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_141'>141</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_141'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to java/time/LocalDate::now &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_142'>142</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_142'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::setReturnDate &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_143'>143</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_143'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::setStatus &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_144'>144</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_144'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::setReturnedBy &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_145'>145</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_145'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> replaced call to com/bookflow/repository/TransactionRepository::save with argument &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/repository/TransactionRepository::save &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_147'>147</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_147'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/service/BookService::incrementStock &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Book::getIsbn &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::getBook &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_150'>150</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_150'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> Substituted 0 with 1 &rarr; KILLED</span>
+</div> <p class='SURVIVED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>none</span></span> replaced call to java/lang/Math::max with argument &rarr; SURVIVED</span>
+<a title="Click to view covering tests" class="view-covered-by-tests" onClick="document.getElementById('MutationIdentifier-[location=Location-[clazz=com.bookflow.service.IssueReturnService,-method=returnBook,-methodDesc=(Ljava/lang/Long;Ljava/lang/String;)Lcom/bookflow/model/Transaction;],-indexes=[74],-mutator=org.pitest.mutationtest.engine.gregor.mutators.experimental.ArgumentPropagationMutator]').style.display=(document.getElementById('MutationIdentifier-[location=Location-[clazz=com.bookflow.service.IssueReturnService,-method=returnBook,-methodDesc=(Ljava/lang/Long;Ljava/lang/String;)Lcom/bookflow/model/Transaction;],-indexes=[74],-mutator=org.pitest.mutationtest.engine.gregor.mutators.experimental.ArgumentPropagationMutator]').style.display == 'block')?'none':'block';">Covering tests</a>
+<div class="covered-tests" id="MutationIdentifier-[location=Location-[clazz=com.bookflow.service.IssueReturnService,-method=returnBook,-methodDesc=(Ljava/lang/Long;Ljava/lang/String;)Lcom/bookflow/model/Transaction;],-indexes=[74],-mutator=org.pitest.mutationtest.engine.gregor.mutators.experimental.ArgumentPropagationMutator]" style="display:none;">Covered by tests:
+<ul>
+<li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#2]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#1]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#4]</li> <li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#1]</li> 
+</ul>
+</div></div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to java/lang/Math::max &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_151'>151</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_151'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to java/time/temporal/ChronoUnit::between &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::getDueDate &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_153'>153</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_153'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</span></span> Substituted 0 with 1 &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed conditional - replaced comparison check with true &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</span></span> removed conditional - replaced comparison check with false &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_154'>154</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_154'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to com/bookflow/service/FineService::createFineForTransaction &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_157'>157</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_157'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/service/AuditLogService::log &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_158'>158</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_158'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to com/bookflow/model/User::getSystemId &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::getMember &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()]</span></span> removed call to com/bookflow/model/Book::getTitle &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> removed call to com/bookflow/model/Transaction::getBook &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_159'>159</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_159'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#1]</span></span> removed conditional - replaced comparison check with true &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#2]</span></span> negated conditional &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#2]</span></span> removed conditional - replaced comparison check with false &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#1]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>5.<span><b>5</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#2]</span></span> Substituted 0 with 1 &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_161'>161</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_161'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>returnBook<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::returnBook &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_167'>167</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_167'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:previewMissing()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findById &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_168'>168</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_168'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>lambda$previewOverdueDays$2<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:previewMissing()]</span></span> removed call to com/bookflow/exception/BookFlowException::&#60;init&#62; &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>lambda$previewOverdueDays$2<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:previewMissing()]</span></span> replaced return value with null for com/bookflow/service/IssueReturnService::lambda$previewOverdueDays$2 &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:previewMissing()]</span></span> removed call to java/util/Optional::orElseThrow &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_169'>169</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_169'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#1]</span></span> Substituted 0 with 1 &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to java/lang/Math::max &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#3]</span></span> replaced long return with 0 for com/bookflow/service/IssueReturnService::previewOverdueDays &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>4.<span><b>4</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#1]</span></span> replaced call to java/lang/Math::max with argument &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_170'>170</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_170'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#1]</span></span> removed call to java/time/LocalDate::now &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#3]</span></span> removed call to java/time/temporal/ChronoUnit::between &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>previewOverdueDays<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#1]</span></span> removed call to com/bookflow/model/Transaction::getDueDate &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_175'>175</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_175'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getActiveTransactionsForMember<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getActiveTransactionsForMember &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getActiveTransactionsForMember<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findActiveByMember &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_180'>180</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_180'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getAllOverdue<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getAllOverdue &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getAllOverdue<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findAllOverdue &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_185'>185</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_185'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getAllCurrentlyIssued<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getAllCurrentlyIssued &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getAllCurrentlyIssued<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findAllCurrentlyIssued &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_190'>190</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_190'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>getHistoryForMember<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> replaced return value with Collections.emptyList for com/bookflow/service/IssueReturnService::getHistoryForMember &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>getHistoryForMember<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> removed call to com/bookflow/repository/TransactionRepository::findAllByMemberId &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_195'>195</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@4ecd8ab1_195'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>countIssuedToday<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> removed call to java/time/LocalDate::now &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>countIssuedToday<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> replaced long return with 0 for com/bookflow/service/IssueReturnService::countIssuedToday &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>3.<span><b>3</b><br/><b>Location : </b>countIssuedToday<br/><b>Killed by : </b>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()]</span></span> removed call to com/bookflow/repository/TransactionRepository::countByIssueDate &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>CONSTRUCTOR_CALLS</li>
+
+<li class='mutator'>EMPTY_RETURNS</li>
+
+<li class='mutator'>EXPERIMENTAL_ARGUMENT_PROPAGATION</li>
+
+<li class='mutator'>EXPERIMENTAL_BIG_DECIMAL</li>
+
+<li class='mutator'>EXPERIMENTAL_BIG_INTEGER</li>
+
+<li class='mutator'>EXPERIMENTAL_MEMBER_VARIABLE</li>
+
+<li class='mutator'>EXPERIMENTAL_NAKED_RECEIVER</li>
+
+<li class='mutator'>EXPERIMENTAL_REMOVE_SWITCH_MUTATOR_[0-99]</li>
+
+<li class='mutator'>EXPERIMENTAL_SWITCH</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>INCREMENTS</li>
+
+<li class='mutator'>INLINE_CONSTS</li>
+
+<li class='mutator'>INVERT_NEGS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS</li>
+
+<li class='mutator'>NON_VOID_METHOD_CALLS</li>
+
+<li class='mutator'>NULL_RETURNS</li>
+
+<li class='mutator'>PRIMITIVE_RETURNS</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_ELSE</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_EQUAL_IF</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_ELSE</li>
+
+<li class='mutator'>REMOVE_CONDITIONALS_ORDER_IF</li>
+
+<li class='mutator'>REMOVE_INCREMENTS</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#6] (0 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#8] (0 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#7] (0 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#2] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#2] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#1] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#5] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#4] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#3] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#9] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#3] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#12] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#11] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#10] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:missingMember()] (3 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#1] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#13] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:duplicateIssueMustNotCreateSecondLoan()] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#2] (3 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:stockBoundary(int)]/[test-template-invocation:#3] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#16] (1 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:missingBook()] (4 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:borrowBoundary(int)]/[test-template-invocation:#1] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:issueWritesDatesAndStock()] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#15] (6 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-factory:eligibilityMcc()]/[dynamic-test:#14] (6 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:messagesIdentifyRecords()] (3 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:precheckUsesFullEligibilityWithoutWriting()] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:readDelegation()] (168 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#2] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#3] (3 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#2] (4 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:auditMatchesFineState(int)]/[test-template-invocation:#1] (4 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#4] (16 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:returnBoundary(int)]/[test-template-invocation:#1] (67 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#1] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#2] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[test-template:previewBoundary(int)]/[test-template-invocation:#3] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:lostTransactionMustNotReturn()] (3 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:repeatReturnRejected()] (3 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:unknownTransactionRejected()] (2 ms)</li><li>com.bookflow.team.IssueReturnTest.[engine:junit-jupiter]/[class:com.bookflow.team.IssueReturnTest]/[method:previewMissing()] (1 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.17.3
+
+</body>
+</html>

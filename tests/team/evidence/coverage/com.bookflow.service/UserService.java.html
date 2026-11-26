@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.service</a> &gt; <span class="el_source">UserService.java</span></div><h1>UserService.java</h1><pre class="source lang-java linenums">package com.bookflow.service;
+
+import com.bookflow.dto.RegistrationRequest;
+import com.bookflow.exception.BookFlowException;
+import com.bookflow.model.AuditLog;
+import com.bookflow.model.User;
+import com.bookflow.repository.UserRepository;
+import com.bookflow.util.PasswordPolicy;
+import com.bookflow.util.SystemIdGenerator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    @Value(&quot;${bookflow.security.max-login-attempts:5}&quot;)
+    private int maxFailedAttempts;
+
+    private final UserRepository userRepository;
+    private final SystemIdGenerator systemIdGenerator;
+    private final AuditLogService auditLogService;
+
+    public UserService(UserRepository userRepository,
+                        SystemIdGenerator systemIdGenerator,
+<span class="fc" id="L29">                        AuditLogService auditLogService) {</span>
+<span class="fc" id="L30">        this.userRepository = userRepository;</span>
+<span class="fc" id="L31">        this.systemIdGenerator = systemIdGenerator;</span>
+<span class="fc" id="L32">        this.auditLogService = auditLogService;</span>
+<span class="fc" id="L33">    }</span>
+
+    @Transactional
+    public User register(RegistrationRequest request) {
+        // Public self-registration is always a student account. Staff roles are
+        // provisioned through an authenticated administrative workflow.
+<span class="fc" id="L39">        User.Role publicRole = User.Role.STU;</span>
+
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (!request.passwordsMatch()) {</span>
+<span class="nc" id="L42">            throw new BookFlowException(&quot;Password and confirm password do not match&quot;);</span>
+        }
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (!request.isAgreedToTerms()) {</span>
+<span class="nc" id="L45">            throw new BookFlowException(&quot;You must agree to the Terms &amp; Privacy Policy&quot;);</span>
+        }
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (userRepository.existsByEmail(request.getEmail())) {</span>
+<span class="nc" id="L48">            throw new BookFlowException(&quot;An account with this email already exists&quot;);</span>
+        }
+
+<span class="fc" id="L51">        PasswordPolicy.validate(request.getPassword(), publicRole);</span>
+
+<span class="fc" id="L53">        String systemId = systemIdGenerator.generate(request.getFirstName(), publicRole);</span>
+
+<span class="fc" id="L55">        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(</span>
+<span class="fc" id="L56">            PasswordPolicy.bcryptStrengthFor(publicRole)</span>
+        );
+<span class="fc" id="L58">        String hash = encoder.encode(request.getPassword());</span>
+
+<span class="fc" id="L60">        User user = User.builder()</span>
+<span class="fc" id="L61">            .systemId(systemId)</span>
+<span class="fc" id="L62">            .firstName(request.getFirstName().trim())</span>
+<span class="fc" id="L63">            .lastName(request.getLastName().trim())</span>
+<span class="fc" id="L64">            .email(request.getEmail().trim().toLowerCase())</span>
+<span class="fc" id="L65">            .phone(request.getPhone())</span>
+<span class="fc" id="L66">            .role(publicRole)</span>
+<span class="fc" id="L67">            .passwordHash(hash)</span>
+<span class="fc" id="L68">            .status(User.UserStatus.ACTIVE)</span>
+<span class="fc" id="L69">            .build();</span>
+
+<span class="fc" id="L71">        userRepository.save(user);</span>
+
+<span class="fc" id="L73">        auditLogService.log(systemId, AuditLog.AuditAction.MEMBER_CREATED,</span>
+<span class="fc" id="L74">            &quot;New &quot; + publicRole.getDisplayName() + &quot; account registered: &quot; + systemId);</span>
+
+<span class="fc" id="L76">        return user;</span>
+    }
+
+    @Transactional
+    public void recordFailedLogin(String systemId) {
+<span class="nc" id="L81">        Optional&lt;User&gt; userOpt = userRepository.findById(systemId);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (userOpt.isEmpty()) return;</span>
+
+<span class="nc" id="L84">        User user = userOpt.get();</span>
+<span class="nc" id="L85">        int attempts = user.getFailedLoginAttempts() + 1;</span>
+<span class="nc" id="L86">        user.setFailedLoginAttempts(attempts);</span>
+
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (attempts &gt;= maxFailedAttempts) {</span>
+<span class="nc" id="L89">            user.setStatus(User.UserStatus.LOCKED);</span>
+<span class="nc" id="L90">            userRepository.save(user);</span>
+<span class="nc" id="L91">            auditLogService.log(systemId, AuditLog.AuditAction.ACCOUNT_LOCKED,</span>
+                &quot;Account locked after &quot; + attempts + &quot; failed login attempts&quot;);
+        } else {
+<span class="nc" id="L94">            userRepository.save(user);</span>
+        }
+
+<span class="nc" id="L97">        auditLogService.log(systemId, AuditLog.AuditAction.LOGIN_FAILED,</span>
+            &quot;Failed login attempt #&quot; + attempts);
+<span class="nc" id="L99">    }</span>
+
+    @Transactional
+    public void recordSuccessfulLogin(String systemId) {
+<span class="nc" id="L103">        userRepository.resetFailedAttempts(systemId);</span>
+<span class="nc" id="L104">        auditLogService.log(systemId, AuditLog.AuditAction.LOGIN, &quot;Successful login&quot;);</span>
+<span class="nc" id="L105">    }</span>
+
+    @Transactional
+    public void resetPassword(String targetSystemId, String newPassword, String resetByAdminId) {
+<span class="nc" id="L109">        User target = userRepository.findById(targetSystemId)</span>
+<span class="nc" id="L110">            .orElseThrow(() -&gt; new BookFlowException(&quot;User not found: &quot; + targetSystemId));</span>
+
+<span class="nc" id="L112">        PasswordPolicy.validate(newPassword, target.getRole());</span>
+
+<span class="nc" id="L114">        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(</span>
+<span class="nc" id="L115">            PasswordPolicy.bcryptStrengthFor(target.getRole())</span>
+        );
+<span class="nc" id="L117">        target.setPasswordHash(encoder.encode(newPassword));</span>
+<span class="nc" id="L118">        target.setFailedLoginAttempts(0);</span>
+<span class="nc" id="L119">        target.setStatus(User.UserStatus.ACTIVE);</span>
+<span class="nc" id="L120">        userRepository.save(target);</span>
+
+<span class="nc" id="L122">        auditLogService.log(resetByAdminId, AuditLog.AuditAction.PASSWORD_RESET,</span>
+            &quot;Password reset for &quot; + targetSystemId + &quot; by &quot; + resetByAdminId);
+<span class="nc" id="L124">    }</span>
+
+    @Transactional(readOnly = true)
+    public User getBySystemId(String systemId) {
+<span class="nc" id="L128">        return userRepository.findById(systemId)</span>
+<span class="nc" id="L129">            .orElseThrow(() -&gt; new BookFlowException(&quot;User not found: &quot; + systemId));</span>
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.List&lt;User&gt; getAllByRole(User.Role role) {
+<span class="nc" id="L134">        return userRepository.findByRole(role);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public java.util.List&lt;User&gt; getAll() {
+<span class="nc" id="L139">        return userRepository.findAll();</span>
+    }
+
+    /** Admin deletes a Librarian or Student account. Admin accounts cannot be self-deleted via this method. */
+    @Transactional
+    public void deleteUser(String targetSystemId, String deletedByAdminId) {
+<span class="nc" id="L145">        User target = userRepository.findById(targetSystemId)</span>
+<span class="nc" id="L146">            .orElseThrow(() -&gt; new BookFlowException(&quot;User not found: &quot; + targetSystemId));</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if (target.getSystemId().equals(deletedByAdminId)) {</span>
+<span class="nc" id="L149">            throw new BookFlowException(&quot;You cannot delete your own account&quot;);</span>
+        }
+
+<span class="nc" id="L152">        userRepository.delete(target);</span>
+
+<span class="nc" id="L154">        auditLogService.log(deletedByAdminId, AuditLog.AuditAction.MEMBER_DELETED,</span>
+<span class="nc" id="L155">            &quot;Deleted account: &quot; + targetSystemId + &quot; (&quot; + target.getRole().getDisplayName() + &quot;)&quot;);</span>
+<span class="nc" id="L156">    }</span>
+
+    /** Toggles a user's account between ACTIVE and LOCKED, resetting failed-attempt counter on unlock. */
+    @Transactional
+    public void toggleLock(String targetSystemId, String actingAdminId) {
+<span class="nc" id="L161">        User target = userRepository.findById(targetSystemId)</span>
+<span class="nc" id="L162">            .orElseThrow(() -&gt; new BookFlowException(&quot;User not found: &quot; + targetSystemId));</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (target.getStatus() == User.UserStatus.LOCKED) {</span>
+<span class="nc" id="L165">            target.setStatus(User.UserStatus.ACTIVE);</span>
+<span class="nc" id="L166">            target.setFailedLoginAttempts(0);</span>
+<span class="nc" id="L167">            auditLogService.log(actingAdminId, AuditLog.AuditAction.LOGIN,</span>
+                &quot;Account unlocked by admin: &quot; + targetSystemId);
+        } else {
+<span class="nc" id="L170">            target.setStatus(User.UserStatus.LOCKED);</span>
+<span class="nc" id="L171">            auditLogService.log(actingAdminId, AuditLog.AuditAction.ACCOUNT_LOCKED,</span>
+                &quot;Account manually locked by admin: &quot; + targetSystemId);
+        }
+<span class="nc" id="L174">        userRepository.save(target);</span>
+<span class="nc" id="L175">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

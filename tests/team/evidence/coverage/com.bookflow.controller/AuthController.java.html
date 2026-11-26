@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.controller</a> &gt; <span class="el_source">AuthController.java</span></div><h1>AuthController.java</h1><pre class="source lang-java linenums">package com.bookflow.controller;
+
+import com.bookflow.dto.RegistrationRequest;
+import com.bookflow.exception.BookFlowException;
+import com.bookflow.model.PasswordResetToken;
+import com.bookflow.model.User;
+import com.bookflow.service.PasswordResetService;
+import com.bookflow.service.UserService;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+@Controller
+@RequestMapping(&quot;/auth&quot;)
+public class AuthController {
+
+    private final UserService userService;
+    private final PasswordResetService passwordResetService;
+
+<span class="fc" id="L22">    public AuthController(UserService userService, PasswordResetService passwordResetService) {</span>
+<span class="fc" id="L23">        this.userService = userService;</span>
+<span class="fc" id="L24">        this.passwordResetService = passwordResetService;</span>
+<span class="fc" id="L25">    }</span>
+
+    @GetMapping(&quot;/login&quot;)
+    public String loginPage(@RequestParam(value = &quot;error&quot;, required = false) String error,
+                            @RequestParam(value = &quot;logout&quot;, required = false) String logout,
+                            @RequestParam(value = &quot;expired&quot;, required = false) String expired,
+                            Model model) {
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (error != null) {</span>
+<span class="nc" id="L33">            model.addAttribute(&quot;errorMessage&quot;, &quot;Invalid System ID or password.&quot;);</span>
+        }
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (logout != null) {</span>
+<span class="nc" id="L36">            model.addAttribute(&quot;infoMessage&quot;, &quot;You have been logged out successfully.&quot;);</span>
+        }
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (expired != null) {</span>
+<span class="nc" id="L39">            model.addAttribute(&quot;infoMessage&quot;, &quot;Your session has expired. Please log in again.&quot;);</span>
+        }
+<span class="nc" id="L41">        return &quot;auth/login&quot;;</span>
+    }
+
+    @GetMapping(&quot;/register&quot;)
+    public String registerPage(Model model) {
+<span class="fc" id="L46">        model.addAttribute(&quot;registrationRequest&quot;, new RegistrationRequest());</span>
+<span class="fc" id="L47">        model.addAttribute(&quot;roles&quot;, List.of(User.Role.STU));</span>
+<span class="fc" id="L48">        return &quot;auth/register&quot;;</span>
+    }
+
+    @PostMapping(&quot;/register&quot;)
+    public String register(@Valid @ModelAttribute(&quot;registrationRequest&quot;) RegistrationRequest request,
+                           BindingResult bindingResult,
+                           Model model) {
+
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L57">            String firstError = bindingResult.getAllErrors().get(0).getDefaultMessage();</span>
+<span class="nc" id="L58">            model.addAttribute(&quot;errorMessage&quot;, firstError);</span>
+<span class="nc" id="L59">            model.addAttribute(&quot;roles&quot;, List.of(User.Role.STU));</span>
+<span class="nc" id="L60">            return &quot;auth/register&quot;;</span>
+        }
+
+        try {
+<span class="nc" id="L64">            User newUser = userService.register(request);</span>
+<span class="nc" id="L65">            model.addAttribute(&quot;successMessage&quot;,</span>
+<span class="nc" id="L66">                    &quot;Account created! Your System ID is: &quot; + newUser.getSystemId() + &quot;. Please log in.&quot;);</span>
+<span class="nc" id="L67">            return &quot;auth/login&quot;;</span>
+<span class="nc" id="L68">        } catch (BookFlowException ex) {</span>
+<span class="nc" id="L69">            model.addAttribute(&quot;errorMessage&quot;, ex.getMessage());</span>
+<span class="nc" id="L70">            model.addAttribute(&quot;roles&quot;, List.of(User.Role.STU));</span>
+<span class="nc" id="L71">            return &quot;auth/register&quot;;</span>
+        }
+    }
+
+    // ---- Forgot Password (request a reset link) ----
+
+    @GetMapping(&quot;/forgot-password&quot;)
+    public String forgotPasswordPage() {
+<span class="nc" id="L79">        return &quot;auth/forgot-password&quot;;</span>
+    }
+
+    @PostMapping(&quot;/forgot-password&quot;)
+    public String forgotPasswordSubmit(@RequestParam String email, Model model) {
+        // Always show the same confirmation, whether or not the email exists,
+        // to avoid revealing which emails have accounts.
+<span class="nc" id="L86">        passwordResetService.requestReset(email);</span>
+<span class="nc" id="L87">        model.addAttribute(&quot;submitted&quot;, true);</span>
+<span class="nc" id="L88">        model.addAttribute(&quot;submittedEmail&quot;, email);</span>
+<span class="nc" id="L89">        return &quot;auth/forgot-password&quot;;</span>
+    }
+
+    // ---- Reset Password (set a new password via emailed link) ----
+
+    @GetMapping(&quot;/reset-password&quot;)
+    public String resetPasswordPage(@RequestParam String token, Model model) {
+        try {
+<span class="nc" id="L97">            PasswordResetToken resetToken = passwordResetService.validateToken(token);</span>
+<span class="nc" id="L98">            model.addAttribute(&quot;token&quot;, token);</span>
+<span class="nc" id="L99">            model.addAttribute(&quot;userFirstName&quot;, resetToken.getUser().getFirstName());</span>
+<span class="nc" id="L100">            return &quot;auth/reset-password&quot;;</span>
+<span class="nc" id="L101">        } catch (BookFlowException ex) {</span>
+<span class="nc" id="L102">            model.addAttribute(&quot;errorMessage&quot;, ex.getMessage());</span>
+<span class="nc" id="L103">            model.addAttribute(&quot;invalidToken&quot;, true);</span>
+<span class="nc" id="L104">            return &quot;auth/reset-password&quot;;</span>
+        }
+    }
+
+    @PostMapping(&quot;/reset-password&quot;)
+    public String resetPasswordSubmit(@RequestParam String token,
+                                      @RequestParam String password,
+                                      @RequestParam String confirmPassword,
+                                      Model model) {
+        try {
+<span class="nc" id="L114">            passwordResetService.completeReset(token, password, confirmPassword);</span>
+<span class="nc" id="L115">            model.addAttribute(&quot;successMessage&quot;, &quot;Your password has been reset. Please log in with your new password.&quot;);</span>
+<span class="nc" id="L116">            return &quot;auth/login&quot;;</span>
+<span class="nc" id="L117">        } catch (BookFlowException ex) {</span>
+<span class="nc" id="L118">            model.addAttribute(&quot;errorMessage&quot;, ex.getMessage());</span>
+<span class="nc" id="L119">            model.addAttribute(&quot;token&quot;, token);</span>
+<span class="nc" id="L120">            return &quot;auth/reset-password&quot;;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

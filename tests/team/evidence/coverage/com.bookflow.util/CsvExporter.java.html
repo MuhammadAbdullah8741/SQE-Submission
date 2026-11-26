@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CsvExporter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.util</a> &gt; <span class="el_source">CsvExporter.java</span></div><h1>CsvExporter.java</h1><pre class="source lang-java linenums">package com.bookflow.util;
+
+import com.bookflow.model.Book;
+import com.bookflow.model.Transaction;
+import com.bookflow.model.User;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.springframework.stereotype.Component;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+@Component
+<span class="fc" id="L19">public class CsvExporter {</span>
+
+<span class="fc" id="L21">    private static final DateTimeFormatter DATE_FMT = DateTimeFormatter.ofPattern(&quot;yyyy-MM-dd&quot;);</span>
+
+    public byte[] exportBooks(List&lt;Book&gt; books) {
+<span class="nc" id="L24">        return write(</span>
+                new String[]{&quot;ISBN&quot;, &quot;Title&quot;, &quot;Author&quot;, &quot;Category&quot;, &quot;Publisher&quot;, &quot;Year&quot;, &quot;Total Copies&quot;, &quot;Available&quot;, &quot;Status&quot;},
+                books,
+<span class="nc" id="L27">                (b, printer) -&gt; printer.printRecord(</span>
+<span class="nc" id="L28">                        b.getIsbn(), b.getTitle(), b.getAuthor(), b.getCategory(),</span>
+<span class="nc" id="L29">                        b.getPublisher(), b.getYear(), b.getTotalCopies(), b.getAvailable(), b.getStatus()</span>
+                )
+        );
+    }
+
+    /** Exports transaction (issue/return) history as CSV. */
+    public byte[] exportTransactions(List&lt;Transaction&gt; transactions) {
+<span class="nc" id="L36">        return write(</span>
+                new String[]{&quot;Txn ID&quot;, &quot;Member ID&quot;, &quot;Member Name&quot;, &quot;Book Title&quot;, &quot;ISBN&quot;, &quot;Issue Date&quot;, &quot;Due Date&quot;, &quot;Return Date&quot;, &quot;Status&quot;},
+                transactions,
+<span class="nc" id="L39">                (t, printer) -&gt; printer.printRecord(</span>
+<span class="nc" id="L40">                        t.getTxnId(),</span>
+<span class="nc" id="L41">                        t.getMember().getSystemId(),</span>
+<span class="nc" id="L42">                        t.getMember().getFullName(),</span>
+<span class="nc" id="L43">                        t.getBook().getTitle(),</span>
+<span class="nc" id="L44">                        t.getBook().getIsbn(),</span>
+<span class="nc" id="L45">                        t.getIssueDate().format(DATE_FMT),</span>
+<span class="nc" id="L46">                        t.getDueDate().format(DATE_FMT),</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                        t.getReturnDate() != null ? t.getReturnDate().format(DATE_FMT) : &quot;&quot;,</span>
+<span class="nc" id="L48">                        t.getStatus()</span>
+                )
+        );
+    }
+
+    /** Exports member (user) list as CSV. */
+    public byte[] exportUsers(List&lt;User&gt; users) {
+<span class="nc" id="L55">        return write(</span>
+                new String[]{&quot;System ID&quot;, &quot;Name&quot;, &quot;Role&quot;, &quot;Email&quot;, &quot;Phone&quot;, &quot;Status&quot;},
+                users,
+<span class="nc" id="L58">                (u, printer) -&gt; printer.printRecord(</span>
+<span class="nc" id="L59">                        u.getSystemId(), u.getFullName(), u.getRole(), u.getEmail(), u.getPhone(), u.getStatus()</span>
+                )
+        );
+    }
+
+    // ---- Generic write helper ----
+
+    @FunctionalInterface
+    private interface RowWriter&lt;T&gt; {
+        void write(T item, CSVPrinter printer) throws IOException;
+    }
+
+    private &lt;T&gt; byte[] write(String[] headers, List&lt;T&gt; items, RowWriter&lt;T&gt; rowWriter) {
+<span class="nc" id="L72">        try (ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L73">             Writer writer = new OutputStreamWriter(baos, StandardCharsets.UTF_8);</span>
+<span class="nc" id="L74">             CSVPrinter printer = new CSVPrinter(</span>
+<span class="nc" id="L75">                     writer, CSVFormat.DEFAULT.builder().setHeader(headers).build())) {</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            for (T item : items) {</span>
+<span class="nc" id="L78">                rowWriter.write(item, printer);</span>
+<span class="nc" id="L79">            }</span>
+<span class="nc" id="L80">            printer.flush();</span>
+<span class="nc" id="L81">            return baos.toByteArray();</span>
+
+<span class="nc" id="L83">        } catch (IOException e) {</span>
+<span class="nc" id="L84">            throw new RuntimeException(&quot;Failed to generate CSV export&quot;, e);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

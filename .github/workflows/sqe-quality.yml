@@ -4,7 +4,8 @@ permissions:
   contents: read
 jobs:
   quality:
-    runs-on: ubuntu-latest
+    # Playwright 1.56 supports Ubuntu 24.04; ubuntu-latest moved to 26.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
       JAVA_TOOL_OPTIONS: -Duser.timezone=Asia/Karachi
@@ -89,6 +90,6 @@ jobs:
             target/surefire-reports/
   deployment-eligibility:
     needs: quality
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - run: echo "Quality job passed. No deployment destination is configured."

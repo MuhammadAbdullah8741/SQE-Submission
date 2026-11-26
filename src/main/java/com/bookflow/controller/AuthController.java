@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -43,7 +44,7 @@ public class AuthController {
     @GetMapping("/register")
     public String registerPage(Model model) {
         model.addAttribute("registrationRequest", new RegistrationRequest());
-        model.addAttribute("roles", User.Role.values());
+        model.addAttribute("roles", List.of(User.Role.STU));
         return "auth/register";
     }
 
@@ -55,7 +56,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             String firstError = bindingResult.getAllErrors().get(0).getDefaultMessage();
             model.addAttribute("errorMessage", firstError);
-            model.addAttribute("roles", User.Role.values());
+            model.addAttribute("roles", List.of(User.Role.STU));
             return "auth/register";
         }
 
@@ -66,7 +67,7 @@ public class AuthController {
             return "auth/login";
         } catch (BookFlowException ex) {
             model.addAttribute("errorMessage", ex.getMessage());
-            model.addAttribute("roles", User.Role.values());
+            model.addAttribute("roles", List.of(User.Role.STU));
             return "auth/register";
         }
     }

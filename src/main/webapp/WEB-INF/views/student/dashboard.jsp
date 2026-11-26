@@ -336,12 +336,12 @@
                                 </div>
                                 <div>
                                     <p class="books-table__date-label">Borrowed on</p>
-                                    <p class="books-table__date"><fmt:formatDate value="${txn.issueDate}" pattern="MMM dd, yyyy"/></p>
+                                    <p class="books-table__date"><c:out value="${txn.issueDate}"/></p>
                                 </div>
                                 <div>
                                     <p class="books-table__date-label">Due Date</p>
                                     <p class="books-table__date ${txn.overdue ? 'books-table__date--overdue' : ''}">
-                                        <fmt:formatDate value="${txn.dueDate}" pattern="MMM dd, yyyy"/>
+                                        <c:out value="${txn.dueDate}"/>
                                     </p>
                                 </div>
                                 <c:choose>
@@ -434,7 +434,7 @@
                             <div>
                                 <p class="due-item__title">${txn.book.title}</p>
                                 <p class="due-item__author">${txn.book.author}</p>
-                                <p class="due-item__date"><fmt:formatDate value="${txn.dueDate}" pattern="MMM dd, yyyy"/></p>
+                                <p class="due-item__date"><c:out value="${txn.dueDate}"/></p>
                                 <p class="due-item__days">${txn.daysRemaining} days left</p>
                             </div>
                         </div>

@@ -57,31 +57,9 @@ public class IssueReturnService {
      */
     @Transactional
     public Transaction issueBook(IssueBookRequest request, String issuedByLibrarianId) {
-
-        User member = userRepository.findById(request.getMemberId())
-            .orElseThrow(() -> new BookFlowException("Member not found: " + request.getMemberId()));
-
-        if (!member.isActive()) {
-            throw new BookFlowException("Member account is " + member.getStatus() + " — cannot issue book");
-        }
-
-        Book book = bookService.getByIsbn(request.getIsbn());
-
-        if (!book.hasAvailableCopies()) {
-            throw new BookFlowException("No copies available for: " + book.getTitle());
-        }
-
-        long activeCount = transactionRepository.countByMemberAndStatus(member, Transaction.TxnStatus.ISSUED);
-        if (activeCount >= borrowLimit) {
-            throw new BookFlowException(
-                "Member has reached the borrow limit (" + borrowLimit + " books). Return a book before issuing another."
-            );
-        }
-
-        boolean hasUnpaidFines = fineRepository.existsByMemberAndPaidFalseAndWaivedFalse(member);
-        if (hasUnpaidFines) {
-            throw new BookFlowException("Member has outstanding fines. Clear fines before issuing a new book.");
-        }
+        IssueEligibility eligibility = validateIssueEligibility(request.getMemberId(), request.getIsbn());
+        User member = eligibility.member();
+        Book book = eligibility.book();
 
         LocalDate issueDate = LocalDate.now();
         LocalDate dueDate = issueDate.plusDays(borrowDurationDays);
@@ -104,6 +82,48 @@ public class IssueReturnService {
         return txn;
     }
 
+    /** Performs the same eligibility checks as issueBook without changing state. */
+    @Transactional(readOnly = true)
+    public Book precheckIssue(String memberId, String isbn) {
+        return validateIssueEligibility(memberId, isbn).book();
+    }
+
+    private IssueEligibility validateIssueEligibility(String memberId, String isbn) {
+        User member = userRepository.findById(memberId)
+            .orElseThrow(() -> new BookFlowException("Member not found: " + memberId));
+
+        if (!member.isActive()) {
+            throw new BookFlowException("Member account is " + member.getStatus() + " — cannot issue book");
+        }
+
+        Book book = bookService.getByIsbn(isbn);
+
+        if (!book.hasAvailableCopies()) {
+            throw new BookFlowException("No copies available for: " + book.getTitle());
+        }
+
+        long activeCount = transactionRepository.countByMemberAndStatus(member, Transaction.TxnStatus.ISSUED);
+        if (activeCount >= borrowLimit) {
+            throw new BookFlowException(
+                "Member has reached the borrow limit (" + borrowLimit + " books). Return a book before issuing another."
+            );
+        }
+
+        boolean hasUnpaidFines = fineRepository.existsByMemberAndPaidFalseAndWaivedFalse(member);
+        if (hasUnpaidFines) {
+            throw new BookFlowException("Member has outstanding fines. Clear fines before issuing a new book.");
+        }
+
+        if (transactionRepository.findByMemberSystemIdAndBookIsbnAndStatus(
+                member.getSystemId(), book.getIsbn(), Transaction.TxnStatus.ISSUED).isPresent()) {
+            throw new BookFlowException("Member already has an active loan for this book");
+        }
+
+        return new IssueEligibility(member, book);
+    }
+
+    private record IssueEligibility(User member, Book book) {}
+
     /**
      * Returns a book. Calculates overdue fine automatically if past due date.
      * Increments book stock.
@@ -114,8 +134,8 @@ public class IssueReturnService {
         Transaction txn = transactionRepository.findById(txnId)
             .orElseThrow(() -> new BookFlowException("Transaction not found: " + txnId));
 
-        if (txn.getStatus() == Transaction.TxnStatus.RETURNED) {
-            throw new BookFlowException("This book has already been returned");
+        if (txn.getStatus() != Transaction.TxnStatus.ISSUED) {
+            throw new BookFlowException("Only issued books can be returned; this transaction is already closed");
         }
 
         LocalDate returnDate = LocalDate.now();

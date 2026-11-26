@@ -34,6 +34,9 @@ public class UserService {
 
     @Transactional
     public User register(RegistrationRequest request) {
+        // Public self-registration is always a student account. Staff roles are
+        // provisioned through an authenticated administrative workflow.
+        User.Role publicRole = User.Role.STU;
 
         if (!request.passwordsMatch()) {
             throw new BookFlowException("Password and confirm password do not match");
@@ -45,12 +48,12 @@ public class UserService {
             throw new BookFlowException("An account with this email already exists");
         }
 
-        PasswordPolicy.validate(request.getPassword(), request.getRole());
+        PasswordPolicy.validate(request.getPassword(), publicRole);
 
-        String systemId = systemIdGenerator.generate(request.getFirstName(), request.getRole());
+        String systemId = systemIdGenerator.generate(request.getFirstName(), publicRole);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(
-            PasswordPolicy.bcryptStrengthFor(request.getRole())
+            PasswordPolicy.bcryptStrengthFor(publicRole)
         );
         String hash = encoder.encode(request.getPassword());
 
@@ -60,7 +63,7 @@ public class UserService {
             .lastName(request.getLastName().trim())
             .email(request.getEmail().trim().toLowerCase())
             .phone(request.getPhone())
-            .role(request.getRole())
+            .role(publicRole)
             .passwordHash(hash)
             .status(User.UserStatus.ACTIVE)
             .build();
@@ -68,7 +71,7 @@ public class UserService {
         userRepository.save(user);
 
         auditLogService.log(systemId, AuditLog.AuditAction.MEMBER_CREATED,
-            "New " + request.getRole().getDisplayName() + " account registered: " + systemId);
+            "New " + publicRole.getDisplayName() + " account registered: " + systemId);
 
         return user;
     }

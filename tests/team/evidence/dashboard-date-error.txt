@@ -1,0 +1,12 @@
+jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+org.apache.jasper.JasperException: jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+Caused by: jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+2026-11-25T16:34:41.917+05:00 DEBUG 2192 --- [.0-8081-exec-10] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.apache.jasper.JasperException: jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+2026-11-25T16:34:41.918+05:00 ERROR 2192 --- [.0-8081-exec-10] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [/bookflow] threw exception [jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]] with root cause
+jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+org.apache.jasper.JasperException: jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+Caused by: jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+2026-11-25T16:35:21.332+05:00 DEBUG 2192 --- [0.0-8081-exec-5] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.apache.jasper.JasperException: jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]
+2026-11-25T16:35:21.335+05:00 ERROR 2192 --- [0.0-8081-exec-5] o.a.c.c.C.[.[.[.[dispatcherServlet]      : Servlet.service() for servlet [dispatcherServlet] in context with path [/bookflow] threw exception [jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]] with root cause
+jakarta.el.ELException: Cannot convert [2026-11-25] of type [class java.time.LocalDate] to [class java.util.Date]

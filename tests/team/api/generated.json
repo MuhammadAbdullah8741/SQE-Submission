@@ -1,0 +1,558 @@
+[
+  {
+    "id": "post-issue-memberId-valid",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-empty",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "empty",
+    "data": {
+      "memberId": "",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-whitespace",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "whitespace",
+    "data": {
+      "memberId": " ",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-unknown",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "unknown",
+    "data": {
+      "memberId": "UNKNOWN",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-minLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "A",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-minLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "AA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-maxLength-1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-maxLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-memberId-maxLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-isbn-valid",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "post-issue-isbn-empty",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "empty",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": ""
+    }
+  },
+  {
+    "id": "post-issue-isbn-whitespace",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "whitespace",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": " "
+    }
+  },
+  {
+    "id": "post-issue-isbn-unknown",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "unknown",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "UNKNOWN"
+    }
+  },
+  {
+    "id": "post-issue-isbn-minLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "A"
+    }
+  },
+  {
+    "id": "post-issue-isbn-minLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AA"
+    }
+  },
+  {
+    "id": "post-issue-isbn-maxLength-1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAA"
+    }
+  },
+  {
+    "id": "post-issue-isbn-maxLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAA"
+    }
+  },
+  {
+    "id": "post-issue-isbn-maxLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAAA"
+    }
+  },
+  {
+    "id": "post-return-txnId-valid",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "valid",
+    "data": {
+      "txnId": "1"
+    }
+  },
+  {
+    "id": "post-return-txnId-wrong-type",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "wrong-type",
+    "data": {
+      "txnId": "abc"
+    }
+  },
+  {
+    "id": "post-return-txnId-empty",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "empty",
+    "data": {
+      "txnId": ""
+    }
+  },
+  {
+    "id": "post-return-txnId-minimum-1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "minimum-1",
+    "data": {
+      "txnId": "0"
+    }
+  },
+  {
+    "id": "post-return-txnId-minimum1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "minimum1",
+    "data": {
+      "txnId": "2"
+    }
+  },
+  {
+    "id": "post-return-txnId-maximum-1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "maximum-1",
+    "data": {
+      "txnId": "9223372036854775806"
+    }
+  },
+  {
+    "id": "post-return-txnId-maximum0",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "maximum0",
+    "data": {
+      "txnId": "9223372036854775807"
+    }
+  },
+  {
+    "id": "post-return-txnId-maximum1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "maximum1",
+    "data": {
+      "txnId": "9223372036854775808"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-valid",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-empty",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "empty",
+    "data": {
+      "memberId": "",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-whitespace",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "whitespace",
+    "data": {
+      "memberId": " ",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-unknown",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "unknown",
+    "data": {
+      "memberId": "UNKNOWN",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-minLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "A",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-minLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "AA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-maxLength-1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-maxLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-memberId-maxLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-valid",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-empty",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "empty",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": ""
+    }
+  },
+  {
+    "id": "get-precheck-isbn-whitespace",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "whitespace",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": " "
+    }
+  },
+  {
+    "id": "get-precheck-isbn-unknown",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "unknown",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "UNKNOWN"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-minLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "A"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-minLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AA"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-maxLength-1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAA"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-maxLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAA"
+    }
+  },
+  {
+    "id": "get-precheck-isbn-maxLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAAA"
+    }
+  },
+  {
+    "id": "get-preview-txnId-valid",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "valid",
+    "data": {
+      "txnId": "1"
+    }
+  },
+  {
+    "id": "get-preview-txnId-wrong-type",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "wrong-type",
+    "data": {
+      "txnId": "abc"
+    }
+  },
+  {
+    "id": "get-preview-txnId-empty",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "empty",
+    "data": {
+      "txnId": ""
+    }
+  },
+  {
+    "id": "get-preview-txnId-minimum-1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "minimum-1",
+    "data": {
+      "txnId": "0"
+    }
+  },
+  {
+    "id": "get-preview-txnId-minimum1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "minimum1",
+    "data": {
+      "txnId": "2"
+    }
+  },
+  {
+    "id": "get-preview-txnId-maximum-1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "maximum-1",
+    "data": {
+      "txnId": "9223372036854775806"
+    }
+  },
+  {
+    "id": "get-preview-txnId-maximum0",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "maximum0",
+    "data": {
+      "txnId": "9223372036854775807"
+    }
+  },
+  {
+    "id": "get-preview-txnId-maximum1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "maximum1",
+    "data": {
+      "txnId": "9223372036854775808"
+    }
+  }
+]

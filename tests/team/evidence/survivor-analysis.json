@@ -1,0 +1,182 @@
+[
+  {
+    "id": "M01",
+    "class": "com.bookflow.service.FineService",
+    "method": "createFineForTransaction",
+    "line": "56",
+    "operator": "replaced call to java/math/BigDecimal::setScale with receiver",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: add fractional category rate 2.345 and assert rounded 7.04 for 3 days.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M02",
+    "class": "com.bookflow.service.FineService",
+    "method": "createFineForTransaction",
+    "line": "64",
+    "operator": "replaced call to com/bookflow/model/Fine$FineBuilder::processingCharge with receiver",
+    "classification": "equivalent",
+    "analysis": "Equivalent: Lombok builder defaults already set zero processing charge / false paid / false waived.",
+    "after": "SURVIVED"
+  },
+  {
+    "id": "M03",
+    "class": "com.bookflow.service.FineService",
+    "method": "createFineForTransaction",
+    "line": "65",
+    "operator": "replaced call to com/bookflow/model/Fine$FineBuilder::paid with receiver",
+    "classification": "equivalent",
+    "analysis": "Equivalent: Lombok builder defaults already set zero processing charge / false paid / false waived.",
+    "after": "SURVIVED"
+  },
+  {
+    "id": "M04",
+    "class": "com.bookflow.service.FineService",
+    "method": "createFineForTransaction",
+    "line": "66",
+    "operator": "replaced call to com/bookflow/model/Fine$FineBuilder::waived with receiver",
+    "classification": "equivalent",
+    "analysis": "Equivalent: Lombok builder defaults already set zero processing charge / false paid / false waived.",
+    "after": "SURVIVED"
+  },
+  {
+    "id": "M05",
+    "class": "com.bookflow.service.FineService",
+    "method": "generateReceiptNumber",
+    "line": "175",
+    "operator": "removed call to java/lang/System::currentTimeMillis",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert receipt timestamp falls between test start and end.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M06",
+    "class": "com.bookflow.service.FineService",
+    "method": "payFine",
+    "line": "106",
+    "operator": "removed call to com/bookflow/model/User::getSystemId",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M07",
+    "class": "com.bookflow.service.FineService",
+    "method": "waiveFine",
+    "line": "131",
+    "operator": "removed call to com/bookflow/model/User::getSystemId",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M08",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "65",
+    "operator": "removed call to com/bookflow/model/User::getStatus",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M09",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "65",
+    "operator": "removed call to java/lang/String::valueOf",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M10",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "71",
+    "operator": "removed call to com/bookflow/model/Book::getTitle",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M11",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "107",
+    "operator": "removed call to com/bookflow/model/Book::getTitle",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M12",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "107",
+    "operator": "removed call to com/bookflow/model/User::getSystemId",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M13",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "107",
+    "operator": "removed call to java/lang/String::valueOf",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M14",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "issueBook",
+    "line": "99",
+    "operator": "replaced call to com/bookflow/model/Transaction$TransactionBuilder::status with receiver",
+    "classification": "equivalent",
+    "analysis": "Equivalent: Transaction builder default is already ISSUED.",
+    "after": "SURVIVED"
+  },
+  {
+    "id": "M15",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "lambda$issueBook$0",
+    "line": "62",
+    "operator": "removed call to com/bookflow/dto/IssueBookRequest::getMemberId",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M16",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "returnBook",
+    "line": "143",
+    "operator": "removed call to com/bookflow/model/Book::getTitle",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M17",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "returnBook",
+    "line": "143",
+    "operator": "removed call to com/bookflow/model/User::getSystemId",
+    "classification": "weak assertion",
+    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "after": "KILLED"
+  },
+  {
+    "id": "M18",
+    "class": "com.bookflow.service.IssueReturnService",
+    "method": "returnBook",
+    "line": "135",
+    "operator": "replaced call to java/lang/Math::max with argument",
+    "classification": "equivalent",
+    "analysis": "Equivalent: negative and zero overdue both bypass fine and use on-time audit text; local overdue variable is not returned.",
+    "after": "SURVIVED"
+  }
+]

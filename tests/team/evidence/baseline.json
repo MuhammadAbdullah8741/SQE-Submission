@@ -1,0 +1,11 @@
+{
+  "upstream": "https://github.com/Prash-Mayank/BookFlow",
+  "commit": "4312c97ba3767b7bb8ba19687a49368b49133390",
+  "branch": "develop",
+  "scope": [
+    "issue book",
+    "return book"
+  ],
+  "licence": "MIT file present on upstream main, absent on develop; copy retained with provenance",
+  "ai_use": "Tests, tooling, analysis, and report prepared with Codex at user request. No student contributions or historical progress fabricated."
+}

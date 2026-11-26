@@ -1,0 +1,3634 @@
+[
+  {
+    "id": "post-issue-memberId-valid",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      },
+      {
+        "txn_id": 2,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 4
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-issue-memberId-empty",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "empty",
+    "data": {
+      "memberId": "",
+      "isbn": "9780000000001"
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-issue-memberId-whitespace",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "whitespace",
+    "data": {
+      "memberId": " ",
+      "isbn": "9780000000001"
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-issue-memberId-unknown",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "unknown",
+    "data": {
+      "memberId": "UNKNOWN",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-memberId-minLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "A",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-memberId-minLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "AA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-memberId-maxLength-1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-memberId-maxLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-memberId-maxLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "memberId",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-isbn-valid",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      },
+      {
+        "txn_id": 2,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 4
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-issue-isbn-empty",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "empty",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": ""
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-issue-isbn-whitespace",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "whitespace",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": " "
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-issue-isbn-unknown",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "unknown",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "UNKNOWN"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-isbn-minLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "A"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-isbn-minLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-isbn-maxLength-1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-isbn-maxLength0",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-issue-isbn-maxLength1",
+    "path": "/librarian/issue",
+    "method": "post",
+    "input": "isbn",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAAA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-return-txnId-valid",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "valid",
+    "data": {
+      "txnId": "1"
+    },
+    "status": 302,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "RETURNED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 6
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": ""
+  },
+  {
+    "id": "post-return-txnId-wrong-type",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "wrong-type",
+    "data": {
+      "txnId": "abc"
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"timestamp\":1795685666184,\"status\":400,\"error\":\"Bad Request\",\"path\":\"/bookflow/librarian/return\"}"
+  },
+  {
+    "id": "post-return-txnId-empty",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "empty",
+    "data": {
+      "txnId": ""
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"timestamp\":1795685667351,\"status\":400,\"error\":\"Bad Request\",\"path\":\"/bookflow/librarian/return\"}"
+  },
+  {
+    "id": "post-return-txnId-minimum-1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "minimum-1",
+    "data": {
+      "txnId": "0"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-return-txnId-minimum1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "minimum1",
+    "data": {
+      "txnId": "2"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-return-txnId-maximum-1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "maximum-1",
+    "data": {
+      "txnId": "9223372036854775806"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-return-txnId-maximum0",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "maximum0",
+    "data": {
+      "txnId": "9223372036854775807"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Librarian Dashboard — BookFlow</title>\r\n    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\r\n    <link href=\"https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700&display=swap\" rel=\"stylesheet\">\r\n    <link rel=\"stylesheet\" href=\"/bookflow/css/bookflow.css\">\r\n<style>\r\n:root { --text-muted: #526174; }\r\n.dash-stat-card__label { color: #526174 !important; }\r\n.sidebar__brand-sub, .sidebar__profile-id, .sidebar__quote, .sidebar__quote span { color: #dbe6f5 !important; opacity: 1 !important; }\r\n[data-theme=\"dark\"] { --text-muted: #b8c7db; }\r\n[data-theme=\"dark\"] .dash-stat-card__label { color: #b8c7db !important; }\r\n</style>\r\n</head>\r\n<body>\r\n\r\n<div class=\"dashboard-layout\">\r\n\r\n    <!-- ================================================== -->\r\n    <!-- SIDEBAR                                            -->\r\n    <!-- ================================================== -->\r\n    <aside class=\"sidebar\" aria-label=\"Library navigation\">\r\n\r\n        <div class=\"sidebar__header\">\r\n      "
+  },
+  {
+    "id": "post-return-txnId-maximum1",
+    "path": "/librarian/return",
+    "method": "post",
+    "input": "txnId",
+    "partition": "maximum1",
+    "data": {
+      "txnId": "9223372036854775808"
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"timestamp\":1795685672947,\"status\":400,\"error\":\"Bad Request\",\"path\":\"/bookflow/librarian/return\"}"
+  },
+  {
+    "id": "get-precheck-memberId-valid",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"available\":true,\"bookTitle\":\"SQE Book 1\",\"copiesLeft\":5}"
+  },
+  {
+    "id": "get-precheck-memberId-empty",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "empty",
+    "data": {
+      "memberId": "",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: \"}"
+  },
+  {
+    "id": "get-precheck-memberId-whitespace",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "whitespace",
+    "data": {
+      "memberId": " ",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found:  \"}"
+  },
+  {
+    "id": "get-precheck-memberId-unknown",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "unknown",
+    "data": {
+      "memberId": "UNKNOWN",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: UNKNOWN\"}"
+  },
+  {
+    "id": "get-precheck-memberId-minLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "A",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: A\"}"
+  },
+  {
+    "id": "get-precheck-memberId-minLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "AA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: AA\"}"
+  },
+  {
+    "id": "get-precheck-memberId-maxLength-1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: AAAAAAAAAAAAAAAAAAAAAAAA\"}"
+  },
+  {
+    "id": "get-precheck-memberId-maxLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: AAAAAAAAAAAAAAAAAAAAAAAAA\"}"
+  },
+  {
+    "id": "get-precheck-memberId-maxLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "memberId",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "AAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Member not found: AAAAAAAAAAAAAAAAAAAAAAAAAA\"}"
+  },
+  {
+    "id": "get-precheck-isbn-valid",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "valid",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "9780000000001"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"available\":true,\"bookTitle\":\"SQE Book 1\",\"copiesLeft\":5}"
+  },
+  {
+    "id": "get-precheck-isbn-empty",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "empty",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": ""
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: \"}"
+  },
+  {
+    "id": "get-precheck-isbn-whitespace",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "whitespace",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": " "
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN:  \"}"
+  },
+  {
+    "id": "get-precheck-isbn-unknown",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "unknown",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "UNKNOWN"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: UNKNOWN\"}"
+  },
+  {
+    "id": "get-precheck-isbn-minLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "minLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "A"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: A\"}"
+  },
+  {
+    "id": "get-precheck-isbn-minLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "minLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: AA\"}"
+  },
+  {
+    "id": "get-precheck-isbn-maxLength-1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "maxLength-1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: AAAAAAAAAAAA\"}"
+  },
+  {
+    "id": "get-precheck-isbn-maxLength0",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "maxLength0",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: AAAAAAAAAAAAA\"}"
+  },
+  {
+    "id": "get-precheck-isbn-maxLength1",
+    "path": "/librarian/issue/precheck",
+    "method": "get",
+    "input": "isbn",
+    "partition": "maxLength1",
+    "data": {
+      "memberId": "STU000001STU",
+      "isbn": "AAAAAAAAAAAAAA"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Book not found for ISBN: AAAAAAAAAAAAAA\"}"
+  },
+  {
+    "id": "get-preview-txnId-valid",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "valid",
+    "data": {
+      "txnId": "1"
+    },
+    "status": 200,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"overdueDays\":0}"
+  },
+  {
+    "id": "get-preview-txnId-wrong-type",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "wrong-type",
+    "data": {
+      "txnId": "abc"
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"timestamp\":1795685694412,\"status\":400,\"error\":\"Bad Request\",\"path\":\"/bookflow/librarian/return/preview\"}"
+  },
+  {
+    "id": "get-preview-txnId-empty",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "empty",
+    "data": {
+      "txnId": ""
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"timestamp\":1795685695551,\"status\":400,\"error\":\"Bad Request\",\"path\":\"/bookflow/librarian/return/preview\"}"
+  },
+  {
+    "id": "get-preview-txnId-minimum-1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "minimum-1",
+    "data": {
+      "txnId": "0"
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Transaction ID must be at least 1\"}"
+  },
+  {
+    "id": "get-preview-txnId-minimum1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "minimum1",
+    "data": {
+      "txnId": "2"
+    },
+    "status": 404,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Transaction not found: 2\"}"
+  },
+  {
+    "id": "get-preview-txnId-maximum-1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "maximum-1",
+    "data": {
+      "txnId": "9223372036854775806"
+    },
+    "status": 404,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Transaction not found: 9223372036854775806\"}"
+  },
+  {
+    "id": "get-preview-txnId-maximum0",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "maximum0",
+    "data": {
+      "txnId": "9223372036854775807"
+    },
+    "status": 404,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"error\":\"Transaction not found: 9223372036854775807\"}"
+  },
+  {
+    "id": "get-preview-txnId-maximum1",
+    "path": "/librarian/return/preview",
+    "method": "get",
+    "input": "txnId",
+    "partition": "maximum1",
+    "data": {
+      "txnId": "9223372036854775808"
+    },
+    "status": 400,
+    "pass": true,
+    "before": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "after": [
+      {
+        "txn_id": 1,
+        "status": "ISSUED"
+      }
+    ],
+    "stock": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "stockAfter": [
+      {
+        "isbn": "9780000000001",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000002",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000003",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000004",
+        "available": 5
+      },
+      {
+        "isbn": "9780000000005",
+        "available": 0
+      }
+    ],
+    "body": "{\"timestamp\":1795685700475,\"status\":400,\"error\":\"Bad Request\",\"path\":\"/bookflow/librarian/return/preview\"}"
+  }
+]

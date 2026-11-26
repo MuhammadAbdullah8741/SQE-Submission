@@ -13,3 +13,11 @@ mvnw.cmd
 *.war
 *.jar
 .DS_Store
+node_modules/
+test-results/
+tests/team/evidence/app*.log
+
+
+.sonar/
+!tests/team/evidence/*.log
+tests/team/evidence/app*.log

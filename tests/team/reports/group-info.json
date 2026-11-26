@@ -1,0 +1,44 @@
+{
+  "members": "Aun Ulfat (24i-3068); M Umar (24i-3132); M Abdullah (24i-3050)",
+  "roster": [
+    {
+      "name": "Aun Ulfat",
+      "roll": "24i-3068"
+    },
+    {
+      "name": "M Umar",
+      "roll": "24i-3132"
+    },
+    {
+      "name": "M Abdullah",
+      "roll": "24i-3050"
+    }
+  ],
+  "section": "C",
+  "repository_url": "https://github.com/MuhammadAbdullah8741/SQE-Submission",
+  "effort_basis": "Group-declared schedule converted at 8 hours per working day",
+  "effort": [
+    {
+      "name": "Aun Ulfat",
+      "dates": "19-21 Nov 2026",
+      "actual_hours": 24,
+      "planned_hours": 0,
+      "status": "Declared actual"
+    },
+    {
+      "name": "M Umar",
+      "dates": "22-24 Nov 2026",
+      "actual_hours": 24,
+      "planned_hours": 0,
+      "status": "Declared actual"
+    },
+    {
+      "name": "M Abdullah",
+      "dates": "25-27 Nov 2026",
+      "actual_hours": 16,
+      "planned_hours": 8,
+      "status": "25-26 actual; 27 planned"
+    }
+  ],
+  "contributions": "Effort dates supplied by the group; hours use 8 hours/day. Future work is not recorded as completed actual effort."
+}

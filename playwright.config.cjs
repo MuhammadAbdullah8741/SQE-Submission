@@ -1,0 +1,2 @@
+const {defineConfig}=require('@playwright/test');
+module.exports=defineConfig({testDir:'./tests/team/browser',workers:1,fullyParallel:false,timeout:60000,retries:0,reporter:[['list'],['html',{outputFolder:'tests/team/evidence/playwright-report',open:'never'}],['json',{outputFile:'tests/team/evidence/playwright-results.json'}]],use:{baseURL:process.env.BASE_URL||'http://127.0.0.1:8081/bookflow',proxy:process.env.ZAP_PROXY?{server:process.env.ZAP_PROXY}:undefined,headless:true,viewport:{width:1440,height:1000},screenshot:'on',trace:'retain-on-failure'}});

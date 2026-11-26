@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeminiService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.service</a> &gt; <span class="el_source">GeminiService.java</span></div><h1>GeminiService.java</h1><pre class="source lang-java linenums">package com.bookflow.service;
+
+import com.bookflow.model.AiCache;
+import com.bookflow.model.Book;
+import com.bookflow.model.Transaction;
+import com.bookflow.model.User;
+import com.bookflow.repository.AiCacheRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class GeminiService {
+
+    @Value(&quot;${bookflow.gemini.api-key:}&quot;)
+    private String apiKey;
+
+    @Value(&quot;${bookflow.gemini.api-url:https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent}&quot;)
+    private String apiUrl;
+
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+    private final AiCacheRepository aiCacheRepository;
+    private final IssueReturnService issueReturnService;
+    private final BookService bookService;
+
+    public GeminiService(RestTemplate restTemplate,
+                         ObjectMapper objectMapper,
+                         AiCacheRepository aiCacheRepository,
+                         IssueReturnService issueReturnService,
+<span class="fc" id="L44">                         BookService bookService) {</span>
+<span class="fc" id="L45">        this.restTemplate = restTemplate;</span>
+<span class="fc" id="L46">        this.objectMapper = objectMapper;</span>
+<span class="fc" id="L47">        this.aiCacheRepository = aiCacheRepository;</span>
+<span class="fc" id="L48">        this.issueReturnService = issueReturnService;</span>
+<span class="fc" id="L49">        this.bookService = bookService;</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Returns 5 personalised book recommendations for the student.
+     * Uses cache if valid (within 24h); otherwise calls Gemini and re-caches.
+     * Falls back to top-borrowed books if the API call fails.
+     */
+    @Transactional
+    public JsonNode getRecommendations(User student) {
+
+<span class="nc" id="L60">        var cached = aiCacheRepository.findById(student.getSystemId());</span>
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        if (cached.isPresent() &amp;&amp; cached.get().isValid()) {</span>
+            try {
+<span class="nc" id="L63">                return objectMapper.readTree(cached.get().getRecommendations());</span>
+<span class="nc" id="L64">            } catch (Exception ignored) {</span>
+                // fall through to regenerate
+            }
+        }
+
+        try {
+<span class="nc" id="L70">            JsonNode recommendations = callGeminiApi(student);</span>
+<span class="nc" id="L71">            cacheRecommendations(student.getSystemId(), recommendations);</span>
+<span class="nc" id="L72">            return recommendations;</span>
+
+<span class="nc" id="L74">        } catch (Exception e) {</span>
+            // Graceful fallback: top-borrowed books
+<span class="nc" id="L76">            return buildFallbackRecommendations();</span>
+        }
+    }
+
+    private JsonNode callGeminiApi(User student) {
+<span class="nc" id="L81">        List&lt;Transaction&gt; history = issueReturnService.getHistoryForMember(student.getSystemId());</span>
+
+<span class="nc" id="L83">        List&lt;Transaction&gt; last10 = history.stream().limit(10).collect(Collectors.toList());</span>
+
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (last10.isEmpty()) {</span>
+<span class="nc" id="L86">            throw new RestClientException(&quot;No borrow history — skip Gemini call, use fallback&quot;);</span>
+        }
+
+<span class="nc" id="L89">        String prompt = buildPrompt(last10);</span>
+
+<span class="nc" id="L91">        ObjectNode requestBody = objectMapper.createObjectNode();</span>
+<span class="nc" id="L92">        ArrayNode contents = requestBody.putArray(&quot;contents&quot;);</span>
+<span class="nc" id="L93">        ObjectNode contentItem = contents.addObject();</span>
+<span class="nc" id="L94">        ArrayNode parts = contentItem.putArray(&quot;parts&quot;);</span>
+<span class="nc" id="L95">        parts.addObject().put(&quot;text&quot;, prompt);</span>
+
+<span class="nc" id="L97">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L98">        headers.setContentType(MediaType.APPLICATION_JSON);</span>
+
+<span class="nc" id="L100">        HttpEntity&lt;String&gt; entity = new HttpEntity&lt;&gt;(requestBody.toString(), headers);</span>
+
+<span class="nc" id="L102">        String url = apiUrl + &quot;?key=&quot; + apiKey;</span>
+
+<span class="nc" id="L104">        ResponseEntity&lt;String&gt; response = restTemplate.postForEntity(url, entity, String.class);</span>
+
+<span class="nc bnc" id="L106" title="All 4 branches missed.">        if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {</span>
+<span class="nc" id="L107">            throw new RestClientException(&quot;Gemini API returned non-success status&quot;);</span>
+        }
+
+<span class="nc" id="L110">        return parseGeminiResponse(response.getBody());</span>
+    }
+
+    private String buildPrompt(List&lt;Transaction&gt; history) {
+<span class="nc" id="L114">        StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L115">        sb.append(&quot;Based on this reader's borrow history, suggest exactly 5 books they would enjoy. &quot;);</span>
+<span class="nc" id="L116">        sb.append(&quot;Respond ONLY with a JSON array of 5 objects, each with keys: title, author, genre, reason. &quot;);</span>
+<span class="nc" id="L117">        sb.append(&quot;No markdown, no extra text.\n\nBorrow history:\n&quot;);</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (Transaction t : history) {</span>
+<span class="nc" id="L120">            sb.append(&quot;- \&quot;&quot;).append(t.getBook().getTitle()).append(&quot;\&quot; by &quot;)</span>
+<span class="nc" id="L121">                    .append(t.getBook().getAuthor()).append(&quot; (&quot;)</span>
+<span class="nc" id="L122">                    .append(t.getBook().getCategory()).append(&quot;)\n&quot;);</span>
+<span class="nc" id="L123">        }</span>
+<span class="nc" id="L124">        return sb.toString();</span>
+    }
+
+    private JsonNode parseGeminiResponse(String rawBody) {
+        try {
+<span class="nc" id="L129">            JsonNode root = objectMapper.readTree(rawBody);</span>
+<span class="nc" id="L130">            String text = root.path(&quot;candidates&quot;).path(0)</span>
+<span class="nc" id="L131">                    .path(&quot;content&quot;).path(&quot;parts&quot;).path(0)</span>
+<span class="nc" id="L132">                    .path(&quot;text&quot;).asText();</span>
+
+            // Strip potential markdown code fences
+<span class="nc" id="L135">            String cleaned = text.replaceAll(&quot;```json&quot;, &quot;&quot;).replaceAll(&quot;```&quot;, &quot;&quot;).trim();</span>
+<span class="nc" id="L136">            return objectMapper.readTree(cleaned);</span>
+
+<span class="nc" id="L138">        } catch (Exception e) {</span>
+<span class="nc" id="L139">            throw new RestClientException(&quot;Failed to parse Gemini response&quot;, e);</span>
+        }
+    }
+
+    private void cacheRecommendations(String memberId, JsonNode recommendations) {
+        try {
+<span class="nc" id="L145">            AiCache cache = AiCache.builder()</span>
+<span class="nc" id="L146">                    .memberId(memberId)</span>
+<span class="nc" id="L147">                    .recommendations(objectMapper.writeValueAsString(recommendations))</span>
+<span class="nc" id="L148">                    .build();</span>
+<span class="nc" id="L149">            aiCacheRepository.save(cache);</span>
+<span class="nc" id="L150">        } catch (Exception ignored) {</span>
+            // Caching failure should not break the recommendation flow
+<span class="nc" id="L152">        }</span>
+<span class="nc" id="L153">    }</span>
+
+    private JsonNode buildFallbackRecommendations() {
+<span class="nc" id="L156">        List&lt;Book&gt; topBooks = bookService.getMostBorrowed(5);</span>
+
+<span class="nc" id="L158">        ArrayNode array = objectMapper.createArrayNode();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        for (Book b : topBooks) {</span>
+<span class="nc" id="L160">            ObjectNode node = array.addObject();</span>
+<span class="nc" id="L161">            node.put(&quot;title&quot;, b.getTitle());</span>
+<span class="nc" id="L162">            node.put(&quot;author&quot;, b.getAuthor());</span>
+<span class="nc" id="L163">            node.put(&quot;genre&quot;, b.getCategory().getDisplayName());</span>
+<span class="nc" id="L164">            node.put(&quot;reason&quot;, &quot;Popular among other readers&quot;);</span>
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">        return array;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

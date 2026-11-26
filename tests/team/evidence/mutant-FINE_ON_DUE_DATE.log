@@ -1,0 +1,186 @@
+[INFO] Scanning for projects...
+[INFO]
+[INFO] -----------------------< com.bookflow:bookflow >------------------------
+[INFO] Building BookFlow 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO]
+[INFO] --- jacoco:0.8.12:prepare-agent (default) @ bookflow ---
+[INFO] argLine set to "-javaagent:C:\\Users\\hp\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.12\\org.jacoco.agent-0.8.12-runtime.jar=destfile=X:\\semester 5\\SQE\\Project\\SQE-Submission\\target\\jacoco.exec"
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ bookflow ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 10 resources from src\main\resources to target\classes
+[INFO]
+[INFO] --- compiler:3.11.0:compile (default-compile) @ bookflow ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 48 source files with javac [debug release 17] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO]
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ bookflow ---
+[INFO] skip non existing resourceDirectory X:\semester 5\SQE\Project\SQE-Submission\src\test\resources
+[INFO]
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ bookflow ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 5 source files with javac [debug release 17] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO]
+[INFO] --- surefire:3.1.2:test (default-test) @ bookflow ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO]
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.bookflow.team.IssueReturnTest
+WARNING: A Java agent has been loaded dynamically (C:\Users\hp\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.13\byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[ERROR] Tests run: 42, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 4.458 s <<< FAILURE! -- in com.bookflow.team.IssueReturnTest
+[ERROR] com.bookflow.team.IssueReturnTest.returnBoundary(int)[1] -- Time elapsed: 0.056 s <<< FAILURE!
+org.mockito.exceptions.verification.NoInteractionsWanted:
+
+No interactions wanted here:
+-> at com.bookflow.team.IssueReturnTest.returnBoundary(IssueReturnTest.java:38)
+But found these interactions on mock 'fineService':
+-> at com.bookflow.service.IssueReturnService.returnBook(IssueReturnService.java:154)
+Actually, above is the only interaction with this mock.
+	at com.bookflow.team.IssueReturnTest.returnBoundary(IssueReturnTest.java:38)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:1024)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.bookflow.team.IssueReturnTest.returnBoundary(int)[2] -- Time elapsed: 0.008 s <<< FAILURE!
+org.mockito.exceptions.verification.NoInteractionsWanted:
+
+No interactions wanted here:
+-> at com.bookflow.team.IssueReturnTest.returnBoundary(IssueReturnTest.java:38)
+But found these interactions on mock 'fineService':
+-> at com.bookflow.service.IssueReturnService.returnBook(IssueReturnService.java:154)
+Actually, above is the only interaction with this mock.
+	at com.bookflow.team.IssueReturnTest.returnBoundary(IssueReturnTest.java:38)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:179)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:1024)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.stream.ReferencePipeline$7$1.accept(ReferencePipeline.java:276)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Failures:
+[ERROR]   IssueReturnTest.returnBoundary:38
+No interactions wanted here:
+-> at com.bookflow.team.IssueReturnTest.returnBoundary(IssueReturnTest.java:38)
+But found these interactions on mock 'fineService':
+-> at com.bookflow.service.IssueReturnService.returnBook(IssueReturnService.java:154)
+Actually, above is the only interaction with this mock.
+[ERROR]   IssueReturnTest.returnBoundary:38
+No interactions wanted here:
+-> at com.bookflow.team.IssueReturnTest.returnBoundary(IssueReturnTest.java:38)
+But found these interactions on mock 'fineService':
+-> at com.bookflow.service.IssueReturnService.returnBook(IssueReturnService.java:154)
+Actually, above is the only interaction with this mock.
+[INFO]
+[ERROR] Tests run: 42, Failures: 2, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17.562 s
+[INFO] Finished at: 2026-11-26T14:24:53+05:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.1.2:test (default-test) on project bookflow: There are test failures.
+[ERROR]
+[ERROR] Please refer to X:\semester 5\SQE\Project\SQE-Submission\target\surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

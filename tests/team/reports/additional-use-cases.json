@@ -1,0 +1,32 @@
+[
+  {
+    "id": "UC5",
+    "title": "Allocate available stock",
+    "preconditions": "Librarian session; active student; no fine; fixture stock set for case",
+    "main": "3 copies -> issue -> 2 copies and one ISSUED loan",
+    "alternatives": [
+      "1 copy -> issue -> 0 and book ISSUED",
+      "2 copies -> issue -> 1 and book AVAILABLE"
+    ],
+    "exceptions": [
+      "0 copies -> explanatory rejection; no transaction",
+      "Unknown ISBN -> explanatory rejection; all stock unchanged"
+    ],
+    "postconditions": "Exactly one copy consumed on success; no stock/loan change on rejection"
+  },
+  {
+    "id": "UC6",
+    "title": "Return the correct loan record",
+    "preconditions": "Librarian session; synthetic issued loan options loaded",
+    "main": "Select first of two loans -> only first returned",
+    "alternatives": [
+      "Select second -> only second returned",
+      "Prior returned history plus active second -> preserve history and return second"
+    ],
+    "exceptions": [
+      "Selected record deleted after form load -> reject, no stock credit",
+      "Selected record closed by another operator -> reject, no duplicate stock credit"
+    ],
+    "postconditions": "Only selected eligible record changes; unrelated records preserved; no extra fine"
+  }
+]

@@ -1,0 +1,23 @@
+D09: Upstream committed database and SMTP credentials
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: High
+Priority: P1
+Status: Partially remediated
+Risk: R01
+Category: Configuration
+
+Reproduction / review:
+Review baseline configuration and Git history without copying secret values into the issue. Working tree now uses environment placeholders; historical values require owner rotation/revocation.
+
+Evidence:
+Baseline application.properties (values deliberately omitted from report)
+
+Root cause:
+Secrets stored in source configuration.
+
+Correction:
+Environment placeholders added in working tree. Owners must revoke/rotate credentials and decide on history cleanup before public publishing.
+
+Triage:
+Do not publish upstream credential-bearing history automatically.

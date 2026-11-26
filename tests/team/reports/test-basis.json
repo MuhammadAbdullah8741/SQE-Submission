@@ -1,0 +1,297 @@
+{
+  "scope": "Circulation module: librarian issues a book, then returns that loan. Shared records: books.available, transactions.status/due_date, fines. Supporting fine settlement is unit-tested; unrelated administration, Gemini, mail and uploads are excluded from functional scope.",
+  "roles": [
+    [
+      "Librarian / administrator",
+      "ROLE_LIB / ROLE_ADM",
+      "May issue and return books through the protected circulation endpoints."
+    ],
+    [
+      "Student",
+      "ROLE_STU",
+      "May use student functions but receives HTTP 403 for issue and return actions."
+    ]
+  ],
+  "useCaseOwnership": [
+    [
+      "Aun Ulfat (24i-3068)",
+      "UC1 Issue book; UC2 Return book"
+    ],
+    [
+      "M Umar (24i-3132)",
+      "UC3 Eligibility check; UC4 Overdue fine"
+    ],
+    [
+      "M Abdullah (24i-3050)",
+      "UC5 Stock allocation; UC6 Correct loan selection"
+    ]
+  ],
+  "assumptions": [
+    "A member may hold at most one active loan per ISBN; repeated issue requests must not duplicate that loan (brief's no-duplicates requirement).",
+    "Only ISSUED transactions can transition to RETURNED. LOST requires an explicit separate recovery policy, absent upstream.",
+    "Book stock and transaction updates must commit atomically; audit failure is treated as a transaction failure.",
+    "Database column limits define input length limits where DTO validation is absent. Spec describes the desired contract and identifies observed differences.",
+    "The reproducible test environment pins Java to Asia/Karachi and MySQL sessions to +05:00. No historical weekly work is claimed."
+  ],
+  "requirements": [
+    [
+      "FR01",
+      "Issue",
+      "Only librarian/admin may issue",
+      "R01",
+      "SEC role matrix"
+    ],
+    [
+      "FR02",
+      "Issue",
+      "Member exists and is ACTIVE",
+      "R02",
+      "MCC + missingMember; API member EP"
+    ],
+    [
+      "FR03",
+      "Issue",
+      "At least one available copy",
+      "R03",
+      "stockBoundary; browser out of stock"
+    ],
+    [
+      "FR04",
+      "Issue",
+      "Reject at 3 active loans and above",
+      "R04",
+      "borrowBoundary 2/3/4; MCC"
+    ],
+    [
+      "FR05",
+      "Issue",
+      "Block unpaid, unwaived fines",
+      "R05",
+      "MCC; settlementMcc"
+    ],
+    [
+      "FR06",
+      "Issue",
+      "Create one loan, decrement one copy, due in 14 days",
+      "R03",
+      "issueWritesDatesAndStock; UC1 main"
+    ],
+    [
+      "FR07",
+      "Issue",
+      "Repeat issue creates no duplicate active loan",
+      "R06",
+      "duplicateIssueMustNotCreateSecondLoan"
+    ],
+    [
+      "FR08",
+      "Return",
+      "Only librarian/admin may return",
+      "R01",
+      "SEC role matrix"
+    ],
+    [
+      "FR09",
+      "Return",
+      "Only ISSUED may become RETURNED",
+      "R07",
+      "lostTransactionMustNotReturn; repeatReturnRejected"
+    ],
+    [
+      "FR10",
+      "Return",
+      "Restore one copy and record return date/operator",
+      "R03",
+      "returnBoundary; UC2 main"
+    ],
+    [
+      "FR11",
+      "Return",
+      "No fine before/on due date; overdue creates days times category rate",
+      "R08",
+      "returnBoundary -1/0/1; fineAmountAndState"
+    ],
+    [
+      "FR12",
+      "Both",
+      "Failure leaves persisted state unchanged; retry writes once",
+      "R09",
+      "RecoveryIntegrationTest"
+    ]
+  ],
+  "rules": [
+    [
+      "BR1",
+      "Eligible = active AND available>0 AND count<3 AND no outstanding fine. MCC: all 16 combinations; only 1111 allows. MC/DC pairs: 15/7,15/11,15/13,15/14."
+    ],
+    [
+      "BR2",
+      "Issue atomically writes ISSUED loan, due today+14, and available-1; duplicate member+ISBN active loan is forbidden."
+    ],
+    [
+      "BR3",
+      "ISSUED -> RETURNED only; RETURNED and LOST returns rejected without stock change."
+    ],
+    [
+      "BR4",
+      "Overdue=max(0,returnDate-dueDate). Fine=overdue*categoryRate; paid OR waived blocks a second settlement. MCC paid/waived: 00 permits,01/10/11 reject; MC/DC 00/01 and 00/10."
+    ]
+  ],
+  "risks": [
+    [
+      "R01",
+      "Product",
+      "Unauthorised issue/return",
+      "5",
+      "5",
+      "25",
+      "RBAC browser allowed/denied + CSRF checks"
+    ],
+    [
+      "R02",
+      "Product",
+      "Inactive or unknown member borrows",
+      "4",
+      "4",
+      "16",
+      "EP, complete MCC, rejection readback"
+    ],
+    [
+      "R03",
+      "Product",
+      "Stock and loan records diverge",
+      "5",
+      "5",
+      "25",
+      "Cross-workflow SQL assertions, rollback, concurrency review"
+    ],
+    [
+      "R04",
+      "Product",
+      "Borrow limit off by one",
+      "4",
+      "4",
+      "16",
+      "3-point BVA 2/3/4 + custom mutant"
+    ],
+    [
+      "R05",
+      "Product",
+      "Outstanding fine restriction bypassed",
+      "3",
+      "4",
+      "12",
+      "MCC and unit mocks"
+    ],
+    [
+      "R06",
+      "Product",
+      "Retried issue creates duplicate",
+      "4",
+      "5",
+      "20",
+      "Repeat request regression; concurrent repeats remain a risk"
+    ],
+    [
+      "R07",
+      "Product",
+      "Invalid return state inflates stock",
+      "4",
+      "5",
+      "20",
+      "All return source states, before/after regression"
+    ],
+    [
+      "R08",
+      "Product",
+      "Incorrect overdue fine",
+      "4",
+      "4",
+      "16",
+      "Date BVA, category rates, settlement MCC"
+    ],
+    [
+      "R09",
+      "Product",
+      "Dependency failure leaves partial write",
+      "3",
+      "5",
+      "15",
+      "Real MySQL rollback and recovery test"
+    ],
+    [
+      "R10",
+      "Product",
+      "Dashboard unusable or inaccessible",
+      "4",
+      "4",
+      "16",
+      "Browser flows, keyboard, axe/Lighthouse before-after"
+    ],
+    [
+      "R11",
+      "Project",
+      "Missing GitHub access/registration evidence",
+      "4",
+      "5",
+      "20",
+      "Prepare local CI/issues/PR text; disclose absent remote evidence"
+    ],
+    [
+      "R12",
+      "Project",
+      "Deadline and machine resource contention",
+      "5",
+      "4",
+      "20",
+      "Prioritise high-risk workflows; record incomplete activities honestly"
+    ]
+  ],
+  "exitCriteria": [
+    [
+      "EC1",
+      "FR01-FR12 automated assertions pass; no open critical/high state-integrity defect",
+      "R01/R03/R06/R07"
+    ],
+    [
+      "EC2",
+      "100% line and branch coverage of the selected IssueReturnService and FineService; PIT >=80%; both custom mutants killed",
+      "R03/R04/R08"
+    ],
+    [
+      "EC3",
+      "Each 1-VU/5-VU run p95<=500ms and unexpected failures<1%; no critical/serious axe finding on repaired screen",
+      "R10/R12"
+    ]
+  ],
+  "estimates": [
+    [
+      "Static/unit/mutation/CI",
+      2,
+      4,
+      7
+    ],
+    [
+      "API/spec/data/recovery",
+      2,
+      4,
+      6
+    ],
+    [
+      "Browser/accessibility/security/performance",
+      3,
+      6,
+      10
+    ],
+    [
+      "Management/report/package",
+      2,
+      4,
+      6
+    ]
+  ],
+  "plan": "Risk 20-25: full positive/negative/state/rollback/role coverage. Risk 12-16: boundaries, partitions and decisions. Entry: build starts, isolated MySQL and synthetic data ready. Suspend on unavailable database, corrupted seed or unsafe environment; resume only after seed and health checks. Exit uses EC1-EC3. Named area and use-case ownership is recorded; automation authorship remains disclosed and is not attributed to students.",
+  "schedule": "Group-declared member schedule: Aun Ulfat 19-21 Nov; M Umar 22-24 Nov; M Abdullah 25-27 Nov 2026. Eight hours per day is used for conversion. As of 26 Nov, Abdullah's 27 Nov allocation remains planned. Independently observed automation sessions occurred on 25 and 26 Nov. Sequence: baseline/scope; unit/MCC and defects; browser/API; analysis/security/performance; completion and package. Three-point estimates use PERT=(O+4M+P)/6.",
+  "weeklyProgress": "19-21 Nov: Aun area - static analysis, white-box, mutation and CI. 22-24 Nov: Umar area - API/spec/data/recovery. 25-26 Nov: Abdullah area - use cases, usability, accessibility, security and performance; 27 Nov remains planned as of this report. Control actions: use develop instead of stub main, isolate synthetic DB, fix invalid state/duplicate/date defects, sequence resource-heavy tools and align SQL/Java dates after a midnight fixture failure.",
+  "gqm": "Goal: protect circulation integrity. Questions: are requirements exercised, do tests detect defects, can changes ship? Metrics: requirements exercised/12 (not equal to pass rate); defects per KLOC using Sonar ncloc; reopened defects/previously closed defects (N/A without lifecycle history); line/branch coverage; PIT score; browser/API failure rate; release criteria actual vs target."
+}

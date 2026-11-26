@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.service</a> &gt; <span class="el_source">ReportService.java</span></div><h1>ReportService.java</h1><pre class="source lang-java linenums">package com.bookflow.service;
+
+import com.bookflow.model.AuditLog;
+import com.bookflow.model.Book;
+import com.bookflow.model.Transaction;
+import com.bookflow.model.User;
+import com.bookflow.repository.*;
+import com.bookflow.util.CsvExporter;
+import com.bookflow.util.PdfReceiptGenerator;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class ReportService {
+
+    private final UserRepository userRepository;
+    private final BookRepository bookRepository;
+    private final TransactionRepository transactionRepository;
+    private final FineRepository fineRepository;
+    private final CsvExporter csvExporter;
+    private final PdfReceiptGenerator pdfReceiptGenerator;
+    private final AuditLogService auditLogService;
+
+    public ReportService(UserRepository userRepository,
+                         BookRepository bookRepository,
+                         TransactionRepository transactionRepository,
+                         FineRepository fineRepository,
+                         CsvExporter csvExporter,
+                         PdfReceiptGenerator pdfReceiptGenerator,
+<span class="fc" id="L35">                         AuditLogService auditLogService) {</span>
+<span class="fc" id="L36">        this.userRepository = userRepository;</span>
+<span class="fc" id="L37">        this.bookRepository = bookRepository;</span>
+<span class="fc" id="L38">        this.transactionRepository = transactionRepository;</span>
+<span class="fc" id="L39">        this.fineRepository = fineRepository;</span>
+<span class="fc" id="L40">        this.csvExporter = csvExporter;</span>
+<span class="fc" id="L41">        this.pdfReceiptGenerator = pdfReceiptGenerator;</span>
+<span class="fc" id="L42">        this.auditLogService = auditLogService;</span>
+<span class="fc" id="L43">    }</span>
+
+    // ---- Admin Dashboard stat cards ----
+
+    @Transactional(readOnly = true)
+    public Map&lt;String, Object&gt; getAdminDashboardStats() {
+<span class="nc" id="L49">        return Map.of(</span>
+<span class="nc" id="L50">                &quot;totalBooks&quot;, bookRepository.count(),</span>
+<span class="nc" id="L51">                &quot;totalMembers&quot;, userRepository.countByRole(User.Role.STU) + userRepository.countByRole(User.Role.LIB),</span>
+<span class="nc" id="L52">                &quot;booksIssuedToday&quot;, transactionRepository.countByIssueDate(LocalDate.now()),</span>
+<span class="nc" id="L53">                &quot;totalFinesCollected&quot;, fineRepository.getTotalCollected()</span>
+        );
+    }
+
+    // ---- Librarian Dashboard: daily activity ----
+
+    @Transactional(readOnly = true)
+    public List&lt;Transaction&gt; getOverdueBooks() {
+<span class="nc" id="L61">        return transactionRepository.findAllOverdue();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Transaction&gt; getCurrentlyIssued() {
+<span class="nc" id="L66">        return transactionRepository.findAllCurrentlyIssued();</span>
+    }
+
+    // ---- Most borrowed books report ----
+
+    @Transactional(readOnly = true)
+    public List&lt;Book&gt; getMostBorrowedBooks(int topN) {
+<span class="nc" id="L73">        return bookRepository.findMostBorrowed(org.springframework.data.domain.PageRequest.of(0, topN));</span>
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal getTotalFineRevenue() {
+<span class="nc" id="L78">        return fineRepository.getTotalCollected();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal getFineRevenueBetween(LocalDate from, LocalDate to) {
+<span class="nc" id="L83">        return fineRepository.getTotalCollectedBetween(from, to);</span>
+    }
+
+    // ---- PDF Export ----
+
+    @Transactional(readOnly = true)
+    public byte[] exportOverdueReportPdf() {
+<span class="nc" id="L90">        List&lt;Transaction&gt; overdue = transactionRepository.findAllOverdue();</span>
+        // Reuses the borrow-history PDF layout grouped under one &quot;report&quot; title
+<span class="nc" id="L92">        return pdfReceiptGenerator.generateBorrowHistory(&quot;Overdue Report&quot;, &quot;ALL-MEMBERS&quot;, overdue);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportBooksCsv() {
+<span class="nc" id="L97">        return csvExporter.exportBooks(bookRepository.findAll());</span>
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportTransactionsCsv() {
+<span class="nc" id="L102">        return csvExporter.exportTransactions(transactionRepository.findAll());</span>
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] exportUsersCsv() {
+<span class="nc" id="L107">        return csvExporter.exportUsers(userRepository.findAll());</span>
+    }
+
+    @Transactional
+    public void logExport(String userId, String reportType) {
+<span class="nc" id="L112">        auditLogService.log(userId, AuditLog.AuditAction.REPORT_EXPORTED,</span>
+                &quot;Exported report: &quot; + reportType);
+<span class="nc" id="L114">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

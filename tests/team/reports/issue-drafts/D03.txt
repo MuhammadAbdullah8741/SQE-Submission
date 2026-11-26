@@ -1,0 +1,23 @@
+D03: Dashboard crashes when Java LocalDate reaches JSTL formatDate
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: High
+Priority: P1
+Status: Fixed locally
+Risk: R10
+Category: Presentation
+
+Reproduction / review:
+Seed an issued transaction and open the librarian dashboard. Expected: render loan dates. Baseline: LocalDate-to-Date ELException and incomplete page.
+
+Evidence:
+browser-before.log; app log ELException; issue-success.png and return-success.png
+
+Root cause:
+JSTL expects java.util.Date; entities expose java.time.LocalDate.
+
+Correction:
+Render escaped ISO date text in affected JSP views.
+
+Triage:
+Fix because it blocks seeded workflow demonstration.

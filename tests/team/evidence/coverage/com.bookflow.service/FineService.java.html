@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FineService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BookFlow</a> &gt; <a href="index.source.html" class="el_package">com.bookflow.service</a> &gt; <span class="el_source">FineService.java</span></div><h1>FineService.java</h1><pre class="source lang-java linenums">package com.bookflow.service;
+
+import com.bookflow.exception.BookFlowException;
+import com.bookflow.model.*;
+import com.bookflow.repository.ConfigRepository;
+import com.bookflow.repository.FineRepository;
+import com.bookflow.util.PdfReceiptGenerator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Fine calculation, payment recording, and admin waivers.
+ *
+ * Fine = overdue_days × daily_rate (rate depends on book category,
+ * configurable via the config table / Fine Config Panel).
+ *
+ * Maps to Implementation Plan §4.3 (Fine &amp; Fee Management).
+ */
+@Service
+public class FineService {
+
+    @Value(&quot;${bookflow.fine.default-daily-rate:5.00}&quot;)
+    private String defaultDailyRateStr;
+
+    @Value(&quot;${bookflow.fine.processing-charge:20.00}&quot;)
+    private String processingChargeStr;
+
+    private final FineRepository fineRepository;
+    private final ConfigRepository configRepository;
+    private final AuditLogService auditLogService;
+    private final PdfReceiptGenerator pdfReceiptGenerator;
+
+    public FineService(FineRepository fineRepository,
+                       ConfigRepository configRepository,
+                       AuditLogService auditLogService,
+<span class="fc" id="L43">                       PdfReceiptGenerator pdfReceiptGenerator) {</span>
+<span class="fc" id="L44">        this.fineRepository = fineRepository;</span>
+<span class="fc" id="L45">        this.configRepository = configRepository;</span>
+<span class="fc" id="L46">        this.auditLogService = auditLogService;</span>
+<span class="fc" id="L47">        this.pdfReceiptGenerator = pdfReceiptGenerator;</span>
+<span class="fc" id="L48">    }</span>
+
+    /** Creates a fine record for an overdue return. Called from IssueReturnService. */
+    @Transactional
+    public Fine createFineForTransaction(Transaction txn, long overdueDays) {
+
+<span class="fc" id="L54">        BigDecimal dailyRate = getDailyRateForCategory(txn.getBook().getCategory());</span>
+<span class="fc" id="L55">        BigDecimal amount = dailyRate.multiply(BigDecimal.valueOf(overdueDays))</span>
+<span class="fc" id="L56">                .setScale(2, RoundingMode.HALF_UP);</span>
+
+<span class="fc" id="L58">        Fine fine = Fine.builder()</span>
+<span class="fc" id="L59">                .transaction(txn)</span>
+<span class="fc" id="L60">                .member(txn.getMember())</span>
+<span class="fc" id="L61">                .amount(amount)</span>
+<span class="fc" id="L62">                .overdueDays(overdueDays)</span>
+<span class="fc" id="L63">                .dailyRate(dailyRate)</span>
+<span class="fc" id="L64">                .processingCharge(BigDecimal.ZERO) // applied at payment time</span>
+<span class="fc" id="L65">                .paid(false)</span>
+<span class="fc" id="L66">                .waived(false)</span>
+<span class="fc" id="L67">                .build();</span>
+
+<span class="fc" id="L69">        return fineRepository.save(fine);</span>
+    }
+
+    /** Daily rate lookup by book category, falling back to default. */
+    @Transactional(readOnly = true)
+    public BigDecimal getDailyRateForCategory(Book.BookCategory category) {
+<span class="fc" id="L75">        String key = &quot;fine.rate.&quot; + category.name().toLowerCase();</span>
+<span class="fc" id="L76">        return configRepository.findById(key)</span>
+<span class="fc" id="L77">                .map(Config::getConfigValue)</span>
+<span class="fc" id="L78">                .map(BigDecimal::new)</span>
+<span class="fc" id="L79">                .orElseGet(() -&gt; configRepository.findById(&quot;fine.rate.default&quot;)</span>
+<span class="fc" id="L80">                        .map(Config::getConfigValue)</span>
+<span class="fc" id="L81">                        .map(BigDecimal::new)</span>
+<span class="fc" id="L82">                        .orElse(new BigDecimal(defaultDailyRateStr)));</span>
+    }
+
+    /** Records a fine payment, adds processing charge, generates a receipt number. */
+    @Transactional
+    public Fine payFine(Long fineId, String paymentMode, String paidByUserId) {
+<span class="fc" id="L88">        Fine fine = fineRepository.findById(fineId)</span>
+<span class="fc" id="L89">                .orElseThrow(() -&gt; new BookFlowException(&quot;Fine not found: &quot; + fineId));</span>
+
+<span class="fc bfc" id="L91" title="All 4 branches covered.">        if (fine.isPaid() || fine.isWaived()) {</span>
+<span class="fc" id="L92">            throw new BookFlowException(&quot;This fine has already been settled&quot;);</span>
+        }
+
+<span class="fc" id="L95">        BigDecimal processingCharge = new BigDecimal(processingChargeStr);</span>
+
+<span class="fc" id="L97">        fine.setProcessingCharge(processingCharge);</span>
+<span class="fc" id="L98">        fine.setPaid(true);</span>
+<span class="fc" id="L99">        fine.setPaymentDate(LocalDate.now());</span>
+<span class="fc" id="L100">        fine.setPaymentMode(paymentMode);</span>
+<span class="fc" id="L101">        fine.setReceiptNumber(generateReceiptNumber(fine));</span>
+
+<span class="fc" id="L103">        fineRepository.save(fine);</span>
+
+<span class="fc" id="L105">        auditLogService.log(paidByUserId, AuditLog.AuditAction.FINE_PAID,</span>
+<span class="fc" id="L106">                &quot;Fine #&quot; + fineId + &quot; (Rs. &quot; + fine.getTotalAmount() + &quot;) paid by &quot; + fine.getMember().getSystemId());</span>
+
+<span class="fc" id="L108">        return fine;</span>
+    }
+
+    /** Admin waives a fine — reason is mandatory and logged in the audit trail. */
+    @Transactional
+    public Fine waiveFine(Long fineId, String reason, String waivedByAdminId) {
+<span class="fc bfc" id="L114" title="All 4 branches covered.">        if (reason == null || reason.isBlank()) {</span>
+<span class="fc" id="L115">            throw new BookFlowException(&quot;A reason is required to waive a fine&quot;);</span>
+        }
+
+<span class="fc" id="L118">        Fine fine = fineRepository.findById(fineId)</span>
+<span class="fc" id="L119">                .orElseThrow(() -&gt; new BookFlowException(&quot;Fine not found: &quot; + fineId));</span>
+
+<span class="fc bfc" id="L121" title="All 4 branches covered.">        if (fine.isPaid() || fine.isWaived()) {</span>
+<span class="fc" id="L122">            throw new BookFlowException(&quot;This fine has already been settled&quot;);</span>
+        }
+
+<span class="fc" id="L125">        fine.setWaived(true);</span>
+<span class="fc" id="L126">        fine.setWaiverReason(reason);</span>
+<span class="fc" id="L127">        fine.setWaivedBy(waivedByAdminId);</span>
+<span class="fc" id="L128">        fineRepository.save(fine);</span>
+
+<span class="fc" id="L130">        auditLogService.log(waivedByAdminId, AuditLog.AuditAction.FINE_WAIVED,</span>
+<span class="fc" id="L131">                &quot;Fine #&quot; + fineId + &quot; waived for &quot; + fine.getMember().getSystemId() + &quot; — reason: &quot; + reason);</span>
+
+<span class="fc" id="L133">        return fine;</span>
+    }
+
+    /** Generates the PDF receipt bytes for a paid fine. */
+    @Transactional(readOnly = true)
+    public byte[] generateReceiptPdf(Long fineId) {
+<span class="fc" id="L139">        Fine fine = fineRepository.findById(fineId)</span>
+<span class="fc" id="L140">                .orElseThrow(() -&gt; new BookFlowException(&quot;Fine not found: &quot; + fineId));</span>
+
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (!fine.isPaid()) {</span>
+<span class="fc" id="L143">            throw new BookFlowException(&quot;Cannot generate receipt — fine has not been paid yet&quot;);</span>
+        }
+
+<span class="fc" id="L146">        return pdfReceiptGenerator.generateFineReceipt(fine);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Fine&gt; getOutstandingForMember(User member) {
+<span class="fc" id="L151">        return fineRepository.findByMemberAndPaidFalseAndWaivedFalse(member);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;Fine&gt; getHistoryForMember(User member) {
+<span class="fc" id="L156">        return fineRepository.findByMemberOrderByCreatedAtDesc(member);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal getTotalOutstanding(User member) {
+<span class="fc" id="L161">        return fineRepository.getTotalOutstandingByMember(member);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public BigDecimal getTotalCollected() {
+<span class="fc" id="L166">        return fineRepository.getTotalCollected();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public Optional&lt;Fine&gt; findByTransaction(Long txnId) {
+<span class="fc" id="L171">        return fineRepository.findByTransactionTxnId(txnId);</span>
+    }
+
+    private String generateReceiptNumber(Fine fine) {
+<span class="fc" id="L175">        return &quot;RCPT-&quot; + fine.getMember().getSystemId() + &quot;-&quot; + System.currentTimeMillis();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

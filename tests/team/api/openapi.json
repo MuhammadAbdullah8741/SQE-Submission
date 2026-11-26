@@ -1,0 +1,10 @@
+{
+ "openapi":"3.0.3","info":{"title":"BookFlow issue/return HTTP interface","version":"baseline-4312c97"},
+ "servers":[{"url":"http://127.0.0.1:8081/bookflow"}],
+ "paths":{
+  "/librarian/issue":{"post":{"summary":"Issue book; cookie session and CSRF token required","requestBody":{"content":{"application/x-www-form-urlencoded":{"schema":{"type":"object","required":["memberId","isbn"],"properties":{"memberId":{"type":"string","minLength":1,"maxLength":25,"example":"STU000001STU"},"isbn":{"type":"string","minLength":1,"maxLength":13,"example":"9780000000001"}}}}}},"responses":{"302":{"description":"Success or validation redirect"},"200":{"description":"Business rejection HTML"},"403":{"description":"Role or CSRF denied"}}}},
+  "/librarian/return":{"post":{"summary":"Return issued transaction","parameters":[{"name":"txnId","in":"query","required":true,"schema":{"type":"integer","minimum":1,"maximum":9223372036854775807,"example":1}}],"responses":{"302":{"description":"Success redirect"},"200":{"description":"Business rejection"},"400":{"description":"Invalid numeric input"},"403":{"description":"Denied"}}}},
+  "/librarian/issue/precheck":{"get":{"parameters":[{"name":"memberId","in":"query","required":true,"schema":{"type":"string","minLength":1,"maxLength":25,"example":"STU000001STU"}},{"name":"isbn","in":"query","required":true,"schema":{"type":"string","minLength":1,"maxLength":13,"example":"9780000000001"}}],"responses":{"200":{"description":"JSON availability or error"},"403":{"description":"Denied"}}}},
+  "/librarian/return/preview":{"get":{"parameters":[{"name":"txnId","in":"query","required":true,"schema":{"type":"integer","minimum":1,"maximum":9223372036854775807,"example":1}}],"responses":{"200":{"description":"Overdue days"},"400":{"description":"Invalid numeric value or value below 1"},"404":{"description":"Transaction not found"}}}}
+ }
+}

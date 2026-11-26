@@ -1,0 +1,22 @@
+[
+  {
+    "vus": 1,
+    "run": 1,
+    "exitCode": 0
+  },
+  {
+    "vus": 1,
+    "run": 2,
+    "exitCode": 0
+  },
+  {
+    "vus": 5,
+    "run": 1,
+    "exitCode": 0
+  },
+  {
+    "vus": 5,
+    "run": 2,
+    "exitCode": 0
+  }
+]

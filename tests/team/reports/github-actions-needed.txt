@@ -1,0 +1,31 @@
+These are reviewable local drafts, NOT claims of completed GitHub activity.
+
+ISSUES
+Create one issue per defects.json entry with title, evidence, expected/actual, severity, priority,
+risk ID, triage and status. Attach the corresponding local evidence file or repository-relative link.
+Do not expose upstream secret values or session-cookie values in issues.
+
+FIX PR TITLE
+Reject duplicate active loans and invalid returns; repair populated circulation dashboard
+
+FIX PR BODY
+Repeated issue requests previously created a second active loan for the same member/ISBN, and LOST
+transactions could be returned, increasing stock. The service now rejects both. Populated dashboards
+also failed because JSTL formatDate cannot format java.time.LocalDate; views render escaped ISO dates.
+Business-error paths repopulate the dashboard model. Accessibility improvements correct contrast,
+heading levels, landmarks and the theme-switch role.
+Validation: regression-before.log shows the two state failures before changes; unit/coverage, PIT,
+browser and accessibility evidence are retained. Concurrent requests are not made atomic by this fix.
+API precheck/preview and broader security findings remain open; this is not a release approval.
+
+BLOCKED PR DEMONSTRATION
+On a separate genuine branch, change activeCount >= borrowLimit to activeCount > borrowLimit.
+Run the same required quality workflow. borrowBoundary(3) and the MCC rejection must fail.
+Retain the PR URL, failed Actions run URL and required-check block screenshot, then close the PR.
+Local mutant-LOAN_LIMIT_OFF_BY_ONE.log demonstrates the failing test, but is not a hosted PR substitute.
+
+REQUIRED SETTINGS
+Team-owned repository; public link in report after credentials/history review.
+Protect the main branch with required check 'quality' from 'SQE quality gate'.
+Do not allow bypasses. No continue-on-error or ignored command failures are in the quality workflow.
+Do not mark individual ownership complete until each actual member has contributed real commits.

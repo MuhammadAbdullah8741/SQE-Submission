@@ -1,0 +1,23 @@
+D04: Business rejection loses dashboard model
+
+LOCAL DRAFT - no GitHub issue has been created.
+Severity: Medium
+Priority: P2
+Status: Fixed locally
+Risk: R10
+Category: Presentation
+
+Reproduction / review:
+Submit an issue for a locked member, then correct the member ID on the returned page. Expected: dashboard data remains available. Baseline catch path omitted model population.
+
+Evidence:
+LibrarianController catch paths; browser correction flow
+
+Root cause:
+Error path returns dashboard without repopulating user, loans and reservations.
+
+Correction:
+Populate dashboard model before rendering rejection.
+
+Triage:
+Fix to permit correction and retry.

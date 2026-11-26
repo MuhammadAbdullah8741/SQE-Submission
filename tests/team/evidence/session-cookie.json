@@ -1,0 +1,5 @@
+{
+  "httpOnly": true,
+  "secure": false,
+  "sameSite": "Lax"
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "component": "Content Security Policy (CSP) Header Not Set",
+    "observed_risk": "Medium",
+    "root_cause": "Observed response/session configuration permits the condition described by ZAP; manually review applicability.",
+    "risk_register": "R01",
+    "impact": "Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.",
+    "fix": "Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.",
+    "evidence": [
+      "http://host.docker.internal:8081/bookflow/auth/login",
+      "http://host.docker.internal:8081/bookflow/librarian/dashboard",
+      "http://host.docker.internal:8081/bookflow/librarian/dashboard?issued=true",
+      "http://host.docker.internal:8081/bookflow/librarian/issue",
+      "http://host.docker.internal:8081/bookflow/librarian/dashboard?returned=true",
+      "http://host.docker.internal:8081/bookflow/librarian/return",
+      "http://host.docker.internal:8081/bookflow/student/dashboard"
+    ],
+    "deduplicated_instances": 7
+  },
+  {
+    "component": "Cookie without SameSite Attribute",
+    "observed_risk": "Low",
+    "root_cause": "Observed response/session configuration permits the condition described by ZAP; manually review applicability.",
+    "risk_register": "R01",
+    "impact": "A cookie has been set without the SameSite attribute, which means that the cookie can be sent as a result of a 'cross-site' request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.",
+    "fix": "Ensure that the SameSite attribute is set to either 'lax' or ideally 'strict' for all cookies.",
+    "evidence": [
+      "http://host.docker.internal:8081/bookflow/auth/login"
+    ],
+    "deduplicated_instances": 2
+  },
+  {
+    "component": "Information Disclosure - Suspicious Comments",
+    "observed_risk": "Informational",
+    "root_cause": "Observed response/session configuration permits the condition described by ZAP; manually review applicability.",
+    "risk_register": "R01",
+    "impact": "The response appears to contain suspicious comments which may help an attacker.",
+    "fix": "Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.",
+    "evidence": [
+      "http://host.docker.internal:8081/bookflow/js/librarian-dashboard.js"
+    ],
+    "deduplicated_instances": 2
+  },
+  {
+    "component": "Modern Web Application",
+    "observed_risk": "Informational",
+    "root_cause": "Observed response/session configuration permits the condition described by ZAP; manually review applicability.",
+    "risk_register": "R01",
+    "impact": "The application appears to be a modern web application. If you need to explore it automatically then the Client Spider may well be more effective than the standard one.",
+    "fix": "This is an informational alert and so no changes are required.",
+    "evidence": [
+      "http://host.docker.internal:8081/bookflow/student/dashboard"
+    ],
+    "deduplicated_instances": 1
+  },
+  {
+    "component": "Session Management Response Identified",
+    "observed_risk": "Informational",
+    "root_cause": "Observed response/session configuration permits the condition described by ZAP; manually review applicability.",
+    "risk_register": "R01",
+    "impact": "The given response has been identified as containing a session management token. The 'Other Info' field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to \"Auto-Detect\" then this rule will change the session management to use the tokens identified.",
+    "fix": "This is an informational alert rather than a vulnerability and so there is nothing to fix.",
+    "evidence": [
+      "http://host.docker.internal:8081/bookflow/auth/login"
+    ],
+    "deduplicated_instances": 3
+  },
+  {
+    "component": "Sub Resource Integrity Attribute Missing",
+    "observed_risk": "Medium",
+    "root_cause": "Observed response/session configuration permits the condition described by ZAP; manually review applicability.",
+    "risk_register": "R01",
+    "impact": "The integrity attribute is missing on a script or link tag served by an external server. The integrity tag prevents an attacker who have gained access to this server from injecting a malicious content.",
+    "fix": "Provide a valid integrity attribute to the tag.",
+    "evidence": [
+      "http://host.docker.internal:8081/bookflow/auth/login",
+      "http://host.docker.internal:8081/bookflow/librarian/dashboard",
+      "http://host.docker.internal:8081/bookflow/librarian/dashboard?issued=true",
+      "http://host.docker.internal:8081/bookflow/librarian/issue",
+      "http://host.docker.internal:8081/bookflow/librarian/dashboard?returned=true",
+      "http://host.docker.internal:8081/bookflow/librarian/return",
+      "http://host.docker.internal:8081/bookflow/student/dashboard"
+    ],
+    "deduplicated_instances": 7
+  }
+]

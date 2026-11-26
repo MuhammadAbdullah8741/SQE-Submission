@@ -73,7 +73,9 @@ jobs:
           python tests/team/api/check_generation.py
           node tests/team/api/run.cjs
       - name: Browser, roles and accessibility
-        run: npx playwright test
+        run: |
+          npx playwright test
+          python tests/team/scripts/check_nonfunctional_evidence.py
       - name: Sonar analysis and quality gate
         run: |
           python tests/team/scripts/sonar.py

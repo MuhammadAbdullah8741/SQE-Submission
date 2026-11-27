@@ -1,6 +1,7 @@
 from pathlib import Path
 import json
 r=Path(__file__).resolve().parents[3];dest=r/'tests/team/reports/issue-drafts';dest.mkdir(exist_ok=True)
+github=json.loads((r/'tests/team/reports/github-evidence.json').read_text())
 steps={
 'D01':'Seed an eligible student and an ISBN with at least two copies. Issue once, then repeat the same member/ISBN request. Expected: reject the second active loan. Baseline: two records accepted.',
 'D02':'Seed an existing transaction as LOST and submit its ID to the return action. Expected: reject without stock change. Baseline: accepted and stock incremented.',
@@ -13,6 +14,6 @@ steps={
 'D09':'Review baseline configuration and Git history without copying secret values into the issue. Working tree now uses environment placeholders; historical values require owner rotation/revocation.',
 'D10':'Source review: public registration exposes all roles, and UserService.register persists the client-supplied role. Expected public signup role: STU. No external exploitation was performed.'}
 for d in json.loads((r/'tests/team/reports/defects.json').read_text()):
- lines=[d['id']+': '+d['title'],'','LOCAL DRAFT - no GitHub issue has been created.','Severity: '+d['severity'],'Priority: '+d['priority'],'Status: '+d['status'],'Risk: '+d['risk'],'Category: '+d['category'],'','Reproduction / review:',steps[d['id']],'','Evidence:',d['evidence'],'','Root cause:',d['rootCause'],'','Correction:',d['fix'],'','Triage:',d['triage']]
+ lines=[d['id']+': '+d['title'],'','GitHub issue: '+github['issues'][d['id']],'Severity: '+d['severity'],'Priority: '+d['priority'],'Status: '+d['status'],'Risk: '+d['risk'],'Category: '+d['category'],'','Reproduction / review:',steps[d['id']],'','Evidence:',d['evidence'],'','Root cause:',d['rootCause'],'','Correction:',d['fix'],'','Triage:',d['triage']]
  (dest/(d['id']+'.txt')).write_text('\n'.join(lines),encoding='utf-8')
-print('Prepared',len(steps),'reviewable issue drafts')
+print('Prepared',len(steps),'GitHub issue records')

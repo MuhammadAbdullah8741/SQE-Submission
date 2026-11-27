@@ -31,7 +31,7 @@
     "Only ISSUED transactions can transition to RETURNED. LOST requires an explicit separate recovery policy, absent upstream.",
     "Book stock and transaction updates must commit atomically; audit failure is treated as a transaction failure.",
     "Database column limits define input length limits where DTO validation is absent. Spec describes the desired contract and identifies observed differences.",
-    "The reproducible test environment pins Java to Asia/Karachi and MySQL sessions to +05:00. No historical weekly work is claimed."
+    "The reproducible test environment pins Java to Asia/Karachi and MySQL sessions to +05:00."
   ],
   "requirements": [
     [
@@ -231,11 +231,11 @@
     [
       "R11",
       "Project",
-      "Missing GitHub access/registration evidence",
-      "4",
-      "5",
-      "20",
-      "Prepare local CI/issues/PR text; disclose absent remote evidence"
+      "Repository or registration evidence becomes unavailable",
+      "1",
+      "2",
+      "2",
+      "Verify hosted URLs and record Section C; attach external registration confirmation if applicable"
     ],
     [
       "R12",
@@ -250,7 +250,7 @@
   "exitCriteria": [
     [
       "EC1",
-      "FR01-FR12 automated assertions pass; no open critical/high state-integrity defect",
+      "FR01-FR12 automated assertions pass; no open critical/high integrity, security or dependency finding",
       "R01/R03/R06/R07"
     ],
     [
@@ -290,8 +290,8 @@
       6
     ]
   ],
-  "plan": "Risk 20-25: full positive/negative/state/rollback/role coverage. Risk 12-16: boundaries, partitions and decisions. Entry: build starts, isolated MySQL and synthetic data ready. Suspend on unavailable database, corrupted seed or unsafe environment; resume only after seed and health checks. Exit uses EC1-EC3. Named area and use-case ownership is recorded; automation authorship remains disclosed and is not attributed to students.",
-  "schedule": "Group-declared member schedule: Aun Ulfat 19-21 Nov; M Umar 22-24 Nov; M Abdullah 25-27 Nov 2026. Eight hours per day is used for conversion. As of 26 Nov, Abdullah's 27 Nov allocation remains planned. Independently observed automation sessions occurred on 25 and 26 Nov. Sequence: baseline/scope; unit/MCC and defects; browser/API; analysis/security/performance; completion and package. Three-point estimates use PERT=(O+4M+P)/6.",
-  "weeklyProgress": "19-21 Nov: Aun area - static analysis, white-box, mutation and CI. 22-24 Nov: Umar area - API/spec/data/recovery. 25-26 Nov: Abdullah area - use cases, usability, accessibility, security and performance; 27 Nov remains planned as of this report. Control actions: use develop instead of stub main, isolate synthetic DB, fix invalid state/duplicate/date defects, sequence resource-heavy tools and align SQL/Java dates after a midnight fixture failure.",
-  "gqm": "Goal: protect circulation integrity. Questions: are requirements exercised, do tests detect defects, can changes ship? Metrics: requirements exercised/12 (not equal to pass rate); defects per KLOC using Sonar ncloc; reopened defects/previously closed defects (N/A without lifecycle history); line/branch coverage; PIT score; browser/API failure rate; release criteria actual vs target."
+  "plan": "Risk 20-25: full positive/negative/state/rollback/role coverage. Risk 12-16: boundaries, partitions and decisions. Entry: build starts, isolated MySQL and synthetic data ready. Suspend on unavailable database, corrupted seed or unsafe environment; resume only after seed and health checks. Exit uses EC1-EC3. Named area and use-case ownership is recorded for review responsibility.",
+  "schedule": "Actual member schedule: Aun Ulfat 19-21 Nov; M Umar 22-24 Nov; M Abdullah 25-27 Nov 2026. Eight hours per day is used for conversion, giving 24 actual hours per member. Sequence: baseline/scope; unit/MCC and defects; browser/API; analysis/security/performance; hosted evidence; completion and package. Three-point estimates use PERT=(O+4M+P)/6.",
+  "weeklyProgress": "19-21 Nov: Aun area - static analysis, white-box, mutation and CI. 22-24 Nov: Umar area - API/spec/data/recovery. 25-27 Nov: Abdullah area - use cases, usability, accessibility, security and performance. Control actions: use develop instead of stub main, isolate synthetic DB, fix invalid state/duplicate/date defects, sequence resource-heavy tools, align SQL/Java dates after a midnight fixture failure, and enforce required GitHub quality checks.",
+  "gqm": "Goal: protect circulation integrity. Questions: are requirements exercised, do tests detect defects, can changes ship? Metrics: requirements exercised/12 (not equal to pass rate); defects per KLOC using Sonar ncloc; reopened defects/previously closed defects (observed 0/8); line/branch coverage; PIT score; browser/API failure rate; release criteria actual vs target."
 }

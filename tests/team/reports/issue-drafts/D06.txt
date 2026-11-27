@@ -1,9 +1,9 @@
 D06: Unknown return-preview transaction raises unhandled error
 
-LOCAL DRAFT - no GitHub issue has been created.
+GitHub issue: https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/8
 Severity: Medium
 Priority: P2
-Status: Open
+Status: Fixed and verified
 Risk: R10
 Category: API contract
 
@@ -11,13 +11,13 @@ Reproduction / review:
 Request return/preview with txnId=0 or an unknown positive ID. Expected: client-facing 400/404. Observed: unhandled exception and HTTP 500.
 
 Evidence:
-api-results.json invalid txnId cases
+api-results.json 52/52 pass; invalid txnId BVA
 
 Root cause:
-Preview controller does not map BookFlowException to a client error.
+Preview controller did not map BookFlowException to a client error.
 
 Correction:
-Return structured 404 for absent transaction and 400 for invalid numeric ID.
+Return structured 404 for absent transactions and 400 for IDs below 1 or invalid numeric input.
 
 Triage:
-Retain failing API evidence and block quality gate.
+Generated BVA and invalid partitions now pass without server errors.

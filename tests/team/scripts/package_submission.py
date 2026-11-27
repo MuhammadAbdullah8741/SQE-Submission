@@ -16,7 +16,7 @@ with zipfile.ZipFile(dest) as z:
  assert 'BookFlow-SQE/.git/HEAD' in z.namelist()
  assert 'BookFlow-SQE/tests/team/browser/workflows.spec.cjs' in z.namelist()
  assert z.testzip() is None
-manifest={'repository_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r,text=True).strip(),'baseline':'4312c97ba3767b7bb8ba19687a49368b49133390','archive_files':len(files),'contains_git':True,'remote_publication':'not performed','pending':['registration evidence','team GitHub URL and genuine Issues/PRs','individual member contributions','full application coverage if examiner interprets business-logic scope broadly'],'artifacts':{}}
+manifest={'repository_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r,text=True).strip(),'baseline':'4312c97ba3767b7bb8ba19687a49368b49133390','archive_files':len(files),'contains_git':True,'remote_publication':'completed','repository_url':'https://github.com/MuhammadAbdullah8741/SQE-Submission','pending':['Section C registration confirmation if required outside the repository'],'artifacts':{}}
 for p in [dest,pdf]:manifest['artifacts'][p.name]={'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
 (out/'submission-manifest.json').write_text(json.dumps(manifest,indent=2))
 print(json.dumps(manifest,indent=2))

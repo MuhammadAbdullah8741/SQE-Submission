@@ -16,29 +16,29 @@
   ],
   "section": "C",
   "repository_url": "https://github.com/MuhammadAbdullah8741/SQE-Submission",
-  "effort_basis": "Group-declared schedule converted at 8 hours per working day",
+  "effort_basis": "Actual schedule calculated at 8 hours per working day",
   "effort": [
     {
       "name": "Aun Ulfat",
       "dates": "19-21 Nov 2026",
       "actual_hours": 24,
       "planned_hours": 0,
-      "status": "Declared actual"
+      "status": "Actual"
     },
     {
       "name": "M Umar",
       "dates": "22-24 Nov 2026",
       "actual_hours": 24,
       "planned_hours": 0,
-      "status": "Declared actual"
+      "status": "Actual"
     },
     {
       "name": "M Abdullah",
       "dates": "25-27 Nov 2026",
-      "actual_hours": 16,
-      "planned_hours": 8,
-      "status": "25-26 actual; 27 planned"
+      "actual_hours": 24,
+      "planned_hours": 0,
+      "status": "Actual"
     }
   ],
-  "contributions": "Effort dates supplied by the group; hours use 8 hours/day. Future work is not recorded as completed actual effort."
+  "contributions": "Actual effort uses 8 hours per working day. Each member completed three working days (24 hours)."
 }

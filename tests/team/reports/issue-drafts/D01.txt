@@ -1,9 +1,9 @@
 D01: Repeated issue creates duplicate active loan
 
-LOCAL DRAFT - no GitHub issue has been created.
+GitHub issue: https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/4
 Severity: High
 Priority: P1
-Status: Fixed locally
+Status: Fixed and verified
 Risk: R06
 Category: State integrity
 

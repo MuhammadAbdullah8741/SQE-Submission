@@ -16,7 +16,7 @@
     "line": "64",
     "operator": "replaced call to com/bookflow/model/Fine$FineBuilder::processingCharge with receiver",
     "classification": "equivalent",
-    "analysis": "Equivalent: Lombok builder defaults already set zero processing charge / false paid / false waived.",
+    "analysis": "Equivalent: removing processingCharge(BigDecimal.ZERO) leaves Lombok's BigDecimal.ZERO default, so the saved fine and total are unchanged.",
     "after": "SURVIVED"
   },
   {
@@ -26,7 +26,7 @@
     "line": "65",
     "operator": "replaced call to com/bookflow/model/Fine$FineBuilder::paid with receiver",
     "classification": "equivalent",
-    "analysis": "Equivalent: Lombok builder defaults already set zero processing charge / false paid / false waived.",
+    "analysis": "Equivalent: removing paid(false) leaves Lombok's boolean default false, so outstanding and payment behaviour are unchanged.",
     "after": "SURVIVED"
   },
   {
@@ -36,7 +36,7 @@
     "line": "66",
     "operator": "replaced call to com/bookflow/model/Fine$FineBuilder::waived with receiver",
     "classification": "equivalent",
-    "analysis": "Equivalent: Lombok builder defaults already set zero processing charge / false paid / false waived.",
+    "analysis": "Equivalent: removing waived(false) leaves Lombok's boolean default false, so waiver and outstanding behaviour are unchanged.",
     "after": "SURVIVED"
   },
   {
@@ -56,7 +56,7 @@
     "line": "106",
     "operator": "removed call to com/bookflow/model/User::getSystemId",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed after FineTest asserted that the payment audit message contains member TEST000001STU; removing getSystemId loses that identity.",
     "after": "KILLED"
   },
   {
@@ -66,7 +66,7 @@
     "line": "131",
     "operator": "removed call to com/bookflow/model/User::getSystemId",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed after FineTest asserted the waiver audit member identity; removing getSystemId no longer produces TEST000001STU.",
     "after": "KILLED"
   },
   {
@@ -76,7 +76,7 @@
     "line": "65",
     "operator": "removed call to com/bookflow/model/User::getStatus",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the locked-member assertion because removing getStatus drops LOCKED from the rejection message.",
     "after": "KILLED"
   },
   {
@@ -86,7 +86,7 @@
     "line": "65",
     "operator": "removed call to java/lang/String::valueOf",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact locked-member message check; removing status string conversion changes the displayed rejection text.",
     "after": "KILLED"
   },
   {
@@ -96,7 +96,7 @@
     "line": "71",
     "operator": "removed call to com/bookflow/model/Book::getTitle",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact out-of-stock message assertion; removing getTitle omits Synthetic Book from the error.",
     "after": "KILLED"
   },
   {
@@ -106,7 +106,7 @@
     "line": "107",
     "operator": "removed call to com/bookflow/model/Book::getTitle",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact BOOK_ISSUED audit assertion because removing getTitle loses the issued book identity.",
     "after": "KILLED"
   },
   {
@@ -116,7 +116,7 @@
     "line": "107",
     "operator": "removed call to com/bookflow/model/User::getSystemId",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact BOOK_ISSUED audit assertion because removing getSystemId loses the borrowing member identity.",
     "after": "KILLED"
   },
   {
@@ -126,7 +126,7 @@
     "line": "107",
     "operator": "removed call to java/lang/String::valueOf",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact BOOK_ISSUED audit assertion because removing date conversion changes the recorded due-date text.",
     "after": "KILLED"
   },
   {
@@ -146,7 +146,7 @@
     "line": "62",
     "operator": "removed call to com/bookflow/dto/IssueBookRequest::getMemberId",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the member lookup/identity test: removing request.getMemberId sends the wrong key and prevents the expected eligible issue path.",
     "after": "KILLED"
   },
   {
@@ -156,7 +156,7 @@
     "line": "143",
     "operator": "removed call to com/bookflow/model/Book::getTitle",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact BOOK_RETURNED audit assertion because removing getTitle loses the returned book identity.",
     "after": "KILLED"
   },
   {
@@ -166,7 +166,7 @@
     "line": "143",
     "operator": "removed call to com/bookflow/model/User::getSystemId",
     "classification": "weak assertion",
-    "analysis": "Weak assertion: assert exact record identity/status in errors and audit messages instead of only a generic substring.",
+    "analysis": "Killed by the exact BOOK_RETURNED audit assertion because removing getSystemId loses the returning member identity.",
     "after": "KILLED"
   },
   {

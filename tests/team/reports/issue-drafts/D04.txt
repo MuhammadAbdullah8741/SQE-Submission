@@ -1,9 +1,9 @@
 D04: Business rejection loses dashboard model
 
-LOCAL DRAFT - no GitHub issue has been created.
+GitHub issue: https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/10
 Severity: Medium
 Priority: P2
-Status: Fixed locally
+Status: Fixed and verified
 Risk: R10
 Category: Presentation
 

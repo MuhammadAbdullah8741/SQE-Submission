@@ -1,0 +1,35 @@
+{
+  "repository": "https://github.com/MuhammadAbdullah8741/SQE-Submission",
+  "ruleset": "https://github.com/MuhammadAbdullah8741/SQE-Submission/settings/rules/28189459",
+  "required_check": "quality",
+  "issues": {
+    "D01": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/4",
+    "D02": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/5",
+    "D03": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/9",
+    "D04": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/10",
+    "D05": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/7",
+    "D06": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/8",
+    "D07": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/11",
+    "D08": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/6",
+    "D09": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/12",
+    "D10": "https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/13"
+  },
+  "pull_requests": {
+    "fix": "https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/1",
+    "api": "https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/2",
+    "nonfunctional": "https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/3",
+    "blocked": "https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/14"
+  },
+  "jobs": {
+    "fix_fail_before": "https://github.com/MuhammadAbdullah8741/SQE-Submission/actions/runs/45881845463/job/140122841254?pr=1",
+    "fix_pass_after": "https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/1/checks",
+    "blocked_boundary_failure": "https://github.com/MuhammadAbdullah8741/SQE-Submission/actions/runs/45891717290/job/140158909672"
+  },
+  "lifecycle": {
+    "fix_pr": "merged after fail-before/pass-after evidence",
+    "api_pr": "merged after required checks",
+    "nonfunctional_pr": "merged after required checks and review",
+    "blocked_pr": "closed without merge after required quality failure",
+    "open_findings": ["D08", "D09"]
+  }
+}

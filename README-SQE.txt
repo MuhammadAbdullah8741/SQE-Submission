@@ -91,20 +91,20 @@ Raw execution logs and machine-readable reports: tests/team/evidence.
 One-time assembly/repair scripts (bootstrap.py, repair.py, fix_*.py, refine_tests.py) preserve provenance;
 do not rerun them as normal setup. The checked-in sources already contain their changes.
 
-OUTSTANDING EXTERNAL SUBMISSION REQUIREMENTS
+EXTERNAL SUBMISSION STATUS
 Members: Aun Ulfat (24i-3068), M Umar (24i-3132), M Abdullah (24i-3050).
-Confirm section registration. Set up a team-owned public GitHub repository.
-Publish reviewed local issue drafts and two genuine PRs: failed regression before fix and passing fix.
-Configure SQE quality gate / quality as a REQUIRED branch status check. YAML alone cannot prevent merging.
-Each member must contribute and commit their own work; review AI-use disclosure and rehearse the viva.
+Team-owned public repository: https://github.com/MuhammadAbdullah8741/SQE-Submission
+Ten GitHub Issues, merged fix/member PRs, fail-before/pass-after evidence and a closed blocked PR are recorded in tests/team/reports/github-evidence.json.
+The main ruleset requires SQE quality gate / quality, a pull request and one approval. All three members have genuine authored commits.
+Confirm or attach Section C registration evidence if it is handled through a separate course form; review AI-use disclosure and rehearse the viva.
 Six complete use cases are assigned two per member: UC1-UC2 Aun, UC3-UC4 Umar, UC5-UC6 Abdullah.
 Whole-project business-logic coverage is not 100%; selected IssueReturnService/FineService are 100%.
 
 SECURITY / RELEASE STATUS
 HOLD: dependency advisories and concurrent issue-write integrity still require production remediation.
 Working configuration has no upstream plaintext secrets, but upstream .git history retains them.
-Owners must revoke/rotate and review history before public publishing. Do not publish the archive blindly.
-No external GitHub changes or course submission has been performed.
+Owners must revoke/rotate and review the upstream history; secret values are not reproduced in this repository or report.
+The public team repository is complete. Course-portal submission remains the group\'s responsibility.
 
 TIMEZONE REPRODUCIBILITY
 The start script pins Java to Asia/Karachi and JDBC connectionTimeZone=+05:00 with

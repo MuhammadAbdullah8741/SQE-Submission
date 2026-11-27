@@ -58,7 +58,7 @@ for k,v in basis['rules']:para(k+': '+v)
 page('3. Test plan and estimation')
 para(basis['plan']);para(basis['schedule'])
 area_actual={'Static/unit/mutation/CI':'Aun: 24 actual hours','API/spec/data/recovery':'Umar: 24 actual hours','Browser/accessibility/security/performance':'Abdullah: 24 actual hours','Management/report/package':'Shared; not separately claimed'}
-table(['Area','O / M / P hours','PERT hours','Declared actual evidence'],[[x[0],f'{x[1]} / {x[2]} / {x[3]}',f'{(x[1]+4*x[2]+x[3])/6:.2f}',area_actual[x[0]]] for x in basis['estimates']],[155,80,65,205])
+table(['Area','O / M / P hours','PERT hours','Actual effort'],[[x[0],f'{x[1]} / {x[2]} / {x[3]}',f'{(x[1]+4*x[2]+x[3])/6:.2f}',area_actual[x[0]]] for x in basis['estimates']],[155,80,65,205])
 para(meta.get('effort_basis','Effort basis not supplied')+'. We recorded 24 actual hours for each member across the stated dates.')
 table(['Member','Dates','Actual hours','Status'],[[x['name'],x['dates'],str(x['actual_hours']),x['status']] for x in meta.get('effort',[])],[100,105,75,225])
 table(['Stage','Deliverable','Control'],[['Baseline','Tagged upstream, isolated schema, synthetic seed','Never reset the original bookflow_db'],['Unit and recovery','JUnit + JaCoCo; real MySQL rollback','Separate mock-unit from persistence integration'],['API and browser','Generated values, Playwright, SQL readback','One database-mutating suite at a time'],['Nonfunctional','Sonar, PIT, axe, Lighthouse, passive ZAP, OSV, k6','Record versions; performance tools run after other suites'],['Completion','Report, runnable repository, zip with .git','Cross-check hosted URLs, commit authors and archive integrity']],[80,210,215])

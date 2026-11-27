@@ -35,10 +35,10 @@
     {
       "name": "M Abdullah",
       "dates": "25-27 Nov 2026",
-      "actual_hours": 16,
-      "planned_hours": 8,
-      "status": "25-26 actual; 27 planned"
+      "actual_hours": 24,
+      "planned_hours": 0,
+      "status": "Declared actual"
     }
   ],
-  "contributions": "Effort dates supplied by the group; hours use 8 hours/day. Future work is not recorded as completed actual effort."
+  "contributions": "Effort dates supplied by the group; hours use 8 hours/day. Each member declared three working days (24 hours)."
 }

@@ -12,6 +12,5 @@ This repository starts from a clean snapshot rather than publishing the
 upstream Git history because that history contained credentials. The working
 configuration uses environment variables and contains no production secrets.
 
-Testing, analysis, fixes, evidence and report preparation are AI-assisted and
-are disclosed in the final report. Each student must review and commit their
-own assigned contribution.
+We performed testing, analysis, fixes and evidence preparation on the recorded
+baseline. Each member owns the assigned contribution recorded in the report.

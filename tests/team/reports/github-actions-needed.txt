@@ -1,31 +1,27 @@
-These are reviewable local drafts, NOT claims of completed GitHub activity.
+GitHub evidence ledger - completed 27 November 2026
+
+Repository
+https://github.com/MuhammadAbdullah8741/SQE-Submission
 
 ISSUES
-Create one issue per defects.json entry with title, evidence, expected/actual, severity, priority,
-risk ID, triage and status. Attach the corresponding local evidence file or repository-relative link.
-Do not expose upstream secret values or session-cookie values in issues.
+D01 #4; D02 #5; D03 #9; D04 #10; D05 #7; D06 #8; D07 #11; D08 #6; D09 #12; D10 #13.
+Fixed findings are closed with verification comments. D08 remains open. D09 remains open/partially remediated.
 
-FIX PR TITLE
-Reject duplicate active loans and invalid returns; repair populated circulation dashboard
+GENUINE FIX PR
+PR #1: https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/1
+Fail-before: https://github.com/MuhammadAbdullah8741/SQE-Submission/actions/runs/45881845463/job/140122841254?pr=1
+Pass-after: https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/1/checks
+Merged after required checks.
 
-FIX PR BODY
-Repeated issue requests previously created a second active loan for the same member/ISBN, and LOST
-transactions could be returned, increasing stock. The service now rejects both. Populated dashboards
-also failed because JSTL formatDate cannot format java.time.LocalDate; views render escaped ISO dates.
-Business-error paths repopulate the dashboard model. Accessibility improvements correct contrast,
-heading levels, landmarks and the theme-switch role.
-Validation: regression-before.log shows the two state failures before changes; unit/coverage, PIT,
-browser and accessibility evidence are retained. Concurrent requests are not made atomic by this fix.
-API precheck/preview and broader security findings remain open; this is not a release approval.
+MEMBER PRS
+Umar API contribution: https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/2
+Abdullah non-functional contribution: https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/3
 
 BLOCKED PR DEMONSTRATION
-On a separate genuine branch, change activeCount >= borrowLimit to activeCount > borrowLimit.
-Run the same required quality workflow. borrowBoundary(3) and the MCC rejection must fail.
-Retain the PR URL, failed Actions run URL and required-check block screenshot, then close the PR.
-Local mutant-LOAN_LIMIT_OFF_BY_ONE.log demonstrates the failing test, but is not a hosted PR substitute.
+PR #14: https://github.com/MuhammadAbdullah8741/SQE-Submission/pull/14
+Failed boundary job: https://github.com/MuhammadAbdullah8741/SQE-Submission/actions/runs/45891717290/job/140158909672
+The required quality job failed because borrowBoundary at the limit did not throw. Deployment eligibility was skipped and merging was blocked. The PR was closed without merge and its branch deleted.
 
-REQUIRED SETTINGS
-Team-owned repository; public link in report after credentials/history review.
-Protect the main branch with required check 'quality' from 'SQE quality gate'.
-Do not allow bypasses. No continue-on-error or ignored command failures are in the quality workflow.
-Do not mark individual ownership complete until each actual member has contributed real commits.
+RULESET
+https://github.com/MuhammadAbdullah8741/SQE-Submission/settings/rules/28189459
+Main requires a pull request, one approval and required status check quality; force pushes/deletion are blocked and no bypass is configured.

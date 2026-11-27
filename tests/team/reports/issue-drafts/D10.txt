@@ -1,9 +1,9 @@
 D10: Public registration accepts privileged role
 
-LOCAL DRAFT - no GitHub issue has been created.
+GitHub issue: https://github.com/MuhammadAbdullah8741/SQE-Submission/issues/13
 Severity: Critical
 Priority: P1
-Status: Open - source verified
+Status: Fixed and verified
 Risk: R01
 Category: Authorization
 
@@ -11,13 +11,13 @@ Reproduction / review:
 Source review: public registration exposes all roles, and UserService.register persists the client-supplied role. Expected public signup role: STU. No external exploitation was performed.
 
 Evidence:
-AuthController.registerPage exposes all roles; UserService.register persists request.getRole(); SecurityConfig permits registration
+PublicRegistrationSecurityTest; AuthController exposes STU only; UserService forces STU
 
 Root cause:
-Client-selected role is trusted during public signup.
+Client-selected role was trusted during public signup.
 
 Correction:
-Force STU for public signup; provision staff only through authenticated admin flow.
+Force STU in the service boundary and expose only STU in the public form; provision staff through an authenticated admin flow.
 
 Triage:
-Hold release; passive source finding, no attack against any external system.
+Regression verifies a malicious ADM field still creates only a student account.
